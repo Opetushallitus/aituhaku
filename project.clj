@@ -6,6 +6,7 @@
                  [compojure "1.1.5"]
                  [ring/ring-json "0.2.0"]
                  [cheshire "5.2.0"]]
+  :plugins [[test2junit "1.0.1"]]
   :profiles {:dev {:source-paths ["dev"]
                    :dependencies [[org.clojure/tools.namespace "0.2.4"]
                                   [clj-webdriver "0.6.0"]
