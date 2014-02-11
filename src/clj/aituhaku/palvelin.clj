@@ -1,18 +1,25 @@
 (ns aituhaku.palvelin
   (:gen-class)
   (:require [org.httpkit.server :as hs]
-            [aituhaku.asetukset :refer [oletusasetukset]]))
+            [aituhaku.asetukset :refer [oletusasetukset]]
+            [ring.middleware.resource :refer [wrap-resource]]
+            [compojure.core :as c]
+            [stencil.core :as s]
+            [stencil.loader :as sl]))
 
-(defn server [request]
-  {:status 200
-   :headers {"Content-Type" "text/plain"}
-   :body "Hello world!"})
+(defn ^:private reitit []
+  (c/routes
+    (c/GET "/" []
+      (s/render-file "template/index" {}))))
 
 (defn sammuta [palvelin]
   ((:sammuta palvelin)))
 
 (defn kaynnista! [asetukset]
-  {:sammuta (hs/run-server server {:port (-> asetukset :server :port Integer/parseInt)})})
+  {:sammuta (hs/run-server (->
+                             (reitit)
+                             (wrap-resource "public"))
+              {:port (-> asetukset :server :port Integer/parseInt)})})
 
 (defn -main []
   (kaynnista! oletusasetukset))
