@@ -67,5 +67,5 @@ module.exports = function (grunt) {
 
   grunt.registerTask('sass-compile', ['sass:dist']);
 
-  grunt.registerTask('sass-watch', ['watch:sass']);
+  grunt.registerTask('sass-watch', ['sass-compile', 'watch:sass']);
 };

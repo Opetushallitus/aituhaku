@@ -1,5 +1,13 @@
 Frontend asennus:
 
+-Asenna node ja npm
+http://nodejs.org/download/
+
+-Asenna grunt
+> npm install -g grunt-cli
+
+-Hakemistossa /frontend tee seuraavat:
+
 > npm install
 > grunt bower
 > grunt sass-compile
@@ -12,11 +20,11 @@ Uuden bower kirjaston käyttöönotto:
 
 > grunt bower
 
-SASS tyylimuutokset
+SASS -tiedostojen kääntäminen
 
 > grunt sass-compile
 
-Tai jatkuva .scss muutosten seuranta:
+Tai jatkuva .scss muutosten seuranta ja kääntäminen:
 
 > grunt sass-watch
 
