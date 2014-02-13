@@ -10,3 +10,5 @@ pom.xml.asc
 *.class
 /.lein-*
 /.nrepl-port
+node_modules
+bower_components

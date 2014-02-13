@@ -3,6 +3,7 @@
   (:require [org.httpkit.server :as hs]
             [aituhaku.asetukset :refer [oletusasetukset]]
             [ring.middleware.resource :refer [wrap-resource]]
+            [ring.middleware.content-type :refer [wrap-content-type]]
             [compojure.core :as c]
             [stencil.core :as s]
             [stencil.loader :as sl]
@@ -10,10 +11,10 @@
 
             [aituhaku.asetukset :refer [oletusasetukset konfiguroi-lokitus]]))
 
-(defn ^:private reitit []
+(defn ^:private reitit [asetukset]
   (c/routes
     (c/GET "/" []
-      (s/render-file "template/index" {}))))
+      (s/render-file "template/index" {:base-url (-> asetukset :server :base-url)}))))
 
 (defn sammuta [palvelin]
   ((:sammuta palvelin)))
@@ -22,7 +23,7 @@
   (try
     (let [_ (konfiguroi-lokitus asetukset)
           sammuta (hs/run-server (->
-                                   (reitit)
+                                   (reitit asetukset)
                                    (wrap-resource "public"))
                                  {:port (-> asetukset :server :port)})]
       {:sammuta sammuta})

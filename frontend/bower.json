@@ -1,0 +1,10 @@
+{
+  "name": "aituhaku",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "angular": "~1.2.12",
+    "lodash": "~2.4.1",
+    "angular-mocks": "~1.2.12"
+  }
+}

@@ -2,9 +2,14 @@
   (:require [clojure.repl :refer :all]
             [clojure.pprint :refer [pprint]]
             [clojure.tools.namespace.repl :as nsr]
-            [clj-http.client :as hc]))
+            [clj-http.client :as hc]
+            stencil.loader
+            clojure.core.cache))
 
 (defonce ^:private palvelin (atom nil))
+
+;; Templatejen kakutus pois päältä kehityksen aikana
+(stencil.loader/set-cache (clojure.core.cache/ttl-cache-factory {} :ttl 0))
 
 (defn ^:private kaynnista! []
   {:pre [(not @palvelin)]

@@ -7,8 +7,6 @@
                  [ring/ring-json "0.2.0"]
                  [cheshire "5.2.0"]
                  [stencil "0.3.3"]
-                 [org.clojure/core.cache "0.6.2"]
-
                  [org.clojure/tools.logging "0.2.6"]
                  [ch.qos.logback/logback-classic "1.0.13"]
                  [org.slf4j/slf4j-api "1.7.5"]]
