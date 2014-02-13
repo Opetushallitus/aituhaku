@@ -6,6 +6,12 @@ module.exports = function (grunt) {
   require('time-grunt')(grunt);
 
   grunt.initConfig({
+    watch: {
+      sass: {
+        files: ['sass/*.scss'],
+        tasks: ['sass-compile']
+      }
+    },
     karma: {
       unit: {
         configFile: 'karma.conf.js',
@@ -41,6 +47,13 @@ module.exports = function (grunt) {
           'angular-mocks.js': 'angular-mocks/angular-mocks.js',
         }
       }
+    },
+    sass: {
+      dist : {
+        files: {
+          '../resources/public/compiled_css/main.css': 'sass/main.scss'
+        }
+      }
     }
   });
 
@@ -50,5 +63,9 @@ module.exports = function (grunt) {
 
   grunt.registerTask('autotest', ['karma:unit_auto']);
 
-  grunt.registerTask('bower', ['bowercopy:libs', 'bowercopy:test_libs'])
+  grunt.registerTask('bower', ['bowercopy:libs', 'bowercopy:test_libs']);
+
+  grunt.registerTask('sass-compile', ['sass:dist']);
+
+  grunt.registerTask('sass-watch', ['watch:sass']);
 };

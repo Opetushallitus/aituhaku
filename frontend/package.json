@@ -22,6 +22,8 @@
     "karma": "~0.10.2",
     "time-grunt": "~0.2.9",
     "load-grunt-tasks": "~0.3.0",
-    "grunt-bowercopy": "~0.7.1"
+    "grunt-bowercopy": "~0.7.1",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-sass": "~0.10.0"
   }
 }
