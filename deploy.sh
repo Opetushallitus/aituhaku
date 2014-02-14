@@ -20,12 +20,12 @@ then
     exit 1
 fi
 
-service=${AITUHAKU_SERVICE:-'aituhaku'}
+service=${AITUHAKU_SERVICE:-aituhaku}
 
 version_jarfile=$1
 user_host=$2
-aituhaku_home=${AITUHAKU_HOME:-'/data00/aituhaku'}
-ssh_key=${AITU_SSH_KEY:-'~/.ssh/id_rsa'}
+aituhaku_home=${AITUHAKU_HOME:-/data00/aituhaku}
+ssh_key=${AITU_SSH_KEY:-~/.ssh/id_rsa}
 
 set -x
 
