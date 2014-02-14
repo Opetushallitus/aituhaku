@@ -5,7 +5,7 @@
            [org.slf4j LoggerFactory]))
 
 (def oletusasetukset
-  {:server {:port 8081
+  {:server {:port 8084
             :base-url ""}
    :logback {:properties-file "resources/logback.xml"}})
 
