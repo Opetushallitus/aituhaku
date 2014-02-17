@@ -1,15 +1,41 @@
 #!/bin/bash
+
+# Kääntää ja paketoi Aituhaun version.
+#
+# Käyttö:
+#
+#     ./build.sh [-t]
+#
+# Parametrit:
+#     -t              Jos annettu, aja yksikkötestit.
+
 set -eu
 
-REPO_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+run_tests=no
+while getopts 'ct' o; do
+    case $o in
+        t)
+            run_tests=yes
+            ;;
+    esac
+done
+
+repo_path="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 set -x
 
-cd $REPO_PATH/frontend
+cd $repo_path/frontend
 npm install
 grunt bower
 grunt sass-compile
+if [ "$run_tests" = yes ]; then
+    grunt test_ff --no-color
+fi
 
-cd $REPO_PATH
-lein do clean, uberjar
+cd $repo_path
+if [ "$run_tests" = yes ]; then
+    lein do test, clean, uberjar
+else
+    lein do clean, uberjar
+fi
 
