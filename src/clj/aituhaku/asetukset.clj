@@ -13,6 +13,7 @@
 (def oletusasetukset
   {:server {:port "8081"
             :base-url ""}
+   :development-mode false ; oletusarvoisesti ei olla kehitysmoodissa. Pitää erikseen kääntää päälle jos tarvitsee kehitysmoodia.
    :logback {:properties-file "resources/logback.xml"}})
 
 (def konversio-map

@@ -20,4 +20,5 @@
              :uberjar {:main aituhaku.palvelin
                        :aot :all}}
   :source-paths ["src/clj"]
-  :main aituhaku.palvelin)
+  :main aituhaku.palvelin
+  :repl-options {:init-ns user})
