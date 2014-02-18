@@ -1,31 +1,32 @@
 Frontend asennus:
 
--Asenna node ja npm
+Asenna node ja npm:
 http://nodejs.org/download/
 
--Asenna grunt
+Asenna grunt:
 > npm install -g grunt-cli
 
--Asenna bower
+Asenna bower:
 > npm install -g bower
 
--Hakemistossa /frontend tee seuraavat:
+Hakemistossa /frontend tee seuraavat:
 > npm install
+
 > bower install
 
--Lokaali kehityspalvelin. (localhost:3000. Livereload ja SASS compile automaattisesti.)
+Lokaali kehityspalvelin. (localhost:3000. Livereload ja SASS compile automaattisesti.):
 > grunt
 
--Frontin buildaus ja kopiointi resources/public/app -hakemistoon
+Frontin buildaus ja kopiointi resources/public/app -hakemistoon:
 > grunt build
 
 Uuden bower kirjaston käyttöönotto:
 > bower install <kirjaston-nimi> --save
 
--Testien ajaminen
+Testien ajaminen:
 > Grunt test
 
--Testien ajaminen jatkuvasti
+Testien ajaminen jatkuvasti:
 > Grunt autotest
 
 
