@@ -1,4 +1,4 @@
-(ns aituhaku.util
+(ns aitu.util
   "Yleisiä apufunktioita."
   (:require [cheshire.core :as cheshire]
             [clj-time.core :as time]

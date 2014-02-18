@@ -3,10 +3,10 @@
             clojure.set
             [clojure.tools.logging :as log]
 
-            [aituhaku.util :refer [pisteavaimet->puu
-                                   deep-merge
-                                   deep-update-vals
-                                   paths]])
+            [aitu.util :refer [pisteavaimet->puu
+                               deep-merge
+                               deep-update-vals
+                               paths]])
   (:import [ch.qos.logback.classic.joran JoranConfigurator]
            [org.slf4j LoggerFactory]))
 
