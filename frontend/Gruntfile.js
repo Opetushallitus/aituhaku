@@ -92,12 +92,19 @@ module.exports = function (grunt) {
         src: ['index.html',
               'template/**/*.html',
               'img/**/*.{png,jpg,jpeg,gif,webp,svg}'],
-        dest: "../resources/public/app",
+        dest: distDir,
         options : {
           process: function (content, srcpath) {
             return content.replace(/<!--dev-->.*<!--enddev-->/g,"");
           }
         }
+      },
+      dist_angular_min_map : {
+        expand : true,
+        cwd: 'src',
+        src : ['bower_components/angular/angular.min.js.map'],
+        dest: distDir + '/js',
+        flatten : true
       }
     },
     usemin: {
@@ -122,5 +129,6 @@ module.exports = function (grunt) {
      'useminPrepare',
      'concat',
      'copy:dist',
+     'copy:dist_angular_min_map',
      'usemin']);
 };
