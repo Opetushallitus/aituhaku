@@ -10,9 +10,10 @@ Asenna bower:
 `npm install -g bower`
 
 Hakemistossa /frontend tee seuraavat:
-`npm install`
-
-`bower install`
+```
+npm install
+bower install
+```
 
 Lokaali kehityspalvelin. (localhost:3000. Livereload ja SASS compile automaattisesti.):
 `grunt`
