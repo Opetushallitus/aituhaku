@@ -7,27 +7,23 @@ http://nodejs.org/download/
 > npm install -g grunt-cli
 
 -Hakemistossa /frontend tee seuraavat:
-
 > npm install
-> grunt bower
-> grunt sass-compile
+> bower install
+
+-Lokaali kehityspalvelin. (localhost:3000. Livereload ja SASS compile automaattisesti.)
+> grunt
+
+-Frontin buildaus ja kopiointi resources/public/app -hakemistoon
+> grunt build
 
 Uuden bower kirjaston käyttöönotto:
-
 > bower install <kirjaston-nimi> --save
-- Tämä lataa kirjaston kokonaisuudessaan bower_components hakemistoon ja tallettaa dependencyn bower.json -tiedostoon.
-- Katso bower_components -hakemistosta polku kirjaston .js -tiedostoon ja lisää polku Gruntfile.js:n bowercopy -conffin.
 
-> grunt bower
+-Testien ajaminen
+> Grunt test
 
-SASS -tiedostojen kääntäminen
-
-> grunt sass-compile
-
-Tai jatkuva .scss muutosten seuranta ja kääntäminen:
-
-> grunt sass-watch
-
+-Testien ajaminen jatkuvasti
+> Grunt autotest
 
 
 

@@ -26,8 +26,8 @@ set -x
 
 cd $repo_path/frontend
 npm install
-grunt bower
-grunt sass-compile
+bower install
+grunt build
 if [ "$run_tests" = yes ]; then
     grunt test_ff --no-color
 fi

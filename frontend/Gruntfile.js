@@ -5,11 +5,39 @@ module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
   require('time-grunt')(grunt);
 
+  var distDir = "../resources/public/app";
+
   grunt.initConfig({
+    connect: {
+      server: {
+        options: {
+          port: 3000,
+          debug: true,
+          base: 'src'
+        },
+        proxies: [{
+          context: '/api',
+          host: 'localhost',
+          port: 8080
+        }]
+      }
+    },
     watch: {
       sass: {
-        files: ['sass/*.scss'],
-        tasks: ['sass-compile']
+        files: ['src/sass/*.scss'],
+        tasks: ['sass:compile']
+      },
+      livereload: {
+        files: [
+          'src/index.html',
+          'src/template/**/*.html',
+          'src/js/**/*.js',
+          'src/img/**/*.{png,jpg,jpeg,gif,webp,svg}',
+          'src/compiled_css/main.css'
+        ],
+        options: {
+          livereload: true
+        }
       }
     },
     karma: {
@@ -29,31 +57,51 @@ module.exports = function (grunt) {
         configFile: 'karma.conf.js'
       }
     },
-    bowercopy: {
-      libs: {
-        options : {
-          destPrefix : '../resources/public/js/bower_components'
-        },
+    sass: {
+      compile : {
         files: {
-          'angular.js': 'angular/angular.js',
-          'lodash.js': 'lodash/dist/lodash.js'
+          'src/compiled_css/main.css': 'src/sass/main.scss'
         }
       },
-      test_libs: {
-        options : {
-          destPrefix : 'test/bower_components'
-        },
+      dist : {
         files: {
-          'angular-mocks.js': 'angular-mocks/angular-mocks.js',
+          '../resources/public/app/compiled_css/main.css': 'src/sass/main.scss'
         }
       }
     },
-    sass: {
-      dist : {
-        files: {
-          '../resources/public/compiled_css/main.css': 'sass/main.scss'
+    clean : { 
+      files : [distDir],
+      options: {force : true}
+    },
+    useminPrepare: {
+      html: 'src/index.html',
+      options: {
+        dest: distDir,
+        flow : {
+          steps: {
+            'js': ['concat']
+          },
+          post: {}
         }
       }
+    },
+    copy: {
+      dist : {
+        expand : true,
+        cwd: 'src',
+        src: ['index.html',
+              'template/**/*.html',
+              'img/**/*.{png,jpg,jpeg,gif,webp,svg}'],
+        dest: "../resources/public/app",
+        options : {
+          process: function (content, srcpath) {
+            return content.replace(/<!--dev-->.*<!--enddev-->/g,"");
+          }
+        }
+      }
+    },
+    usemin: {
+      html: [distDir + '/index.html']
     }
   });
 
@@ -63,9 +111,16 @@ module.exports = function (grunt) {
 
   grunt.registerTask('autotest', ['karma:unit_auto']);
 
-  grunt.registerTask('bower', ['bowercopy:libs', 'bowercopy:test_libs']);
+  grunt.registerTask('default',
+    ['sass:compile',
+     'connect:server',
+     'watch']);
 
-  grunt.registerTask('sass-compile', ['sass:dist']);
-
-  grunt.registerTask('sass-watch', ['sass-compile', 'watch:sass']);
+  grunt.registerTask('build',
+    ['clean',
+     'sass:dist',
+     'useminPrepare',
+     'concat',
+     'copy:dist',
+     'usemin']);
 };

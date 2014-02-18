@@ -3,7 +3,6 @@
 
 module.exports = function(config) {
   var autoWatch = true;
-  var publicJsPath = '../resources/public/js';
 
   config.set({
     // base path, that will be used to resolve files and exclude
@@ -14,9 +13,11 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      publicJsPath + '/bower_components/*.js',
-      publicJsPath + '/*.js',
-      'test/bower_components/angular-mocks.js',
+      'src/bower_components/angular/angular.js',
+      'src/bower_components/lodash/dist/lodash.js',
+      'src/js/*.js',
+      'src/js/**/*.js',
+      'src/bower_components/angular-mocks/angular-mocks.js',
       'test/mock/**/*.js',
       'test/spec/**/*.js'
     ],
