@@ -6,6 +6,9 @@ http://nodejs.org/download/
 -Asenna grunt
 > npm install -g grunt-cli
 
+-Asenna bower
+> npm install -g bower
+
 -Hakemistossa /frontend tee seuraavat:
 > npm install
 > bower install
