@@ -3,8 +3,11 @@
             [clojure.pprint :refer [pprint]]
             [clojure.tools.namespace.repl :as nsr]
             [clj-http.client :as hc]
-            stencil.loader
-            clojure.core.cache))
+            clojure.core.cache
+            schema.core
+            stencil.loader))
+
+(schema.core/set-fn-validation! true)
 
 (defonce ^:private palvelin (atom nil))
 

@@ -1,8 +1,13 @@
 (ns aituhaku.rest-api.tutkinto
   (:require [compojure.core :as c]
-            [aitu.rest-api.http-util :refer [cachable-json-response json-response]]))
+            [schema.core :as schema]
+            [aitu.rest-api.http-util :refer [cachable-json-response json-response]]
+            [aituhaku.toimiala.skeema :refer [Tutkinto]]))
 
 (c/defroutes reitit
   (c/GET "/haku" [termi :as req]
-    (cachable-json-response req [{:nimi "Tutkinto 1"}
-                                 {:nimi "Tutkinto 2"}])))
+    (schema/validate schema/Str termi)
+    (cachable-json-response req
+                            [{:nimi "Tutkinto 1"}
+                             {:nimi "Tutkinto 2"}]
+                            [Tutkinto])))

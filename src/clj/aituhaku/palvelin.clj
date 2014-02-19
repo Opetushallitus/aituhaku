@@ -9,8 +9,11 @@
             [ring.middleware.resource :refer [wrap-resource]]
             [ring.middleware.content-type :refer [wrap-content-type]]
             [ring.util.response :as resp]
+            schema.core
             [aituhaku.asetukset :refer [lue-asetukset oletusasetukset konfiguroi-lokitus]]
             aituhaku.rest-api.tutkinto))
+
+(schema.core/set-fn-validation! true)
 
 (defn ^:private reitit [asetukset]
   (c/routes
