@@ -5,6 +5,8 @@
   "dependencies": {
     "angular": "~1.2.12",
     "lodash": "~2.4.1",
-    "angular-mocks": "~1.2.12"
+    "angular-mocks": "~1.2.12",
+    "angular-route": "~1.2.12",
+    "angular-resource": "~1.2.12"
   }
 }

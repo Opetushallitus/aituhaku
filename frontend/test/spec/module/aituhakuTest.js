@@ -1,3 +1,5 @@
+'use strict';
+
 describe('Module: aituhaku', function() {
 
   beforeEach(module('aituhaku'));

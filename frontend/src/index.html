@@ -1,20 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="aituhaku">
 <head>
   <title></title>
   <link rel="stylesheet" href="compiled_css/main.css">
 </head>
 <body>
 
-AITU HAKU
+  <div id="content" class="app-wrapper">
+    <div ng-view></div>
+  </div>
 
-<!-- build:js js/libs.js -->
-<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
-<script type="text/javascript" src="bower_components/lodash/dist/lodash.min.js"></script>
-<!-- endbuild -->
-<!-- build:js js/app.js -->
-<script type="text/javascript" src="js/aituhaku.js"></script>
-<!-- endbuild -->
-<!--dev--><script src="//localhost:35729/livereload.js"></script><!--enddev-->
+  <!-- build:js js/libs.js -->
+  <script src="bower_components/angular/angular.min.js"></script>
+  <script src="bower_components/angular-route/angular-route.min.js"></script>
+  <script src="bower_components/angular-resource/angular-resource.min.js"></script>
+  <script src="bower_components/lodash/dist/lodash.min.js"></script>
+  <!-- endbuild -->
+  <!-- build:js js/app.js -->
+  <script src="js/aituhaku.js"></script>
+  <script src="js/tutkinnot/ui.js"></script>
+  <script src="js/tutkinnot/tutkinto.js"></script>
+  <!-- endbuild -->
+  <!--dev--><script src="//localhost:35729/livereload.js"></script><!--enddev-->
 </body>
 </html>

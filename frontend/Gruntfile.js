@@ -102,7 +102,9 @@ module.exports = function (grunt) {
       dist_angular_min_map : {
         expand : true,
         cwd: 'src',
-        src : ['bower_components/angular/angular.min.js.map'],
+        src : ['bower_components/angular/angular.min.js.map',
+               'bower_components/angular-route/angular-route.min.js.map',
+               'bower_components/angular-resource/angular-resource.min.js.map'],
         dest: distDir + '/js',
         flatten : true
       }
