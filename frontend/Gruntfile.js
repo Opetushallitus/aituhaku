@@ -13,12 +13,28 @@ module.exports = function (grunt) {
         options: {
           port: 3000,
           debug: true,
-          base: 'src'
+          base: 'src',
+          middleware: function (connect, options) {
+            if (!Array.isArray(options.base)) {
+              options.base = [options.base];
+            }
+
+            var middlewares = [require('grunt-connect-proxy/lib/utils').proxyRequest];
+
+            options.base.forEach(function(base) {
+              middlewares.push(connect.static(base));
+            });
+
+            var directory = options.directory || options.base[options.base.length - 1];
+            middlewares.push(connect.directory(directory));
+
+            return middlewares;
+          }
         },
         proxies: [{
           context: '/api',
           host: 'localhost',
-          port: 8080
+          port: 8081
         }]
       }
     },
@@ -122,6 +138,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default',
     ['sass:compile',
+     'configureProxies:server',
      'connect:server',
      'watch']);
 
