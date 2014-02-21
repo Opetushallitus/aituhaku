@@ -14,5 +14,5 @@ describe('Module: aituhaku', function() {
     it('requestTimeout asetetaan arvoon 120000', function(){
       expect(asetukset.requestTimeout).toEqual(120000);
     });
-  })
-})
+  });
+});

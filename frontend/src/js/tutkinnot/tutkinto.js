@@ -7,7 +7,8 @@ angular.module('tutkinnot.tutkinto', ['ngResource'])
         method: 'GET',
         isArray: true,
         id: 'tutkintohaku'
-      }});
+      }
+    });
 
     Resource.hae = function(termi, successCallback, errorCallback) {
       return Resource.haku({termi: termi}, successCallback, errorCallback);

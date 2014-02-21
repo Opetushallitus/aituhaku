@@ -5,7 +5,7 @@ module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
   require('time-grunt')(grunt);
 
-  var distDir = "../resources/public/app";
+  var distDir = '../resources/public/app';
 
   grunt.initConfig({
     connect: {
@@ -56,6 +56,22 @@ module.exports = function (grunt) {
         }
       }
     },
+    jshint: {
+      options: {
+        jshintrc: '.jshintrc',
+        reporter: require('jshint-stylish')
+      },
+      all: [
+        'Gruntfile.js',
+        'src/js/**/*.js'
+      ],
+      test: {
+        options: {
+          jshintrc: 'test/.jshintrc'
+        },
+        src: ['test/spec/**/*.js']
+      }
+    },
     karma: {
       unit: {
         configFile: 'karma.conf.js',
@@ -85,7 +101,7 @@ module.exports = function (grunt) {
         }
       }
     },
-    clean : { 
+    clean: {
       files : [distDir],
       options: {force : true}
     },
@@ -110,8 +126,8 @@ module.exports = function (grunt) {
               'img/**/*.{png,jpg,jpeg,gif,webp,svg}'],
         dest: distDir,
         options : {
-          process: function (content, srcpath) {
-            return content.replace(/<!--dev-->.*<!--enddev-->/g,"");
+          process: function (content) {
+            return content.replace(/<!--dev-->.*<!--enddev-->/g, '');
           }
         }
       },
@@ -144,6 +160,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build',
     ['clean',
+     'jshint',
      'sass:dist',
      'useminPrepare',
      'concat',
