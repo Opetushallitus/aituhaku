@@ -10,6 +10,7 @@
             [ring.middleware.content-type :refer [wrap-content-type]]
             [ring.util.response :as resp]
             schema.core
+            [aitu.infra.print-wrapper :refer [log-request-wrapper]]
             [aituhaku.asetukset :refer [lue-asetukset oletusasetukset konfiguroi-lokitus]]
             aituhaku.rest-api.tutkinto))
 
@@ -33,7 +34,8 @@
                                    wrap-json-params
                                    wrap-params
                                    (wrap-resource "public/app")
-                                   (wrap-content-type))
+                                   wrap-content-type
+                                   log-request-wrapper)
                                  {:port (-> asetukset :server :port Integer/parseInt)})]
       {:sammuta sammuta})
     (catch Throwable t
