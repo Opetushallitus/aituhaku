@@ -14,7 +14,14 @@
   {:server {:port "8081"
             :base-url ""}
    :development-mode false ; oletusarvoisesti ei olla kehitysmoodissa. Pitää erikseen kääntää päälle jos tarvitsee kehitysmoodia.
-   :logback {:properties-file "resources/logback.xml"}})
+   :logback {:properties-file "resources/logback.xml"}
+   :db {:host "127.0.0.1"
+        :port "2345"
+        :name "ttk"
+        :user "ttk_user"
+        :password "ttk"
+        :maximum-pool-size "15"
+        :minimum-pool-size "3"}})
 
 (def konversio-map
   {"true" true})

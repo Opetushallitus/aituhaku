@@ -28,6 +28,7 @@
   (try
     (let [asetukset (lue-asetukset oletusasetukset)
           _ (konfiguroi-lokitus asetukset)
+          _ (aituhaku.arkisto.sql.korma/luo-db (:db asetukset))
           sammuta (hs/run-server (->
                                    (reitit asetukset)
                                    wrap-keyword-params
