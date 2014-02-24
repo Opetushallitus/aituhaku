@@ -1,0 +1,16 @@
+<h1>AITU | Näyttötutkintohaku</h1>
+
+<form>
+  <fieldset class="search-field">
+    <label>Tutkinnon nimi</label>
+    <input type="text" ng-model="hakuehto.nimi" ng-change="hae(hakuehto.nimi)" class="search-with-autocomplete">
+  </fieldset>
+</form>
+
+<div class="search-results">
+  <hakutulokset tuloksia-sivulla="10" otsikot="['Tutkintotunnus', 'Nimi', 'Opintoala']" hakutulokset="tutkinnot">
+    <div class="table-cell">{{hakutulos.tutkintotunnus}}</div>
+    <div class="table-cell">{{hakutulos.nimi_fi}}</div>
+    <div class="table-cell">{{hakutulos.opintoala_nimi_fi}}</div>
+  </hakutulokset>
+</div>

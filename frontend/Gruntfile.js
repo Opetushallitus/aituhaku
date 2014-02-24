@@ -147,7 +147,7 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.registerTask('test', ['karma:unit']);
+  grunt.registerTask('test', ['jshint', 'karma:unit']);
 
   grunt.registerTask('test_ff', ['karma:unit_ff']);
 

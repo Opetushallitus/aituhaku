@@ -1,12 +1,12 @@
 'use strict';
 
-angular.module('tutkinnot.ui', ['tutkinnot.tutkinto', 'ngRoute'])
+angular.module('tutkinnot.ui', ['tutkinnot.tutkinto', 'yhteiset.direktiivit.hakutulokset', 'ngRoute'])
 
   .config(['$routeProvider', function($routeProvider) {
     $routeProvider
       .when('/tutkinnot', {
         controller: 'TutkinnotController',
-        templateUrl: 'template/tutkinnot.html'
+        templateUrl: 'template/tutkinnot/tutkinnot.html'
       })
       .otherwise({
         redirectTo: '/tutkinnot'

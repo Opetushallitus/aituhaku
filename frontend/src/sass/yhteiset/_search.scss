@@ -27,34 +27,32 @@
   margin-right: $marginL;
 }
 
-.pagination {
-  ul {list-style: none; padding: 0; margin: 10px 0 10px 0; @include clearfix;
-    li {float: left;
-      &:not(.disabled) a:hover {background-color: $darker-primary;}
-      a {color: $primary-action-text; cursor: pointer; background-color: $primary-color; margin-right: $marginL; display: block; padding: 3px 10px 3px 10px;}
-      &.disabled {cursor: auto;
-        a {background-color: $disabled-primary-color;}
-      }
+.pagination {list-style: none; padding: 0; margin: 10px 0 10px 0; @include clearfix;
+  li {float: left;
+    &:not(.disabled) a:hover {background-color: $darker-primary;}
+    a {color: $primary-action-text; cursor: pointer; background-color: $primary-color; margin-right: $marginL; display: block; padding: 3px 10px 3px 10px;}
+    &.disabled {cursor: auto;
+      a {background-color: $disabled-primary-color;}
     }
-    li:first-child a {
-      @include icon-before(-35px, 5px){@include left-double-arrow;}
-      padding-left: 50px;
-    }
+  }
+  li:first-child a {
+    @include icon-before(-35px, 5px){@include left-double-arrow;}
+    padding-left: 50px;
+  }
 
-    li:first-child + li a {
-      @include icon-before(-26px, 5px){@include left-arrow;}
-      padding-left: 41px;
-    }
+  li:first-child + li a {
+    @include icon-before(-26px, 5px){@include left-arrow;}
+    padding-left: 41px;
+  }
 
-    li:first-child + li + li a {
-      @include icon-after(20px, 5px){@include right-arrow;}
-      padding-right: 41px;
-    }
+  li:first-child + li + li a {
+    @include icon-after(20px, 5px){@include right-arrow;}
+    padding-right: 41px;
+  }
 
-    li:first-child + li + li + li a {
-      @include icon-after(20px, 5px){@include right-double-arrow;}
-      padding-right: 50px;
-    }
+  li:first-child + li + li + li a {
+    @include icon-after(20px, 5px){@include right-double-arrow;}
+    padding-right: 50px;
   }
 }
 
