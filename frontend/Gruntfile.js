@@ -40,7 +40,7 @@ module.exports = function (grunt) {
     },
     watch: {
       sass: {
-        files: ['src/sass/*.scss'],
+        files: ['src/sass/**/*.scss'],
         tasks: ['sass:compile']
       },
       livereload: {
@@ -123,7 +123,8 @@ module.exports = function (grunt) {
         cwd: 'src',
         src: ['index.html',
               'template/**/*.html',
-              'img/**/*.{png,jpg,jpeg,gif,webp,svg}'],
+              'img/**/*.{png,jpg,jpeg,gif,webp,svg}',
+              'font/**/*'],
         dest: distDir,
         options : {
           process: function (content) {
