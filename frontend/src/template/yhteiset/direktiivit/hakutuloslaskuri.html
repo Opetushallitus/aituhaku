@@ -1,8 +1,8 @@
 <div>
   <p ng-show="hakutulokset.length > 0">
-    [[hakutulokset]]
+    {{i18n.hakutulokset.hakutulokset}}
     {{mista(nykyinenSivu, tuloksiaSivulla)}} - {{mihin(nykyinenSivu, tuloksiaSivulla, hakutulokset.length)}}
-    / [[yhteensa]] {{hakutulokset.length}} [[hakutulosta]]
+    / {{i18n.hakutulokset.yhteensa}} {{hakutulokset.length}} {{i18n.hakutulokset.hakutulosta}}
   </p>
-  <p ng-show="hakutulokset.length == 0">[[ei-hakutuloksia]]</p>
+  <p ng-show="hakutulokset.length == 0">{{i18n.hakutulokset.ei_hakutuloksia}}</p>
 </div>

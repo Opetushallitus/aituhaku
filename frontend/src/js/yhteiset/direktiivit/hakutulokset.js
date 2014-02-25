@@ -12,12 +12,11 @@ angular.module('yhteiset.direktiivit.hakutulokset', [
       scope: {
         hakutulokset: '=',
         tuloksiaSivulla: '=',
-        otsikot: '@'
+        otsikot: '='
       },
       transclude: true,
       templateUrl: 'template/yhteiset/direktiivit/hakutulokset.html',
       link: function(scope) {
-        scope.parsitutOtsikot = scope.$eval(scope.otsikot);
         scope.nykyinenSivu = 1;
         scope.$watchCollection('hakutulokset', function() {
           scope.nykyinenSivu = 1;

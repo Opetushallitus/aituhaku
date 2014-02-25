@@ -26,6 +26,7 @@ set -x
 
 cd $repo_path/frontend
 npm install
+rm -rf src/bower_components
 bower install
 grunt build
 if [ "$run_tests" = yes ]; then
