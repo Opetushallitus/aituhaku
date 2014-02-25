@@ -1,0 +1,18 @@
+<h1>
+  {{toimikunta.nimi_fi}}
+</h1>
+
+<section class="info-section">
+  <fieldset>
+    <label>Sähköposti</label>
+    <p><a href="mailto:{{toimikunta.sahkoposti}}">{{toimikunta.sahkoposti}}</a></p>
+  </fieldset>
+  <fieldset>
+    <label>Kielisyys</label>
+    <p>{{toimikunta.kielisyys}}</p>
+  </fieldset>
+  <fieldset>
+    <label>Toimikausi</label>
+    <p>{{toimikunta.toimikausi_alku | date:'dd.MM.yyyy'}} – {{toimikunta.toimikausi_loppu | date:'dd.MM.yyyy'}}</p>
+  </fieldset>
+</section>
