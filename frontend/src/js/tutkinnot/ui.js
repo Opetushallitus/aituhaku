@@ -19,7 +19,7 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto', 'yhteiset.direktiivit.haku
     };
 
     $scope.hae = function(nimi) {
-      $scope.tutkinnot = Tutkinto.hae(nimi);
+      Tutkinto.hae(nimi, function(tutkinnot) { $scope.tutkinnot = tutkinnot; });
     };
   }]);
 
