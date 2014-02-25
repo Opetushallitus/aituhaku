@@ -6,3 +6,7 @@
   [termi]
   (->> (tutkinto-sql/hae-tutkintojen-tiedot)
     (filter #(sisaltaako-kentat? % [:nimi_fi :nimi_sv] termi))))
+
+(defn hae
+  [tutkintotunnus]
+  (tutkinto-sql/hae tutkintotunnus))

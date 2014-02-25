@@ -69,7 +69,20 @@ kertoo mitä käyttäjätunnusta yhteyteen käytetään, esim. :user ->
      (sql/transform sql-timestamp->joda-datetime)
      ~@body))
 
-(defentity tutkinnot_view)
+(declare tutkinnot_view)
 
 (defentity toimikunta_view
   (sql/table :toimikuntaview))
+
+(defentity tutkinnon_jarjestajat_view
+  (sql/table :tutkinnon_jarjestajat_view :jarjestajat))
+
+(defentity tutkinnon_toimikunnat_view
+  (sql/table :tutkinnon_toimikunnat_view :toimikunnat))
+
+(defentity tutkinnot_view
+  (sql/pk :tutkintotunnus)
+  (sql/has-many tutkinnon_jarjestajat_view
+    {:fk :tutkintotunnus})
+  (sql/has-many tutkinnon_toimikunnat_view
+    {:fk :tutkintotunnus}))

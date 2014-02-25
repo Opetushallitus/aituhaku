@@ -2,7 +2,7 @@
   (:require [compojure.core :as c]
             [schema.core :as schema]
             [aitu.rest-api.http-util :refer [cachable-json-response json-response]]
-            [aituhaku.toimiala.skeema :refer [Tutkinto]]
+            [aituhaku.toimiala.skeema :refer [Tutkinto TutkintoTiedot]]
             [aituhaku.arkisto.tutkinto :as arkisto]))
 
 (c/defroutes reitit
@@ -10,4 +10,10 @@
     (schema/validate schema/Str termi)
     (cachable-json-response req
                             (arkisto/hae-termilla termi)
-                            [Tutkinto])))
+                            [Tutkinto]))
+
+  (c/GET "/tiedot" [tutkintotunnus :as req]
+    (schema/validate schema/Str tutkintotunnus)
+    (cachable-json-response req
+                            (arkisto/hae tutkintotunnus)
+                            [TutkintoTiedot])))

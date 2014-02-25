@@ -15,3 +15,14 @@
                  :toimikausi_alku org.joda.time.LocalDate
                  :toimikausi_loppu org.joda.time.LocalDate
                  :kielisyys s/Str})
+
+(def Jarjestaja {:oppilaitoskoodi s/Str
+                 :oppilaitos_nimi s/Str})
+
+(def Toimikunta {:nimi_fi s/Str
+                 :nimi_sv s/Str
+                 :tkunta s/Str})
+
+(def TutkintoTiedot (merge Tutkinto
+                           {:jarjestajat [Jarjestaja]
+                            :toimikunnat [Toimikunta]}))
