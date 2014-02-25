@@ -5,5 +5,5 @@
 
 (defn hae-tutkintojen-tiedot
   []
-  (sql/select tutkintoview
+  (sql/select tutkinnot_view
     (sql/fields :tutkintotunnus :nimi_fi :nimi_sv :opintoala_nimi_fi :opintoala_nimi_sv :tutkintotaso)))

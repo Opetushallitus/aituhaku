@@ -69,4 +69,4 @@ kertoo mitä käyttäjätunnusta yhteyteen käytetään, esim. :user ->
      (sql/transform sql-timestamp->joda-datetime)
      ~@body))
 
-(defentity tutkintoview)
+(defentity tutkinnot_view)
