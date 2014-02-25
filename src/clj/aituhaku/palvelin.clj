@@ -9,16 +9,19 @@
             [ring.middleware.resource :refer [wrap-resource]]
             [ring.middleware.content-type :refer [wrap-content-type]]
             [ring.util.response :as resp]
+            [cheshire.generate :as json-gen]
             schema.core
             [aitu.infra.print-wrapper :refer [log-request-wrapper]]
             [aituhaku.asetukset :refer [lue-asetukset oletusasetukset konfiguroi-lokitus]]
-            aituhaku.rest-api.tutkinto))
+            aituhaku.rest-api.tutkinto
+            aituhaku.rest-api.toimikunta))
 
 (schema.core/set-fn-validation! true)
 
 (defn ^:private reitit [asetukset]
   (c/routes
     (c/context "/api/tutkinto" [] aituhaku.rest-api.tutkinto/reitit)
+    (c/context "/api/toimikunta" [] aituhaku.rest-api.toimikunta/reitit)
     (c/GET "/" [] (resp/redirect "index.html"))))
 
 (defn sammuta [palvelin]
@@ -29,6 +32,9 @@
     (let [asetukset (lue-asetukset oletusasetukset)
           _ (konfiguroi-lokitus asetukset)
           _ (aituhaku.arkisto.sql.korma/luo-db (:db asetukset))
+          _ (json-gen/add-encoder org.joda.time.LocalDate
+              (fn [c json-generator]
+                (.writeString json-generator (.toString c "yyyy-MM-dd"))))
           sammuta (hs/run-server (->
                                    (reitit asetukset)
                                    wrap-keyword-params

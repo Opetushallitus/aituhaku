@@ -70,3 +70,6 @@ kertoo mitä käyttäjätunnusta yhteyteen käytetään, esim. :user ->
      ~@body))
 
 (defentity tutkinnot_view)
+
+(defentity toimikunta_view
+  (sql/table :toimikuntaview))
