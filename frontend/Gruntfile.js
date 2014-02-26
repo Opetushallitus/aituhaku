@@ -149,7 +149,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', ['jshint', 'karma:unit']);
 
-  grunt.registerTask('test_ff', ['karma:unit_ff']);
+  grunt.registerTask('test_ff', ['jshint', 'karma:unit_ff']);
 
   grunt.registerTask('autotest', ['karma:unit_auto']);
 
@@ -161,7 +161,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build',
     ['clean',
-     'test',
+     'test_ff',
      'sass:dist',
      'useminPrepare',
      'concat',
