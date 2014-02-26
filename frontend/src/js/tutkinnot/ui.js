@@ -23,11 +23,11 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto', 'yhteiset.direktiivit.haku
     };
 
     $scope.hae = function(nimi) {
-      Tutkinto.hae(nimi, function(tutkinnot) { $scope.tutkinnot = tutkinnot; });
+      Tutkinto.haeNimella(nimi, function(tutkinnot) { $scope.tutkinnot = tutkinnot; });
     };
   }])
 
   .controller('TutkintoController', ['Tutkinto', '$scope', '$routeParams', function(Tutkinto, $scope, $routeParams) {
-    $scope.tutkinto = Tutkinto.tiedot($routeParams.tutkintotunnus);
+    $scope.tutkinto = Tutkinto.hae($routeParams.tutkintotunnus);
   }]);
 
