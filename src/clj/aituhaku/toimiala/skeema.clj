@@ -8,7 +8,10 @@
                :opintoala_nimi_sv s/Str
                (s/optional-key :koulutusala_nimi_fi) s/Str
                (s/optional-key :koulutusala_nimi_sv) s/Str
-               :tutkintotaso s/Str})
+               :tutkintotaso s/Str
+               :voimassa_alkupvm org.joda.time.LocalDate
+               :voimassa_loppupvm org.joda.time.LocalDate
+               :siirtymaajan_loppupvm org.joda.time.LocalDate})
 
 (def ToimikuntaNimi {:nimi_fi s/Str
                      :nimi_sv s/Str
