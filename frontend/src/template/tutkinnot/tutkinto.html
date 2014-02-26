@@ -1,32 +1,32 @@
-<h1>{{tutkinto.nimi_fi}}</h1>
+<h1>{{tutkinto.nimi | lokalisoi:tutkinto:'nimi'}}</h1>
 
-<h2>[[tutkinnon-perustiedot]]</h2>
+<h2>{{i18n.tutkinnot.tutkinnon_perustiedot}}</h2>
 <section class="info-section">
   <fieldset>
-    <label>[[tutkintokoodi]]</label>
+    <label>{{i18n.tutkinnot.tutkintotunnus}}</label>
     <p>{{tutkinto.tutkintotunnus}}</p>
   </fieldset>
   <fieldset>
-    <label>[[koulutusala]]</label>
-    <p>{{tutkinto.koulutusala_nimi_fi}}</p>
+    <label>{{i18n.tutkinnot.koulutusala}}</label>
+    <p>{{tutkinto.koulutusala_nimi | lokalisoi:tutkinto:'koulutusala_nimi'}}</p>
   </fieldset>
   <fieldset>
-    <label>[[opintoala]]</label>
-    <p>{{tutkinto.opintoala_nimi_fi}}</p>
+    <label>{{i18n.tutkinnot.opintoala}}</label>
+    <p>{{tutkinto.opintoala_nimi | lokalisoi:tutkinto:'opintoala_nimi'}}</p>
   </fieldset>
 
   <br>
   <fieldset class="toimikunta-lista">
-    <label>[[toimikunta]]</label>
+    <label>{{i18n.tutkinnot.toimikunta}}</label>
     <div ng-repeat="toimikunta in tutkinto.toimikunnat">
-      <a ng-href="#/toimikunta/{{toimikunta.tkunta}}/tiedot">{{toimikunta.nimi_fi}}</a>
+      <a ng-href="#/toimikunta/{{toimikunta.tkunta}}">{{toimikunta.nimi | lokalisoi:toimikunta:'nimi'}}</a>
     </div>
   </fieldset>
 </section>
 
-<h2>[[tutkinnon-jarjestajat]]</h2>
+<h2>{{i18n.tutkinnot.tutkinnon_jarjestajat}}</h2>
 <div class="search-results">
-  <hakutulokset tuloksia-sivulla="10" otsikot="['[[tutkinnon-jarjestaja]]']" hakutulokset="tutkinto.jarjestajat">
+  <hakutulokset tuloksia-sivulla="10" otsikot="[i18n.tutkinnot.tutkinnon_jarjestaja]" hakutulokset="tutkinto.jarjestajat">
     <div class="table-cell">{{hakutulos.nimi}}</div>
   </hakutulokset>
 </div>
