@@ -17,14 +17,25 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto', 'yhteiset.direktiivit.haku
       });
   }])
 
-  .controller('TutkinnotController', ['Tutkinto', '$scope', function(Tutkinto, $scope) {
+  .constant('hakuAsetukset', {
+    viive : 500,
+    minHakuehtoPituus : 3
+  })
+
+  .controller('TutkinnotController', ['Tutkinto', '$scope', 'hakuAsetukset', function(Tutkinto, $scope, asetukset) {
+
+    function hae(nimi) {
+      if(nimi && nimi.length >= asetukset.minHakuehtoPituus) {
+        Tutkinto.haeNimella(nimi, function(tutkinnot) { $scope.tutkinnot = tutkinnot; });
+      }
+    }
+
     $scope.hakuehto = {
       nimi: ''
     };
 
-    $scope.hae = function(nimi) {
-      Tutkinto.haeNimella(nimi, function(tutkinnot) { $scope.tutkinnot = tutkinnot; });
-    };
+    $scope.hae = _.debounce(hae, asetukset.viive);
+
   }])
 
   .controller('TutkintoController', ['Tutkinto', '$scope', '$routeParams', function(Tutkinto, $scope, $routeParams) {
