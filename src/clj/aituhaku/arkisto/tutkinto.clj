@@ -9,4 +9,4 @@
 
 (defn hae
   [tutkintotunnus]
-  (tutkinto-sql/hae tutkintotunnus))
+  (first (tutkinto-sql/hae tutkintotunnus)))

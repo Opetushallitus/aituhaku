@@ -12,7 +12,7 @@
   [tutkintotunnus]
   (sql/select tutkinnot_view
     (sql/with tutkinnon_jarjestajat_view
-      (sql/fields :oppilaitoskoodi :oppilaitos_nimi))
+      (sql/fields :oppilaitoskoodi :nimi))
     (sql/with tutkinnon_toimikunnat_view
       (sql/fields :nimi_fi :nimi_sv :tkunta))
     (sql/where {:tutkintotunnus tutkintotunnus})))

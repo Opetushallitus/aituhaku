@@ -1,0 +1,32 @@
+<h1>{{tutkinto.nimi_fi}}</h1>
+
+<h2>[[tutkinnon-perustiedot]]</h2>
+<section class="info-section">
+  <fieldset>
+    <label>[[tutkintokoodi]]</label>
+    <p>{{tutkinto.tutkintotunnus}}</p>
+  </fieldset>
+  <fieldset>
+    <label>[[koulutusala]]</label>
+    <p>{{tutkinto.koulutusala_nimi_fi}}</p>
+  </fieldset>
+  <fieldset>
+    <label>[[opintoala]]</label>
+    <p>{{tutkinto.opintoala_nimi_fi}}</p>
+  </fieldset>
+
+  <br>
+  <fieldset class="toimikunta-lista">
+    <label>[[toimikunta]]</label>
+    <div ng-repeat="toimikunta in tutkinto.toimikunnat">
+      <a ng-href="#/toimikunta/{{toimikunta.tkunta}}/tiedot">{{toimikunta.nimi_fi}}</a>
+    </div>
+  </fieldset>
+</section>
+
+<h2>[[tutkinnon-jarjestajat]]</h2>
+<div class="search-results">
+  <hakutulokset tuloksia-sivulla="10" otsikot="['[[tutkinnon-jarjestaja]]']" hakutulokset="tutkinto.jarjestajat">
+    <div class="table-cell">{{hakutulos.nimi}}</div>
+  </hakutulokset>
+</div>

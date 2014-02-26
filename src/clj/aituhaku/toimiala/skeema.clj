@@ -6,6 +6,8 @@
                :nimi_sv s/Str
                :opintoala_nimi_fi s/Str
                :opintoala_nimi_sv s/Str
+               (s/optional-key :koulutusala_nimi_fi) s/Str
+               (s/optional-key :koulutusala_nimi_sv) s/Str
                :tutkintotaso s/Str})
 
 (def Toimikunta {:tkunta s/Str
@@ -17,7 +19,7 @@
                  :kielisyys s/Str})
 
 (def Jarjestaja {:oppilaitoskoodi s/Str
-                 :oppilaitos_nimi s/Str})
+                 :nimi s/Str})
 
 (def Toimikunta {:nimi_fi s/Str
                  :nimi_sv s/Str

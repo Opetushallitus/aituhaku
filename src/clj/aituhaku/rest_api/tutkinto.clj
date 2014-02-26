@@ -12,8 +12,8 @@
                             (arkisto/hae-termilla termi)
                             [Tutkinto]))
 
-  (c/GET "/tiedot" [tutkintotunnus :as req]
+  (c/GET "/:tutkintotunnus" [tutkintotunnus :as req]
     (schema/validate schema/Str tutkintotunnus)
     (cachable-json-response req
                             (arkisto/hae tutkintotunnus)
-                            [TutkintoTiedot])))
+                            TutkintoTiedot)))
