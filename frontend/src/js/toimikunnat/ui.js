@@ -7,9 +7,6 @@ angular.module('toimikunnat.ui', ['toimikunnat.toimikunta', 'ngRoute'])
       .when('/toimikunta/:tkunta', {
         controller: 'ToimikuntaController',
         templateUrl: 'template/toimikunnat/toimikunta.html'
-      })
-      .otherwise({
-        redirectTo: '/'
       });
   }])
 
