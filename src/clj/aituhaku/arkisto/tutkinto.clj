@@ -3,6 +3,11 @@
             [aitu.util :refer [sisaltaako-kentat?]]
             [aitu.timeutil :as timeutil]))
 
+(defn tutkinto-voimassa?
+  [tutkinto]
+  (and (timeutil/pvm-mennyt-tai-tanaan? (:voimassa_alkupvm tutkinto))
+       (timeutil/pvm-tuleva-tai-tanaan? (:siirtymaajan_loppupvm tutkinto))))
+
 (defn hae-termilla
   [termi]
   (->> (tutkinto-sql/hae-tutkintojen-tiedot)
@@ -13,7 +18,3 @@
   [tutkintotunnus]
   (first (tutkinto-sql/hae tutkintotunnus)))
 
-(defn tutkinto-voimassa?
-  [tutkinto]
-  (and (timeutil/pvm-mennyt-tai-tanaan? (:voimassa_alkupvm tutkinto))
-       (timeutil/pvm-tuleva-tai-tanaan? (:siirtymaajan_loppupvm tutkinto))))
