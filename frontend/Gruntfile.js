@@ -161,7 +161,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build',
     ['clean',
-     'jshint',
+     'test',
      'sass:dist',
      'useminPrepare',
      'concat',
