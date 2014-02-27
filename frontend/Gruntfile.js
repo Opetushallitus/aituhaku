@@ -162,7 +162,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build',
     ['clean',
-     'test_ff',
      'sass:dist',
      'useminPrepare',
      'concat',
