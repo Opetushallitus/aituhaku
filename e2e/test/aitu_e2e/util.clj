@@ -79,16 +79,18 @@
            "http://localhost:8080")
        polku))
 
-(defn avaa [polku]
-  (let [url (aitu-url polku)]
-    (w/to url)
-    (try
-      (w/wait-until #(= (w/current-url) url))
-      (catch TimeoutException e
-        (println (str "Odotettiin selaimen siirtyvän URLiin '" url "'"
-                      ", mutta sen URL oli " (w/current-url)))
-        (throw e)))
-    (odota-angular-pyyntoa)))
+(defn avaa
+  ([polku] (avaa aitu-url polku))
+  ([osoite-fn polku]
+    (let [url (osoite-fn polku)]
+     (w/to url)
+     (try
+       (w/wait-until #(= (w/current-url) url))
+       (catch TimeoutException e
+         (println (str "Odotettiin selaimen siirtyvän URLiin '" url "'"
+                       ", mutta sen URL oli " (w/current-url)))
+         (throw e)))
+     (odota-angular-pyyntoa))))
 
 (defn avaa-uudelleenladaten [polku]
   (puhdista-selain)
