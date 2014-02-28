@@ -1,8 +1,13 @@
 <div class="hakutuloslaskuri">
   <p ng-show="hakutulokset.length > 0">
-    {{i18n.hakutulokset.hakutulokset}}
-    {{mista(nykyinenSivu, tuloksiaSivulla)}} - {{mihin(nykyinenSivu, tuloksiaSivulla, hakutulokset.length)}}
-    / {{i18n.hakutulokset.yhteensa}} {{hakutulokset.length}} {{i18n.hakutulokset.hakutulosta}}
+    <span ng-show="hakutulokset.length > 1">
+      {{i18n.hakutulokset.hakutulokset}} {{mista(nykyinenSivu, tuloksiaSivulla)}} - {{mihin(nykyinenSivu, tuloksiaSivulla, hakutulokset.length)}} / {{i18n.hakutulokset.yhteensa}} {{hakutulokset.length}} {{i18n.hakutulokset.hakutulosta}}
+    </span>
+    <span ng-show="hakutulokset.length == 1">
+      1 {{i18n.hakutulokset.hakutulos}}
+    </span>
   </p>
-  <p ng-show="hakutulokset.length == 0">{{i18n.hakutulokset.ei_hakutuloksia}}</p>
+  <p ng-show="hakutulokset.length == 0">
+    {{i18n.hakutulokset.ei_hakutuloksia}}
+  </p>
 </div>

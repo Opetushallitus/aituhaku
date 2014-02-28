@@ -97,7 +97,7 @@
   (avaa polku))
 
 (defn sivun-otsikko []
-  (w/text "#content h1"))
+  (w/text "h1"))
 
 (defn aseta-inputtiin-arvo-jquery-selektorilla [selektori arvo]
   (w/execute-script (str selektori ".val('" arvo "').trigger('input')")))

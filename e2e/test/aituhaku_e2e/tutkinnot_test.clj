@@ -5,7 +5,8 @@
             [clj-time.core :as time]
             [aitu-e2e.util :refer :all]
             [aitu-e2e.data-util :refer [with-data]]
-            [aituhaku-e2e.util :refer :all]))
+            [aituhaku-e2e.util :refer :all]
+            [clojure.string :refer [blank?]]))
 
 (def tutkinnot "/#/tutkinnot")
 
@@ -14,32 +15,18 @@
   (w/input-text (str "input[ng-model=\"hakuehto.nimi\"]") nimi)
   (odota-angular-pyyntoa))
 
-(defn nakyvat-tutkintojen-nimet []
-  (map w/text (w/find-elements (-> *ng*
-                                 (.repeater "hakutulos in hakutulokset")
-                                 (.column "hakutulos.nimi")))))
-
-(defn nakyvat-tutkintotunnukset []
+(defn nakyvien-tutkintojen-tiedot [kentta]
   (map w/text (w/find-elements (-> *ng*
                                    (.repeater "hakutulos in hakutulokset")
-                                   (.column "hakutulos.tutkintotunnus")))))
+                                   (.column kentta)))))
 
-(defn nakyvat-opintoalat []
-  (map w/text (w/find-elements (-> *ng*
-                                   (.repeater "hakutulos in hakutulokset")
-                                   (.column "hakutulos.opintoala_nimi")))))
 (defn seuraava-sivu []
-  (w/click {:css ".pagination li:nth-child(3) a"})
+  (w/click {:text "Seuraava"})
   (odota-angular-pyyntoa))
 
-(defn nykyinen-sivu []
-  (w/attribute ".table.hakutulokset .table-header" "data-nykyinen-sivu"))
-
 (defn hakutuloslaskurin-teksti []
-  (first (map w/text (w/find-elements {:css ".hakutuloslaskuri p"}))))
-
-(defn ei-hakutuloksia-teksti []
-  (first (map w/text (w/find-elements {:css ".hakutuloslaskuri p + p"}))))
+  (first
+    (remove blank? (map w/text (w/find-elements {:css ".hakutuloslaskuri p"})))))
 
 (defn luo-tutkintoja-opintoalaan [lkm opintoala]
   (take lkm
@@ -52,10 +39,18 @@
 (def tutkinnot-testidata
   {:koulutusalat [{:koodi "KA1"}]
    :opintoalat [{:koodi "OA1"
-                 :koulutusala "KA1"}
-                {:koodi "OA2"
                  :koulutusala "KA1"}]
    :tutkinnot (luo-tutkintoja-opintoalaan 25 "OA1")})
+
+(defn testaa-halutuloslistan-sivua [tutkinnot-osajoukko laskurin-teksti]
+  (w/wait-until #(= (hakutuloslaskurin-teksti) laskurin-teksti))
+  (is (=
+        (nakyvien-tutkintojen-tiedot "hakutulos.nimi")
+        (map :nimi_fi tutkinnot-osajoukko)))
+  (is (=
+        (nakyvien-tutkintojen-tiedot "hakutulos.tutkintotunnus")
+        (map :tutkintotunnus tutkinnot-osajoukko)))
+  (is (every? #(= % "Opintoala 1") (nakyvien-tutkintojen-tiedot "hakutulos.opintoala_nimi_fi"))))
 
 (deftest tutkinnot-test
   (with-data tutkinnot-testidata
@@ -64,44 +59,44 @@
         "sivutus:"
         (avaa-aituhaku tutkinnot)
         (testing
+          "sivun otsikko"
+          (is (= (sivun-otsikko) "AITU | NÄYTTÖTUTKINTOHAKU")))
+        (testing
           "hakuehdolla ei löydy tuloksia"
           (hae-nimella "väärä hakuehto")
-          (w/wait-until #(= (ei-hakutuloksia-teksti) "ei hakutuloksia")))
+          (w/wait-until #(= (hakutuloslaskurin-teksti) "ei hakutuloksia")))
         (testing
-          "hakuehdolla löytyy tuloksia"
+          "hakuehdolla löytyy yksi tulos"
+          (hae-nimella "haettava tutkinto a1")
+          (testaa-halutuloslistan-sivua
+            (take 1 (:tutkinnot tutkinnot-testidata))
+            "1 hakutulos"))
+        (testing
+          "hakuehdolla löytyy paljon tutkintoja"
           (hae-nimella "haettava tutkinto")
           (testing
             "ensimmäinen sivu:"
-            (let [tutkinnot-osajoukko (take 10 (:tutkinnot tutkinnot-testidata))]
-              (w/wait-until #(= (hakutuloslaskurin-teksti) "hakutulokset 1 - 10 / yhteensä 25 hakutulosta"))
-              (is (=
-                    (nakyvat-tutkintojen-nimet)
-                    (map :nimi_fi tutkinnot-osajoukko)))
-              (is (=
-                    (nakyvat-tutkintotunnukset)
-                    (map :tutkintotunnus tutkinnot-osajoukko)))
-              (is (every? #(= % "Opintoala 1") (nakyvat-opintoalat)))))
+            (testaa-halutuloslistan-sivua
+              (take 10 (:tutkinnot tutkinnot-testidata))
+              "hakutulokset 1 - 10 / yhteensä 25 hakutulosta"))
           (seuraava-sivu)
           (testing
             "toinen sivu:"
-            (let [tutkinnot-osajoukko (take 10 (drop 10 (:tutkinnot tutkinnot-testidata)))]
-              (w/wait-until #(= (hakutuloslaskurin-teksti) "hakutulokset 11 - 20 / yhteensä 25 hakutulosta"))
-              (is (=
-                    (nakyvat-tutkintojen-nimet)
-                    (map :nimi_fi tutkinnot-osajoukko)))
-              (is (=
-                    (nakyvat-tutkintotunnukset)
-                    (map :tutkintotunnus tutkinnot-osajoukko)))
-              (is (every? #(= % "Opintoala 1") (nakyvat-opintoalat)))))
+            (testaa-halutuloslistan-sivua
+              (take 10 (drop 10 (:tutkinnot tutkinnot-testidata)))
+              "hakutulokset 11 - 20 / yhteensä 25 hakutulosta"))
           (seuraava-sivu)
           (testing
             "kolmas sivu:"
-            (let [tutkinnot-osajoukko (take 5 (drop 20 (:tutkinnot tutkinnot-testidata)))]
-              (w/wait-until #(= (hakutuloslaskurin-teksti) "hakutulokset 21 - 25 / yhteensä 25 hakutulosta"))
-              (is (=
-                    (nakyvat-tutkintojen-nimet)
-                    (map :nimi_fi tutkinnot-osajoukko)))
-              (is (=
-                    (nakyvat-tutkintotunnukset)
-                    (map :tutkintotunnus tutkinnot-osajoukko)))
-              (is (every? #(= % "Opintoala 1") (nakyvat-opintoalat))))))))))
+            (testaa-halutuloslistan-sivua
+              (take 5 (drop 20 (:tutkinnot tutkinnot-testidata)))
+              "hakutulokset 21 - 25 / yhteensä 25 hakutulosta")))
+        (testing
+          "tutkinnon sivulle siirtyminen"
+          (let [haettavan-tutkinnon-nimi "Haettava tutkinto a1"]
+            (hae-nimella haettavan-tutkinnon-nimi)
+            (some-> (w/find-element {:text haettavan-tutkinnon-nimi}) w/text)
+            (w/wait-until #(some-> (w/find-element {:text haettavan-tutkinnon-nimi}) w/text))
+            (w/click {:text haettavan-tutkinnon-nimi})
+            (odota-angular-pyyntoa)
+            (is (= (sivun-otsikko) "HAETTAVA TUTKINTO A1"))))))))
