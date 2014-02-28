@@ -63,9 +63,8 @@
       (testing
         "sivutus:"
         (avaa-aituhaku tutkinnot)
-
         (testing
-            "hakuehdolla ei löydy tuloksia"
+          "hakuehdolla ei löydy tuloksia"
           (hae-nimella "väärä hakuehto")
           (w/wait-until #(= (ei-hakutuloksia-teksti) "ei hakutuloksia")))
         (testing
@@ -96,7 +95,7 @@
               (is (every? #(= % "Opintoala 1") (nakyvat-opintoalat)))))
           (seuraava-sivu)
           (testing
-              "kolmas sivu:"
+            "kolmas sivu:"
             (let [tutkinnot-osajoukko (take 5 (drop 20 (:tutkinnot tutkinnot-testidata)))]
               (w/wait-until #(= (hakutuloslaskurin-teksti) "hakutulokset 21 - 25 / yhteensä 25 hakutulosta"))
               (is (=
