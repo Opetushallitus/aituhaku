@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('tutkinnot.ui', ['tutkinnot.tutkinto', 'yhteiset.direktiivit.hakutulokset', 'ngRoute'])
+angular.module('tutkinnot.ui', ['tutkinnot.tutkinto', 'yhteiset.direktiivit.hakutulokset', 'yhteiset.suodattimet.jarjestaLokalisoidullaNimella', 'ngRoute'])
 
   .config(['$routeProvider', function($routeProvider) {
     $routeProvider
@@ -22,11 +22,13 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto', 'yhteiset.direktiivit.haku
     minHakuehtoPituus : 3
   })
 
-  .controller('TutkinnotController', ['Tutkinto', '$scope', 'hakuAsetukset', function(Tutkinto, $scope, asetukset) {
+  .controller('TutkinnotController', ['Tutkinto', '$scope', '$filter', 'hakuAsetukset', function(Tutkinto, $scope, $filter, asetukset) {
 
     function hae(nimi) {
       if(nimi && nimi.length >= asetukset.minHakuehtoPituus) {
-        Tutkinto.haeNimella(nimi, function(tutkinnot) { $scope.tutkinnot = tutkinnot; });
+        Tutkinto.haeNimella(nimi, function(tutkinnot) {
+          $scope.tutkinnot = $filter('jarjestaLokalisoidullaNimella')(tutkinnot, 'nimi');
+        });
       }
     }
 
