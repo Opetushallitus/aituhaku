@@ -25,8 +25,11 @@
 </section>
 
 <h2>{{i18n.tutkinnot.tutkinnon_jarjestajat}}</h2>
-<div class="search-results">
-  <hakutulokset tuloksia-sivulla="10" otsikot="[i18n.tutkinnot.tutkinnon_jarjestaja]" hakutulokset="tutkinto.jarjestajat">
-    <div class="table-cell">{{hakutulos.nimi}}</div>
-  </hakutulokset>
+<div class="table">
+  <div class="table-header">
+    <div class="table-cell">{{i18n.tutkinnot.tutkinnon_jarjestaja}}</div>
+  </div>
+  <div class="table-row" ng-repeat="jarjestaja in tutkinto.jarjestajat | orderBy:'nimi'">
+    <div class="table-cell">{{jarjestaja.nimi}}</div>
+  </div>
 </div>
