@@ -137,30 +137,30 @@
 (defn luo-tutkintoja-opintoalaan [lkm opintoala]
   (take lkm
         (for [a (seq "abcdefghijklmnopqrstuwvxyz")
-              i (range 9)]
-          {:nimi_fi (str "Haettava tutkinto " a (+ i 1 ))
-           :tutkintotunnus (str "TU" a (+ i 1 ) )
+              i (range 1 10)]
+          {:nimi_fi (str "Haettava tutkinto " a i)
+           :tutkintotunnus (str "TU" a i)
            :opintoala opintoala})))
 
 (defn tutkinnot-oletus-testidata []
   (let [toimikunnat (assoc-in (setup-toimikunta) [:toimikunnat 0 :nimi_fi] "Tutkinnon toimikunnan nimi")
         tutkinnot (luo-tutkintoja-opintoalaan 25 "OA1")
-        sopimuksen_oppilaitos (setup-oppilaitos)
-        sopimuksen_toimikunta (:tkunta (get-in toimikunnat [:toimikunnat 0]))
-        toimikunnan_tutkinto (get-in (vec tutkinnot) [0 :tutkintotunnus])
-        sopimus (setup-voimassaoleva-jarjestamissopimus "12345" (:oppilaitoskoodi sopimuksen_oppilaitos) sopimuksen_toimikunta -1)
+        ensimmainen_oppilaitos (setup-oppilaitos)
+        toinen_oppilaitos (setup-oppilaitos (uusi-oppilaitostunnus!) "Toinen oppilaitos")
+        toimikunta (:tkunta (get-in toimikunnat [:toimikunnat 0]))
+        tutkinto (get-in (vec tutkinnot) [0 :tutkintotunnus])
+        ensimmainen_sopimus (setup-voimassaoleva-jarjestamissopimus "12345" (:oppilaitoskoodi ensimmainen_oppilaitos) toimikunta -1)
+        toinen_sopimus (setup-voimassaoleva-jarjestamissopimus "23456" (:oppilaitoskoodi toinen_oppilaitos) toimikunta -1)
         muu-testidata {:koulutusalat [{:koodi "KA1"
                                        :selite_fi "Koulutusalan nimi"}]
                        :opintoalat [{:koodi "OA1"
                                      :koulutusala "KA1"
                                      :selite_fi "Opintoalan nimi"}]
                        :tutkinnot tutkinnot
-                       :toimikunta_ja_tutkinto [{:toimikunta sopimuksen_toimikunta
-                                                 :tutkintotunnus toimikunnan_tutkinto}]}]
+                       :toimikunta_ja_tutkinto [{:toimikunta toimikunta
+                                                 :tutkintotunnus tutkinto}]}]
     (merge
       muu-testidata
       toimikunnat
-      {:oppilaitokset [sopimuksen_oppilaitos]}
-      (->
-        (update-in sopimus [:jarjestamissopimukset] (partial conj []))
-        (update-in [:sopimus_ja_tutkinto] (partial conj []))))))
+      {:oppilaitokset [ensimmainen_oppilaitos toinen_oppilaitos]}
+      (merge-datamaps ensimmainen_sopimus toinen_sopimus))))

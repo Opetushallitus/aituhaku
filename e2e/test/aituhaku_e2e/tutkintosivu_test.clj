@@ -55,4 +55,4 @@
             (is (= (toimikunta-kentan-arvo) (get-in testidata [:toimikunnat 0 :nimi_fi]))))
           (testing
             "tutkinnon järjestäjät"
-            (is (= (set (tutkinnon-jarjestajien-nimet)) #{(get-in (tutkinnot-oletus-testidata) [:oppilaitokset 0 :nimi])}))))))))
+            (is (= (set (tutkinnon-jarjestajien-nimet)) (set (map :nimi (:oppilaitokset testidata)))))))))))
