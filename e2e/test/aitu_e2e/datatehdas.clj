@@ -57,18 +57,16 @@
           toimikuntatunnus (get toimikunta :tkunta toimikunta)
           tutkintoversio-id (get tutkintoversio :tutkintoversio_id tutkintoversio)]
       {:jarjestamissopimukset
-       {:toimikunta toimikuntatunnus
-        :sopijatoimikunta toimikuntatunnus
-        :oppilaitos oppilaitostunnus
-        :jarjestamissopimusid jarjestamissopimusid
-        :sopimusnumero sopimusnumero
-        :alkupvm menneisyydessa
-        :loppupvm tulevaisuudessa}
+        {:toimikunta toimikuntatunnus
+         :sopijatoimikunta toimikuntatunnus
+         :oppilaitos oppilaitostunnus
+         :jarjestamissopimusid jarjestamissopimusid
+         :sopimusnumero sopimusnumero
+         :alkupvm menneisyydessa
+         :loppupvm tulevaisuudessa}
        :sopimus_ja_tutkinto
-       {
-        :jarjestamissopimusid jarjestamissopimusid
-        :sopimus_ja_tutkinto [{:tutkintoversio_id tutkintoversio-id}]
-        }}))
+       {:jarjestamissopimusid jarjestamissopimusid
+        :sopimus_ja_tutkinto [{:tutkintoversio_id tutkintoversio-id}]}}))
   ([oppilaitostunnus toimikuntatunnus tutkintoversio]
     (setup-voimassaoleva-jarjestamissopimus (uusi-sopimusnumero!) oppilaitostunnus toimikuntatunnus tutkintoversio)))
 
@@ -136,3 +134,33 @@
   [& ms]
     (vectorize (apply merge-with concat (map vectorize ms))))
 
+(defn luo-tutkintoja-opintoalaan [lkm opintoala]
+  (take lkm
+        (for [a (seq "abcdefghijklmnopqrstuwvxyz")
+              i (range 9)]
+          {:nimi_fi (str "Haettava tutkinto " a (+ i 1 ))
+           :tutkintotunnus (str "TU" a (+ i 1 ) )
+           :opintoala opintoala})))
+
+(defn tutkinnot-oletus-testidata []
+  (let [toimikunnat (assoc-in (setup-toimikunta) [:toimikunnat 0 :nimi_fi] "Tutkinnon toimikunnan nimi")
+        tutkinnot (luo-tutkintoja-opintoalaan 25 "OA1")
+        sopimuksen_oppilaitos (setup-oppilaitos)
+        sopimuksen_toimikunta (:tkunta (get-in toimikunnat [:toimikunnat 0]))
+        toimikunnan_tutkinto (get-in (vec tutkinnot) [0 :tutkintotunnus])
+        sopimus (setup-voimassaoleva-jarjestamissopimus "12345" (:oppilaitoskoodi sopimuksen_oppilaitos) sopimuksen_toimikunta -1)
+        muu-testidata {:koulutusalat [{:koodi "KA1"
+                                       :selite_fi "Koulutusalan nimi"}]
+                       :opintoalat [{:koodi "OA1"
+                                     :koulutusala "KA1"
+                                     :selite_fi "Opintoalan nimi"}]
+                       :tutkinnot tutkinnot
+                       :toimikunta_ja_tutkinto [{:toimikunta sopimuksen_toimikunta
+                                                 :tutkintotunnus toimikunnan_tutkinto}]}]
+    (merge
+      muu-testidata
+      toimikunnat
+      {:oppilaitokset [sopimuksen_oppilaitos]}
+      (->
+        (update-in sopimus [:jarjestamissopimukset] (partial conj []))
+        (update-in [:sopimus_ja_tutkinto] (partial conj []))))))
