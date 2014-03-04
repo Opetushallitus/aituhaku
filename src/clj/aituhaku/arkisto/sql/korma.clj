@@ -72,15 +72,16 @@ kertoo mitä käyttäjätunnusta yhteyteen käytetään, esim. :user ->
 (declare tutkinnot_view)
 
 (defentity toimikunta_view
-  (sql/table :toimikuntaview))
+  (sql/table :aituhaku.toimikuntaview))
 
 (defentity tutkinnon_jarjestajat_view
-  (sql/table :tutkinnon_jarjestajat_view :jarjestajat))
+  (sql/table :aituhaku.tutkinnon_jarjestajat_view :jarjestajat))
 
 (defentity tutkinnon_toimikunnat_view
-  (sql/table :tutkinnon_toimikunnat_view :toimikunnat))
+  (sql/table :aituhaku.tutkinnon_toimikunnat_view :toimikunnat))
 
 (defentity tutkinnot_view
+  (sql/table :aituhaku.tutkinnot_view)
   (sql/pk :tutkintotunnus)
   (sql/has-many tutkinnon_jarjestajat_view
     {:fk :tutkintotunnus})

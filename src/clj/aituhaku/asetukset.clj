@@ -18,8 +18,8 @@
    :db {:host "127.0.0.1"
         :port "2345"
         :name "ttk"
-        :user "ttk_user"
-        :password "ttk"
+        :user "aituhaku_user"
+        :password "aituhaku"
         :maximum-pool-size "15"
         :minimum-pool-size "3"}})
 
