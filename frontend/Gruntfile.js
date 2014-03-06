@@ -127,6 +127,7 @@ module.exports = function (grunt) {
               'font/**/*'],
         dest: distDir,
         options : {
+          noProcess: '**/*.{png,gif,jpg,ico,svg,woff}',
           process: function (content) {
             return content.replace(/<!--dev-->.*<!--enddev-->/g, '');
           }
