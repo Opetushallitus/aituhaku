@@ -1,6 +1,10 @@
 'use strict';
 
-angular.module('tutkinnot.ui', ['tutkinnot.tutkinto', 'yhteiset.direktiivit.hakutulokset', 'yhteiset.suodattimet.jarjestaLokalisoidullaNimella', 'ngRoute'])
+angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
+                                'yhteiset.direktiivit.hakutulokset',
+                                'yhteiset.suodattimet.jarjestaLokalisoidullaNimella',
+                                'yhteiset.palvelut.debounce',
+                                'ngRoute'])
 
   .config(['$routeProvider', function($routeProvider) {
     $routeProvider
@@ -22,21 +26,26 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto', 'yhteiset.direktiivit.haku
     minHakuehtoPituus : 3
   })
 
-  .controller('TutkinnotController', ['Tutkinto', '$scope', '$filter', 'hakuAsetukset', function(Tutkinto, $scope, $filter, asetukset) {
+  .controller('TutkinnotController', ['Tutkinto', '$scope', '$filter', 'debounce', 'hakuAsetukset', function(Tutkinto, $scope, $filter, debounce, asetukset) {
 
-    function hae(nimi) {
-      if(nimi && nimi.length >= asetukset.minHakuehtoPituus) {
-        Tutkinto.haeNimella(nimi, function(tutkinnot) {
-          $scope.tutkinnot = $filter('jarjestaLokalisoidullaNimella')(tutkinnot, 'nimi');
-        });
+    function tutkinnotHakuVastaus(tutkinnot) {
+      $scope.tutkinnot = $filter('jarjestaLokalisoidullaNimella')(tutkinnot, 'nimi');
+    }
+
+    function hae() {
+      var hakuehto = $scope.hakuehto;
+
+      if(hakuehto.nimi.length >= asetukset.minHakuehtoPituus || hakuehto.opintoala.length >= asetukset.minHakuehtoPituus) {
+        Tutkinto.haeEhdoilla(hakuehto, tutkinnotHakuVastaus);
       }
     }
 
     $scope.hakuehto = {
-      nimi: ''
+      nimi: '',
+      opintoala: ''
     };
 
-    $scope.hae = _.debounce(hae, asetukset.viive);
+    $scope.hakuehdotMuuttuneet = debounce(hae, asetukset.viive);
 
   }])
 

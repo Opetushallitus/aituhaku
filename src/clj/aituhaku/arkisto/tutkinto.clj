@@ -8,11 +8,21 @@
   (and (timeutil/pvm-mennyt-tai-tanaan? (:voimassa_alkupvm tutkinto))
        (timeutil/pvm-tuleva-tai-tanaan? (:siirtymaajan_loppupvm tutkinto))))
 
-(defn hae-termilla
-  [termi]
+(defn hakuehto-predikaatti
+  [hakuehdot]
+  (fn[x]
+    (every?
+      #(if (:hakuehto %)
+         (sisaltaako-kentat? x (:kentat %) (:hakuehto %))
+         true)
+      hakuehdot)))
+
+(defn hae-ehdoilla
+  "Hakee kentistä ehdoilla."
+  [hakuehdot]
   (->> (tutkinto-sql/hae-tutkintojen-tiedot)
     (filter tutkinto-voimassa?)
-    (filter #(sisaltaako-kentat? % [:nimi_fi :nimi_sv] termi))))
+    (filter (hakuehto-predikaatti hakuehdot))))
 
 (defn hae
   [tutkintotunnus]

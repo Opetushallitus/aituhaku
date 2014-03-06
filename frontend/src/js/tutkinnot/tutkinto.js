@@ -2,11 +2,11 @@
 
 angular.module('tutkinnot.tutkinto', ['ngResource'])
   .factory('Tutkinto', ['$resource', function($resource) {
-    var Resource = $resource('api/tutkinto/haku', null, {
-      hakuNimella: {
+    var resource = $resource(null, null, {
+      hakuEhdoilla: {
         method: 'GET',
         isArray: true,
-        id: 'tutkintohaku'
+        url: 'api/tutkinto/haku'
       },
       haku: {
         method: 'GET',
@@ -14,13 +14,13 @@ angular.module('tutkinnot.tutkinto', ['ngResource'])
       }
     });
 
-    Resource.haeNimella = function(termi, successCallback, errorCallback) {
-      return Resource.hakuNimella({termi: termi}, successCallback, errorCallback);
+    return {
+      haeEhdoilla : function(ehdot, successCallback, errorCallback) {
+        return resource.hakuEhdoilla(ehdot, successCallback, errorCallback);
+      },
+      hae : function(tutkintotunnus, successCallback, errorCallback) {
+        return resource.haku({tutkintotunnus: tutkintotunnus}, successCallback, errorCallback);
+      }
     };
-    Resource.hae = function(tutkintotunnus, successCallback, errorCallback) {
-      return Resource.haku({tutkintotunnus: tutkintotunnus}, successCallback, errorCallback);
-    };
-
-    return Resource;
   }]);
 

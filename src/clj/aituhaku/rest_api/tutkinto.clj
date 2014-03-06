@@ -6,11 +6,16 @@
             [aituhaku.arkisto.tutkinto :as arkisto]))
 
 (c/defroutes reitit
-  (c/GET "/haku" [termi :as req]
-    (schema/validate schema/Str termi)
+  (c/GET "/haku" [nimi opintoala :as req]
+    (schema/validate (schema/maybe schema/Str) nimi)
+    (schema/validate (schema/maybe schema/Str) opintoala)
     (cachable-json-response req
-                            (arkisto/hae-termilla termi)
-                            [Tutkinto]))
+      (arkisto/hae-ehdoilla [{:hakuehto nimi
+                              :kentat [:nimi_fi :nimi_sv]}
+                             {:hakuehto opintoala
+                              :kentat [:opintoala_nimi_fi
+                                       :opintoala_nimi_sv]}])
+      [Tutkinto]))
 
   (c/GET "/:tutkintotunnus" [tutkintotunnus :as req]
     (schema/validate schema/Str tutkintotunnus)

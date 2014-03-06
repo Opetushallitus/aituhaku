@@ -3,7 +3,11 @@
 <form>
   <fieldset class="search-field">
     <label>{{i18n.tutkinnot.tutkinnon_nimi}}</label>
-    <input type="text" ng-model="hakuehto.nimi" ng-change="hae(hakuehto.nimi)" class="search-with-autocomplete">
+    <input type="text" ng-model="hakuehto.nimi" ng-change="hakuehdotMuuttuneet()">
+  </fieldset>
+  <fieldset class="search-field">
+    <label>{{i18n.tutkinnot.opintoala}}</label>
+    <input type="text" ng-model="hakuehto.opintoala" ng-change="hakuehdotMuuttuneet()">
   </fieldset>
 </form>
 
