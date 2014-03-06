@@ -1,5 +1,7 @@
 <h1>{{i18n.yleiset.palvelun_otsikko}}</h1>
 
+<p>{{i18n.yleiset.tervetuloa_teksti}}</p>
+
 <form>
   <fieldset class="search-field">
     <label>{{i18n.tutkinnot.tutkinnon_nimi}}</label>
@@ -11,7 +13,7 @@
   </fieldset>
 </form>
 
-<div class="search-results">
+<div class="search-results" latausindikaattori lataa="hakujaKaynnissa > 0">
   <hakutulokset tuloksia-sivulla="10" otsikot="[i18n.tutkinnot.tutkintotunnus, i18n.tutkinnot.tutkinnon_nimi, i18n.tutkinnot.opintoala]" hakutulokset="tutkinnot">
     <div class="table-cell">{{hakutulos.tutkintotunnus}}</div>
     <div class="table-cell"><a ng-href="#/tutkinto/{{hakutulos.tutkintotunnus}}">{{hakutulos.nimi | lokalisoi:hakutulos:'nimi'}}</a></div>

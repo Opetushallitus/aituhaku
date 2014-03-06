@@ -4,6 +4,7 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
                                 'yhteiset.direktiivit.hakutulokset',
                                 'yhteiset.suodattimet.jarjestaLokalisoidullaNimella',
                                 'yhteiset.palvelut.debounce',
+                                'yhteiset.direktiivit.latausindikaattori',
                                 'ngRoute'])
 
   .config(['$routeProvider', function($routeProvider) {
@@ -28,7 +29,10 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
 
   .controller('TutkinnotController', ['Tutkinto', '$scope', '$filter', 'debounce', 'hakuAsetukset', function(Tutkinto, $scope, $filter, debounce, asetukset) {
 
+    $scope.hakujaKaynnissa = 0;
+
     function tutkinnotHakuVastaus(tutkinnot) {
+      $scope.hakujaKaynnissa--;
       $scope.tutkinnot = $filter('jarjestaLokalisoidullaNimella')(tutkinnot, 'nimi');
     }
 
@@ -36,6 +40,7 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
       var hakuehto = $scope.hakuehto;
 
       if(hakuehto.nimi.length >= asetukset.minHakuehtoPituus || hakuehto.opintoala.length >= asetukset.minHakuehtoPituus) {
+        $scope.hakujaKaynnissa++;
         Tutkinto.haeEhdoilla(hakuehto, tutkinnotHakuVastaus);
       }
     }
