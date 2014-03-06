@@ -49,7 +49,7 @@
         (avaa-aituhaku tutkinnot)
         (testing
           "sivun otsikko"
-          (is (= (sivun-otsikko) "AITU | NÄYTTÖTUTKINTOHAKU")))
+          (is (= (sivun-otsikko) "NÄYTTÖTUTKINTOHAKU")))
         (testing
           "hakutulokset:"
           (testing "nimellä haku"

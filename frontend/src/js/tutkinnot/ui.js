@@ -39,7 +39,7 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
     function hae() {
       var hakuehto = $scope.hakuehto;
 
-      if(hakuehto.nimi.length >= asetukset.minHakuehtoPituus || hakuehto.opintoala.length >= asetukset.minHakuehtoPituus) {
+      if(hakuehto.nimi.length >= asetukset.minHakuehtoPituus || hakuehto.opintoala.length >= asetukset.minHakuehtoPituus) {
         $scope.hakujaKaynnissa++;
         Tutkinto.haeEhdoilla(hakuehto, tutkinnotHakuVastaus);
       }
