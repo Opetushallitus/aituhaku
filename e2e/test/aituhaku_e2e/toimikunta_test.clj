@@ -8,7 +8,7 @@
             [aituhaku-e2e.util :refer :all]))
 
 (defn toimikuntasivu [tkunta]
-  (str "/#/toimikunta/" tkunta))
+  (str "/fi/#/toimikunta/" tkunta))
 
 (deftest toimikuntasivu-test
   (testing "toimikuntasivu"

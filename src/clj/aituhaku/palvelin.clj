@@ -13,6 +13,7 @@
             schema.core
             [aitu.infra.print-wrapper :refer [log-request-wrapper]]
             [aituhaku.asetukset :refer [lue-asetukset oletusasetukset konfiguroi-lokitus]]
+            [aituhaku.infra.i18n :refer [wrap-locale]]
             aituhaku.rest-api.tutkinto
             aituhaku.rest-api.toimikunta
             aituhaku.rest-api.i18n))
@@ -42,8 +43,11 @@
                                    (reitit asetukset)
                                    wrap-keyword-params
                                    wrap-json-params
-                                   wrap-params
                                    (wrap-resource "public/app")
+                                   (wrap-locale
+                                     :ei-redirectia #"/api/.*"
+                                     :base-url (-> asetukset :server :base-url))
+                                   wrap-params
                                    wrap-content-type
                                    log-request-wrapper)
                                  {:port (-> asetukset :server :port Integer/parseInt)})]

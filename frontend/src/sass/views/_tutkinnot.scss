@@ -1,3 +1,13 @@
 .loader {
   top: 250px;
 }
+
+ul.kielen-vaihto {
+  @include clearfix;
+  float: right;
+  list-style: none;
+  li {
+    float: left;
+    &:first-child:after {content: '|'; margin-left: $marginS; margin-right: $marginS;}
+  }
+}

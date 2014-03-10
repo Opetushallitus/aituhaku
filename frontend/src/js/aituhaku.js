@@ -8,4 +8,16 @@ angular.module('aituhaku', ['tutkinnot.ui', 'toimikunnat.ui', 'yhteiset.palvelut
 
   .constant('asetukset', {
     requestTimeout : 120000 //2min timeout kaikille pyynnöille
-  });
+  })
+
+  .directive('kielenVaihto', ['kieli', function(kieli){
+    return {
+      restrict: 'E',
+      scope : {},
+      templateUrl : 'template/kielen_vaihto.html',
+      replace: true,
+      link: function(scope) {
+        scope.kieli = kieli;
+      }
+    };
+  }]);

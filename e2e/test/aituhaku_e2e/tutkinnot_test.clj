@@ -7,7 +7,7 @@
             [aituhaku-e2e.util :refer :all]
             [clojure.string :refer [blank?]]))
 
-(def tutkinnot "/#/tutkinnot")
+(def tutkinnot "/fi/#/tutkinnot")
 
 (defn hae-nimella [nimi]
   (tyhjenna-input "hakuehto.nimi")

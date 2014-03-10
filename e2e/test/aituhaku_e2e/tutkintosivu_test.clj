@@ -7,7 +7,7 @@
             [aitu-e2e.datatehdas :refer [tutkinnot-oletus-testidata]]))
 
 (defn tutkintosivu [tutkintotunnus]
-  (str "/#/tutkinto/" tutkintotunnus))
+  (str "/fi/#/tutkinto/" tutkintotunnus))
 
 (defn tutkinnon-tietokentan-arvo [kentta]
   (-> *ng*

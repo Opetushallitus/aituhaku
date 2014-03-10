@@ -3,8 +3,9 @@
 angular.module('yhteiset.palvelut.i18n', ['ngResource'])
 
   .factory('kieli', ['$location', function($location) {
-    var kieli = $location.search().kieli;
-    return kieli ? kieli : 'fi';
+    var url = $location.absUrl();
+    var kieli = url.match(/\/sv\//) ? 'sv' : 'fi';
+    return kieli;
   }])
 
   .factory('i18n', ['$resource', 'kieli', function($resource, kieli) {
