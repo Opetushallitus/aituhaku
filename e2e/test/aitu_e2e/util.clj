@@ -3,7 +3,8 @@
            com.paulhammant.ngwebdriver.WaitForAngularRequestsToFinish
            java.util.concurrent.TimeUnit
            (org.openqa.selenium.remote CapabilityType
-                                       DesiredCapabilities)
+                                       DesiredCapabilities
+                                       RemoteWebDriver)
            (org.openqa.selenium UnexpectedAlertBehaviour
                                 NoAlertPresentException
                                 UnhandledAlertException)
@@ -15,8 +16,18 @@
 
 (def ^:dynamic *ng*)
 
+(defmacro odota-kunnes [& body]
+  `(w/wait-until (fn [] ~@body) 20000))
+
 (defn odota-sivun-latautumista []
-  (w/wait-until #(= (w/execute-script "return document.readyState") "complete")))
+  (let [ready-state (atom nil)]
+    (try
+      (odota-kunnes (= (reset! ready-state
+                               (w/execute-script "return document.readyState"))
+                       "complete"))
+      (catch TimeoutException e
+        (println (str "document.readyState == '" @ready-state "'"))
+        (throw e)))))
 
 (defn odota-angular-pyyntoa []
   (odota-sivun-latautumista)
@@ -24,10 +35,19 @@
     (:webdriver w/*driver*)))
 
 (defn luo-webdriver! []
-  (let [driver (init-driver (FirefoxDriver. (doto (DesiredCapabilities.)
-                                              (.setCapability
-                                                CapabilityType/UNEXPECTED_ALERT_BEHAVIOUR
-                                                UnexpectedAlertBehaviour/IGNORE))))]
+  (let [remote_url (System/getenv "REMOTE_URL")
+        browser-name (or (System/getenv "BROWSER_NAME") "internet explorer")
+        capabilities (doto
+                       (if remote_url
+                         (doto (DesiredCapabilities.) (.setBrowserName browser-name))
+                         (DesiredCapabilities.))
+                       (.setCapability
+                         CapabilityType/UNEXPECTED_ALERT_BEHAVIOUR
+                         UnexpectedAlertBehaviour/IGNORE))
+        driver (init-driver
+                 (if remote_url
+                    (RemoteWebDriver. (java.net.URL. remote_url) capabilities)
+                    (FirefoxDriver. capabilities)))]
     (w/set-driver! driver)
     (-> driver :webdriver .manage .timeouts (.setScriptTimeout 30 TimeUnit/SECONDS))))
 
@@ -100,7 +120,7 @@
   (w/text "h1"))
 
 (defn aseta-inputtiin-arvo-jquery-selektorilla [selektori arvo]
-  (w/execute-script (str selektori ".val('" arvo "').trigger('input')")))
+  (w/execute-script (str selektori ".val('" arvo "').trigger('change')")))
 
 (defn tyhjenna-input [ng-model-nimi]
   (aseta-inputtiin-arvo-jquery-selektorilla (str "$('input[ng-model=\"" ng-model-nimi "\"]')") ""))
