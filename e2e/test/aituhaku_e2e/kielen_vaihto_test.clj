@@ -38,13 +38,13 @@
         (is (not (suomeksi-span-nakyvissa)))
         (is (ruotsiksi-span-nakyvissa))
         (is (not (ruotsiksi-linkki-nakyvissa)))))
-    (testing "kielen vaihtaminen suomesta ruotsiin onnistuu"
+    #_(testing "kielen vaihtaminen suomesta ruotsiin onnistuu"
       (with-webdriver
         (avaa-aituhaku-suomeksi)
         (is (not (suomeksi-linkki-nakyvissa)))
         (vaihda-kielta-ruotsiksi)
         (is (suomeksi-linkki-nakyvissa))))
-    (testing "kielen vaihtaminen ruotsista suomeen onnistuu"
+    #_(testing "kielen vaihtaminen ruotsista suomeen onnistuu"
       (with-webdriver
         (avaa-aituhaku-ruotsiksi)
         (is (not (ruotsiksi-linkki-nakyvissa)))

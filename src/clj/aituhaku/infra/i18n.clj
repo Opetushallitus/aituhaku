@@ -41,7 +41,6 @@
           accept-languagen-kielikoodi (accept-languagen-kielikoodi request)
           kielikoodi (or urin-kielikoodi accept-languagen-kielikoodi)
           ei-redirectia? (some-> ei-redirectia (re-matches (:uri request)))]
-      (println uri)
       (if (or kielikoodi ei-redirectia?)
         (with-bindings (if kielikoodi
                          {#'*locale* (Locale. kielikoodi)}
