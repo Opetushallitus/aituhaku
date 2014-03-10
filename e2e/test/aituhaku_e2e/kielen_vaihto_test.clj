@@ -16,11 +16,11 @@
 
 (defn vaihda-kielta-suomeksi []
   (w/click {:css ".fi.valittu a"})
-  (odota-angular-pyyntoa))
+  (w/wait-until #(suomeksi-span-nakyvissa)))
 
 (defn vaihda-kielta-ruotsiksi []
   (w/click {:css ".sv.valittu a"})
-  (odota-angular-pyyntoa))
+  (w/wait-until #(ruotsiksi-span-nakyvissa)))
 
 (deftest kielenvaihto-test
   (testing "kielenvaihto"
