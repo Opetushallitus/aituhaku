@@ -14,6 +14,7 @@
             [aitu.infra.print-wrapper :refer [log-request-wrapper]]
             [aituhaku.asetukset :refer [lue-asetukset oletusasetukset konfiguroi-lokitus]]
             [aituhaku.infra.i18n :refer [wrap-locale]]
+            [stencil.core :as s]
             aituhaku.rest-api.tutkinto
             aituhaku.rest-api.toimikunta
             aituhaku.rest-api.i18n))
@@ -25,8 +26,7 @@
     (c/context "/api/tutkinto" [] aituhaku.rest-api.tutkinto/reitit)
     (c/context "/api/toimikunta" [] aituhaku.rest-api.toimikunta/reitit)
     (c/context "/api/i18n" [] aituhaku.rest-api.i18n/reitit)
-    (c/GET "/" [] (-> (resp/resource-response "index.html" {:root "public/app"})
-                    (resp/content-type "text/html; charset=utf-8")))))
+    (c/GET "/" [] (s/render-file "public/app/index.html" {:base-url (-> asetukset :server :base-url)}))))
 
 (defn sammuta [palvelin]
   ((:sammuta palvelin)))

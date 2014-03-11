@@ -4,6 +4,7 @@ angular.module('aituhaku', ['tutkinnot.ui', 'toimikunnat.ui', 'yhteiset.palvelut
 
   .controller('AituhakuController', ['$scope', 'i18n', function($scope, i18n){
     $scope.i18n = i18n;
+    $scope.baseUrl = _.has(window, 'hakuBaseUrl') ?  window.hakuBaseUrl : '';
   }])
 
   .constant('asetukset', {
@@ -13,7 +14,6 @@ angular.module('aituhaku', ['tutkinnot.ui', 'toimikunnat.ui', 'yhteiset.palvelut
   .directive('kielenVaihto', ['kieli', function(kieli){
     return {
       restrict: 'E',
-      scope : {},
       templateUrl : 'template/kielen_vaihto.html',
       replace: true,
       link: function(scope) {

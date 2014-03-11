@@ -141,7 +141,9 @@ module.exports = function (grunt) {
         options : {
           noProcess: '**/*.{png,gif,jpg,ico,svg,woff}',
           process: function (content) {
-            return content.replace(/<!--dev-->.*<!--enddev-->/g, '');
+            return content.replace(/<!--dev-->.*<!--enddev-->/g, '')
+              .replace(/<!-- mustache/g, '')
+              .replace(/end mustache -->/g, '');
           }
         }
       },
