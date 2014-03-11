@@ -23,7 +23,7 @@ describe('yhteiset.palvelut.debounce', function(){
 
     $timeout.flush();
 
-    expect(viivastytettava.calls.length).toEqual(1);
+    expect(viivastytettava.calls.count()).toEqual(1);
     expect(viivastytettava).toHaveBeenCalledWith('arvo3');
   });
 });
