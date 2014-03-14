@@ -99,9 +99,9 @@ angular.module('yhteiset.direktiivit.hakuvalitsin', [])
           return i18n.yleiset['anna-hakuehto'];
         },
         formatSearching: function () {
-          return i18n.yleiset['etsitaan'];
+          return i18n.yleiset.etsitaan;
         }
       };
     }
   };
-}])
+}]);

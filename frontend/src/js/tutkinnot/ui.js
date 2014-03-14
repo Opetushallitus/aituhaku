@@ -46,7 +46,7 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
 
     $scope.hakujaKaynnissa = 0;
     $scope.tutkinnonNimi = '';
-    $scope.opintoala = {}
+    $scope.opintoala = {};
 
     function tutkinnotHakuVastaus(tutkinnot) {
       $scope.hakujaKaynnissa--;
@@ -64,8 +64,8 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
 
     var hakuehdotMuuttuneet = debounce(hae, asetukset.viive);
 
-    $scope.$watch('tutkinnonNimi', hakuehdotMuuttuneet)
-    $scope.$watch('opintoala.opintoala_tkkoodi', hakuehdotMuuttuneet)
+    $scope.$watch('tutkinnonNimi', hakuehdotMuuttuneet);
+    $scope.$watch('opintoala.opintoala_tkkoodi', hakuehdotMuuttuneet);
 
   }])
 
