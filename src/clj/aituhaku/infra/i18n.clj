@@ -17,8 +17,7 @@
                       ResourceBundle))
   (:require [clojure.string :as s]
             [ring.util.response :refer [redirect]]
-            [compojure.core :as c]
-            [aitu.util :refer [pisteavaimet->puu]]))
+            [compojure.core :as c]))
 
 (def ^:dynamic *locale*)
 
