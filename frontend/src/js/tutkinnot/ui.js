@@ -19,6 +19,7 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
                                 'yhteiset.suodattimet.jarjestaLokalisoidullaNimella',
                                 'yhteiset.palvelut.debounce',
                                 'yhteiset.direktiivit.latausindikaattori',
+                                'yhteiset.direktiivit.hakuvalitsin',
                                 'ngRoute'])
 
   .config(['$routeProvider', function($routeProvider) {
@@ -44,6 +45,8 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
   .controller('TutkinnotController', ['Tutkinto', '$scope', '$filter', 'debounce', 'hakuAsetukset', function(Tutkinto, $scope, $filter, debounce, asetukset) {
 
     $scope.hakujaKaynnissa = 0;
+    $scope.tutkinnonNimi = '';
+    $scope.opintoala = {}
 
     function tutkinnotHakuVastaus(tutkinnot) {
       $scope.hakujaKaynnissa--;
@@ -51,20 +54,18 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
     }
 
     function hae() {
-      var hakuehto = $scope.hakuehto;
-
-      if(hakuehto.nimi.length >= asetukset.minHakuehtoPituus || hakuehto.opintoala.length >= asetukset.minHakuehtoPituus) {
+      var tutkinnonNimi = $scope.tutkinnonNimi;
+      var opintoala = _.isEmpty($scope.opintoala) ? null : $scope.opintoala.opintoala_tkkoodi;
+      if(tutkinnonNimi.length >= asetukset.minHakuehtoPituus || opintoala) {
         $scope.hakujaKaynnissa++;
-        Tutkinto.haeEhdoilla(hakuehto, tutkinnotHakuVastaus);
+        Tutkinto.haeEhdoilla({nimi: tutkinnonNimi, opintoala: opintoala}, tutkinnotHakuVastaus);
       }
     }
 
-    $scope.hakuehto = {
-      nimi: '',
-      opintoala: ''
-    };
+    var hakuehdotMuuttuneet = debounce(hae, asetukset.viive);
 
-    $scope.hakuehdotMuuttuneet = debounce(hae, asetukset.viive);
+    $scope.$watch('tutkinnonNimi', hakuehdotMuuttuneet)
+    $scope.$watch('opintoala.opintoala_tkkoodi', hakuehdotMuuttuneet)
 
   }])
 

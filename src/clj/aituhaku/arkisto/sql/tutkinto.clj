@@ -18,10 +18,13 @@
 
 
 (defn hae-tutkintojen-tiedot
-  []
+  [opintoala]
   (sql/select tutkinnot_view
-    (sql/fields :tutkintotunnus :nimi_fi :nimi_sv :opintoala_nimi_fi :opintoala_nimi_sv
-                :tutkintotaso :voimassa_alkupvm :voimassa_loppupvm :siirtymaajan_loppupvm)))
+    (sql/fields :tutkintotunnus :nimi_fi :nimi_sv :opintoala_nimi_fi :opintoala_nimi_sv :opintoala_tkkoodi
+                :tutkintotaso :voimassa_alkupvm :voimassa_loppupvm :siirtymaajan_loppupvm)
+    (sql/where (or
+                 (nil? opintoala)
+                 {:opintoala_tkkoodi opintoala}))))
 
 (defn hae
   [tutkintotunnus]

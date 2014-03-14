@@ -7,12 +7,15 @@
 <form>
   <fieldset class="search-field">
     <label>{{i18n.tutkinnot.tutkinnon_nimi}}</label>
-    <input type="text" ng-model="hakuehto.nimi" ng-change="hakuehdotMuuttuneet()">
+    <input type="text" ng-model="tutkinnonNimi">
   </fieldset>
-  <fieldset class="search-field">
-    <label>{{i18n.tutkinnot.opintoala}}</label>
-    <input type="text" ng-model="hakuehto.opintoala" ng-change="hakuehdotMuuttuneet()">
-  </fieldset>
+  <hakuvalitsin
+    otsikko="{{i18n.tutkinnot.opintoala}}"
+    url="api/opintoala/haku"
+    model="opintoala"
+    model-id-property="opintoala_tkkoodi"
+    model-text-property="opintoala_nimi">
+  </hakuvalitsin>
 </form>
 
 <div class="search-results" latausindikaattori lataa="hakujaKaynnissa > 0">

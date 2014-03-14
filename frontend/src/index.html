@@ -8,7 +8,12 @@
   </script>
   end mustache -->
   <title></title>
+  <!-- build:css css/styles.css -->
   <link rel="stylesheet" href="compiled_css/main.css">
+  <!-- endbuild -->
+  <!-- build:css select2/select2.css -->
+  <link rel="stylesheet" href="bower_components/select2/select2.css">
+  <!-- endbuild -->
 </head>
 <body ng-controller="AituhakuController">
 
@@ -21,6 +26,8 @@
   <script src="bower_components/angular-resource/angular-resource.min.js"></script>
   <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
   <script src="bower_components/lodash/dist/lodash.min.js"></script>
+  <script src="bower_components/select2/select2.min.js"></script>
+  <script src="bower_components/angular-ui-select2/src/select2.js"></script>
   <!-- endbuild -->
   <!-- build:js js/app.js -->
   <script src="js/aituhaku.js"></script>
@@ -30,6 +37,7 @@
   <script src="js/tutkinnot/tutkinto.js"></script>
   <script src="js/yhteiset/direktiivit/hakutulokset.js"></script>
   <script src="js/yhteiset/direktiivit/hakutuloslaskuri.js"></script>
+  <script src="js/yhteiset/direktiivit/hakuvalitsin.js"></script>
   <script src="js/yhteiset/direktiivit/latausindikaattori.js"></script>
   <script src="js/yhteiset/direktiivit/sivutusnavigaatio.js"></script>
   <script src="js/yhteiset/suodattimet/jarjesta_lokalisoidulla_nimella.js"></script>

@@ -24,11 +24,7 @@
     (schema/validate (schema/maybe schema/Str) nimi)
     (schema/validate (schema/maybe schema/Str) opintoala)
     (cachable-json-response req
-      (arkisto/hae-ehdoilla [{:hakuehto nimi
-                              :kentat [:nimi_fi :nimi_sv]}
-                             {:hakuehto opintoala
-                              :kentat [:opintoala_nimi_fi
-                                       :opintoala_nimi_sv]}])
+      (arkisto/hae-ehdoilla nimi opintoala)
       [Tutkinto]))
 
   (c/GET "/:tutkintotunnus" [tutkintotunnus :as req]

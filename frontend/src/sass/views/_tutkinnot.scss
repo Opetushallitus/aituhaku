@@ -11,3 +11,8 @@ ul.kielen-vaihto {
     &:first-child:after {content: '|'; margin-left: $marginS; margin-right: $marginS;}
   }
 }
+
+.select2-container .select2-choice abbr {
+  right: 28px !important;
+  top : 7px !important;
+}

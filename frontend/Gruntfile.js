@@ -120,11 +120,6 @@ module.exports = function (grunt) {
         files: {
           'src/compiled_css/main.css': 'src/sass/main.scss'
         }
-      },
-      dist : {
-        files: {
-          '../resources/public/app/compiled_css/main.css': 'src/sass/main.scss'
-        }
       }
     },
     clean: {
@@ -137,7 +132,8 @@ module.exports = function (grunt) {
         dest: distDir,
         flow : {
           steps: {
-            'js': ['concat']
+            'js': ['concat'],
+            'css' : ['concat']
           },
           post: {}
         }
@@ -170,6 +166,14 @@ module.exports = function (grunt) {
                'bower_components/jquery/dist/jquery.min.map'],
         dest: distDir + '/js',
         flatten : true
+      },
+      dist_select2 : {
+        expand : true,
+        cwd : 'src',
+        src : ['bower_components/select2/select2.png',
+               'bower_components/select2/select2-spinner.gif'],
+        dest : distDir + '/select2',
+        flatten : true
       }
     },
     usemin: {
@@ -191,10 +195,11 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build',
     ['clean',
-     'sass:dist',
+     'sass:compile',
      'useminPrepare',
      'concat',
      'copy:dist',
      'copy:dist_angular_min_map',
+     'copy:dist_select2',
      'usemin']);
 };

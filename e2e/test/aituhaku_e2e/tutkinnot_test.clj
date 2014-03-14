@@ -15,7 +15,7 @@
 (ns aituhaku-e2e.tutkinnot-test
   (:require [clojure.test :refer [deftest is testing]]
             [clj-webdriver.taxi :as w]
-            [aitu-e2e.datatehdas :refer [tutkinnot-oletus-testidata]]
+            [aitu-e2e.datatehdas :refer [tutkinnot-oletus-testidata luo-tutkintoja-opintoalaan]]
             [aitu-e2e.util :refer :all]
             [aitu-e2e.data-util :refer [with-data]]
             [aituhaku-e2e.util :refer :all]
@@ -24,13 +24,12 @@
 (def tutkinnot "/fi/#/tutkinnot")
 
 (defn hae-nimella [nimi]
-  (tyhjenna-input "hakuehto.nimi")
-  (w/input-text (str "input[ng-model=\"hakuehto.nimi\"]") nimi)
+  (tyhjenna-input "tutkinnonNimi")
+  (w/input-text (str "input[ng-model=\"tutkinnonNimi\"]") nimi)
   (odota-angular-pyyntoa))
 
 (defn hae-opintoalalla [opintoala]
-  (tyhjenna-input "hakuehto.opintoala")
-  (w/input-text (str "input[ng-model=\"hakuehto.opintoala\"]") opintoala)
+  (valitse-select2-optio "opintoala" "opintoala_tkkoodi" opintoala)
   (odota-angular-pyyntoa))
 
 (defn nakyvien-tutkintojen-tiedot [kentta]
@@ -54,10 +53,11 @@
   (is (every? #(= % "Opintoala 1") (nakyvien-tutkintojen-tiedot "hakutulos.opintoala_nimi_fi"))))
 
 (deftest tutkinnot-haku-test
-  (let [testidata (tutkinnot-oletus-testidata)
+  (let [toisen-opintoalan-tutkinnot (drop 25 (luo-tutkintoja-opintoalaan 26 "OA2"))
+        testidata (update-in (tutkinnot-oletus-testidata) [:tutkinnot] concat toisen-opintoalan-tutkinnot)
         vaara-hakuehto "väärä hakuehto"
         tutkinnon-nimi-ehto (-> (:tutkinnot testidata) first :nimi_fi)
-        opintoalan-nimi-ehto (-> (:opintoalat testidata) first :selite_fi)]
+        opintoalan-nimi-ehto (-> (:opintoalat testidata) second :selite_fi)]
     (with-data testidata
       (with-webdriver
         (avaa-aituhaku tutkinnot)
@@ -76,28 +76,22 @@
               (hae-nimella tutkinnon-nimi-ehto)
               (testaa-hakutuloslistan-sivua (take 1 (:tutkinnot testidata)))
               (is (= (hakutuloslaskurin-teksti) "1 hakutulos"))))
-          (tyhjenna-input "hakuehto.nimi")
+          (tyhjenna-input "tutkinnonNimi")
           (testing "opintoalalla haku"
-            (testing
-              "hakuehdolla ei löydy tuloksia"
-              (hae-opintoalalla vaara-hakuehto)
-              (is (= (hakutuloslaskurin-teksti) "ei hakutuloksia")))
-            (testing
-              "hakuehdolla löytyy tuloksia"
-              (hae-opintoalalla opintoalan-nimi-ehto)
-              (testaa-hakutuloslistan-sivua (take 10 (:tutkinnot testidata)))
-              (is (= (hakutuloslaskurin-teksti) "hakutulokset 1 - 10 / yhteensä 25 hakutulosta"))))
+            (hae-opintoalalla opintoalan-nimi-ehto)
+            (testaa-hakutuloslistan-sivua toisen-opintoalan-tutkinnot)
+            (is (= (hakutuloslaskurin-teksti) "1 hakutulos")))
           (testing "nimellä ja opintoalalla haku"
             (testing
               "molemmat ehdot eivät täsmää"
-              (hae-nimella tutkinnon-nimi-ehto)
-              (hae-opintoalalla vaara-hakuehto)
+              (hae-nimella vaara-hakuehto)
+              (hae-opintoalalla opintoalan-nimi-ehto)
               (is (= (hakutuloslaskurin-teksti) "ei hakutuloksia")))
             (testing
               "molemmat ehdot täsmäävät"
-              (hae-nimella tutkinnon-nimi-ehto)
+              (hae-nimella "Haettava tutkinto")
               (hae-opintoalalla opintoalan-nimi-ehto)
-              (testaa-hakutuloslistan-sivua (take 1 (:tutkinnot testidata)))
+              (testaa-hakutuloslistan-sivua toisen-opintoalan-tutkinnot)
               (is (= (hakutuloslaskurin-teksti) "1 hakutulos")))))))))
 
 (deftest tutkinnot-sivutus-test

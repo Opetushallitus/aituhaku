@@ -169,7 +169,10 @@
                                        :selite_fi "Koulutusalan nimi"}]
                        :opintoalat [{:koodi "OA1"
                                      :koulutusala "KA1"
-                                     :selite_fi "Opintoalan nimi"}]
+                                     :selite_fi "Opintoalan nimi"}
+                                    {:koodi "OA2"
+                                     :koulutusala "KA1"
+                                     :selite_fi "Toisen opintoalan nimi"}]
                        :tutkinnot tutkinnot
                        :toimikunta_ja_tutkinto [{:toimikunta toimikunta
                                                  :tutkintotunnus tutkinto}]}]

@@ -101,3 +101,6 @@ kertoo mitä käyttäjätunnusta yhteyteen käytetään, esim. :user ->
     {:fk :tutkintotunnus})
   (sql/has-many tutkinnon_toimikunnat_view
     {:fk :tutkintotunnus}))
+
+(defentity opintoala_view
+  (sql/table :aituhaku.opintoala_view))

@@ -20,6 +20,7 @@
                :nimi_sv s/Str
                :opintoala_nimi_fi s/Str
                :opintoala_nimi_sv s/Str
+               :opintoala_tkkoodi s/Str
                (s/optional-key :koulutusala_nimi_fi) s/Str
                (s/optional-key :koulutusala_nimi_sv) s/Str
                :tutkintotaso s/Str
@@ -43,3 +44,9 @@
 (def TutkintoTiedot (merge Tutkinto
                            {:jarjestajat [Jarjestaja]
                             :toimikunnat [ToimikuntaNimi]}))
+
+(def Opintoala {:opintoala_nimi_fi s/Str
+                :opintoala_nimi_sv s/Str
+                :opintoala_tkkoodi s/Str
+                :voimassa_alkupvm org.joda.time.LocalDate
+                :voimassa_loppupvm org.joda.time.LocalDate})
