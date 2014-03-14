@@ -71,13 +71,13 @@
           toimikuntatunnus (get toimikunta :tkunta toimikunta)
           tutkintoversio-id (get tutkintoversio :tutkintoversio_id tutkintoversio)]
       {:jarjestamissopimukset
-        {:toimikunta toimikuntatunnus
-         :sopijatoimikunta toimikuntatunnus
-         :oppilaitos oppilaitostunnus
-         :jarjestamissopimusid jarjestamissopimusid
-         :sopimusnumero sopimusnumero
-         :alkupvm menneisyydessa
-         :loppupvm tulevaisuudessa}
+       {:toimikunta toimikuntatunnus
+        :sopijatoimikunta toimikuntatunnus
+        :oppilaitos oppilaitostunnus
+        :jarjestamissopimusid jarjestamissopimusid
+        :sopimusnumero sopimusnumero
+        :alkupvm menneisyydessa
+        :loppupvm tulevaisuudessa}
        :sopimus_ja_tutkinto
        {:jarjestamissopimusid jarjestamissopimusid
         :sopimus_ja_tutkinto [{:tutkintoversio_id tutkintoversio-id}]}}))

@@ -97,13 +97,14 @@
           (-> w/*driver* :webdriver .switchTo .alert .accept)))
       (-> (tarkista-js-virheet f)
           (tarkista-otsikkotekstit)))
-    (try
+    (do
       (luo-webdriver!)
-      (binding [*ng* (ByAngular. (:webdriver w/*driver*))]
-        (-> (tarkista-js-virheet f)
-            (tarkista-otsikkotekstit)))
-      (finally
-        (w/quit)))))
+      (try
+        (binding [*ng* (ByAngular. (:webdriver w/*driver*))]
+          (-> (tarkista-js-virheet f)
+              (tarkista-otsikkotekstit)))
+        (finally
+          (w/quit))))))
 
 (defmacro with-webdriver [& body]
   `(with-webdriver* (fn [] ~@body)))
@@ -117,14 +118,14 @@
   ([polku] (avaa aitu-url polku))
   ([osoite-fn polku]
     (let [url (osoite-fn polku)]
-     (w/to url)
-     (try
-       (w/wait-until #(= (w/current-url) url))
-       (catch TimeoutException e
-         (println (str "Odotettiin selaimen siirtyvän URLiin '" url "'"
-                       ", mutta sen URL oli " (w/current-url)))
-         (throw e)))
-     (odota-angular-pyyntoa))))
+      (w/to url)
+      (try
+        (odota-kunnes (= (w/current-url) url))
+        (catch TimeoutException e
+          (println (str "Odotettiin selaimen siirtyvän URLiin '" url "'"
+                        ", mutta sen URL oli '" (w/current-url) "'"))
+          (throw e)))
+      (odota-angular-pyyntoa))))
 
 (defn avaa-uudelleenladaten [polku]
   (puhdista-selain)
@@ -134,7 +135,7 @@
   (w/text "h1"))
 
 (defn aseta-inputtiin-arvo-jquery-selektorilla [selektori arvo]
-  (w/execute-script (str selektori ".val('" arvo "').trigger('change')")))
+  (w/execute-script (str selektori ".val('" arvo "').trigger('input').trigger('change')")))
 
 (defn tyhjenna-input [ng-model-nimi]
   (aseta-inputtiin-arvo-jquery-selektorilla (str "$('input[ng-model=\"" ng-model-nimi "\"]')") ""))
@@ -173,10 +174,10 @@
                                         "[model-id-property=\"" tunnistekentta "\"]"
                                         " div.select2-container")]
     (w/execute-script (str "$('" select2-container-selector "').data('select2').open()")))
-  (w/wait-until #(-> (w/find-elements {:css "#select2-drop input.select2-input"}) (count) (> 0)))
+  (odota-kunnes (-> (w/find-elements {:css "#select2-drop input.select2-input"}) (count) (> 0)))
   (w/clear "#select2-drop input")
   (w/input-text "#select2-drop input" hakuehto)
-  (w/wait-until #(-> (w/find-elements {:css "#select2-drop input.select2-active"}) (count) (= 0)))
+  (odota-kunnes (-> (w/find-elements {:css "#select2-drop input.select2-active"}) (count) (= 0)))
   (w/click "#select2-drop .select2-results li:first-child"))
 
 (defn syota-kenttaan [ng-model-nimi arvo]
@@ -231,7 +232,7 @@
   (odota-angular-pyyntoa))
 
 (defn odota-dialogia [teksti-re]
-  (w/wait-until #(dialogi-nakyvissa? teksti-re)))
+  (odota-kunnes (dialogi-nakyvissa? teksti-re)))
 
 (defn tallenna-ja-hyvaksy-dialogi []
   ;; Ei voida käyttää tallenna-funktiota, koska Angularin odottaminen vaatii
