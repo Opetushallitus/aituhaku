@@ -14,7 +14,8 @@
 
 (ns aituhaku.palvelin
   (:gen-class)
-  (:require [clojure.tools.logging :as log]
+  (:require [clojure.java.io :as io]
+            [clojure.tools.logging :as log]
             [compojure.core :as c]
             [org.httpkit.server :as hs]
             [ring.middleware.json :refer [wrap-json-params]]
@@ -36,6 +37,10 @@
 
 (schema.core/set-fn-validation! true)
 
+(def ^:private build-id (delay (if-let [resource (io/resource "build-id.txt")]
+                                 (.trim (slurp resource))
+                                 "dev")))
+
 (defn ^:private reitit [asetukset]
   (c/routes
     (c/context "/api/tutkinto" [] aituhaku.rest-api.tutkinto/reitit)
@@ -45,16 +50,20 @@
     (c/GET "/" [] (s/render-file "public/app/index.html" {:base-url (-> asetukset :server :base-url)}))))
 
 (defn sammuta [palvelin]
-  ((:sammuta palvelin)))
+  (log/info "Sammutetaan näyttötutkintohaku")
+  ((:sammuta palvelin))
+  (log/info "Palvelin sammutettu"))
 
 (defn kaynnista! [oletusasetukset]
   (try
+    (log/info "Käynnistetään näyttötutkintohaku, versio" @build-id)
     (let [asetukset (lue-asetukset oletusasetukset)
           _ (konfiguroi-lokitus asetukset)
           _ (aituhaku.arkisto.sql.korma/luo-db (:db asetukset))
           _ (json-gen/add-encoder org.joda.time.LocalDate
               (fn [c json-generator]
                 (.writeString json-generator (.toString c "yyyy-MM-dd"))))
+          portti (-> asetukset :server :port Integer/parseInt)
           sammuta (hs/run-server (->
                                    (reitit asetukset)
                                    wrap-keyword-params
@@ -66,7 +75,8 @@
                                    wrap-params
                                    wrap-content-type
                                    log-request-wrapper)
-                                 {:port (-> asetukset :server :port Integer/parseInt)})]
+                                 {:port portti})
+          _ (log/info "Palvelin käynnistetty porttiin " portti)]
       {:sammuta sammuta})
     (catch Throwable t
       (let [virheviesti "Palvelimen käynnistys epäonnistui"]
