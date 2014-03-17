@@ -18,7 +18,8 @@
                  [clj-http "0.7.6"]
                  [cheshire "5.2.0"]
                  [com.paulhammant/ngwebdriver "0.9.1"]
-                 [clj-time "0.6.0"]]
+                 [clj-time "0.6.0"]
+                 [org.clojars.mikkosuonio/opetushallitus-aitu-e2e "0.1.2"]]
   :plugins [[test2junit "1.0.1"]]
 
   :test-selectors {:ie (complement :no-ie)
