@@ -15,7 +15,7 @@
 (ns aituhaku.rest-api.tutkinto
   (:require [compojure.core :as c]
             [schema.core :as schema]
-            [aitu.rest-api.http-util :refer [cachable-json-response json-response]]
+            [aituhaku.rest-api.http-util :refer [json-response]]
             [aituhaku.toimiala.skeema :refer [Tutkinto TutkintoTiedot]]
             [aituhaku.arkisto.tutkinto :as arkisto]))
 
@@ -23,12 +23,12 @@
   (c/GET "/haku" [nimi opintoala :as req]
     (schema/validate (schema/maybe schema/Str) nimi)
     (schema/validate (schema/maybe schema/Str) opintoala)
-    (cachable-json-response req
+    (json-response
       (arkisto/hae-ehdoilla nimi opintoala)
       [Tutkinto]))
 
   (c/GET "/:tutkintotunnus" [tutkintotunnus :as req]
     (schema/validate schema/Str tutkintotunnus)
-    (cachable-json-response req
-                            (arkisto/hae tutkintotunnus)
-                            TutkintoTiedot)))
+    (json-response
+      (arkisto/hae tutkintotunnus)
+      TutkintoTiedot)))

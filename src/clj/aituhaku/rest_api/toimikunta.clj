@@ -14,7 +14,7 @@
 
 (ns aituhaku.rest-api.toimikunta
   (:require [compojure.core :as c]
-            [aitu.rest-api.http-util :refer [json-response]]
+            [aituhaku.rest-api.http-util :refer [json-response]]
             [aituhaku.toimiala.skeema :refer [Toimikunta]]
             [aituhaku.arkisto.sql.toimikunta :as arkisto]))
 

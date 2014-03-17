@@ -29,6 +29,7 @@
             :base-url ""}
    :development-mode false ; oletusarvoisesti ei olla kehitysmoodissa. Pitää erikseen kääntää päälle jos tarvitsee kehitysmoodia.
    :logback {:properties-file "resources/logback.xml"}
+   :response-cache-max-age "86400"
    :db {:host "127.0.0.1"
         :port "2345"
         :name "ttk"
@@ -36,6 +37,8 @@
         :password "aituhaku"
         :maximum-pool-size "15"
         :minimum-pool-size "3"}})
+
+(def asetukset (promise))
 
 (def konversio-map
   {"true" true})

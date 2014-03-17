@@ -17,7 +17,7 @@
                       ResourceBundle))
   (:require [compojure.core :as c]
             [schema.core :as schema]
-            [aitu.rest-api.http-util :refer [json-response]]
+            [aituhaku.rest-api.http-util :refer [json-response]]
             [aitu.util :refer [pisteavaimet->puu]]))
 
 (defn validoi-kieli []

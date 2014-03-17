@@ -27,7 +27,7 @@
             [cheshire.generate :as json-gen]
             schema.core
             [aitu.infra.print-wrapper :refer [log-request-wrapper]]
-            [aituhaku.asetukset :refer [lue-asetukset oletusasetukset konfiguroi-lokitus]]
+            [aituhaku.asetukset :refer [asetukset lue-asetukset oletusasetukset konfiguroi-lokitus]]
             [aituhaku.infra.i18n :refer [wrap-locale]]
             [stencil.core :as s]
             aituhaku.rest-api.i18n
@@ -57,21 +57,22 @@
 (defn kaynnista! [oletusasetukset]
   (try
     (log/info "Käynnistetään näyttötutkintohaku, versio" @build-id)
-    (let [asetukset (lue-asetukset oletusasetukset)
-          _ (konfiguroi-lokitus asetukset)
-          _ (aituhaku.arkisto.sql.korma/luo-db (:db asetukset))
+    (let [luetut-asetukset (lue-asetukset oletusasetukset)
+          _ (deliver asetukset luetut-asetukset )
+          _ (konfiguroi-lokitus luetut-asetukset)
+          _ (aituhaku.arkisto.sql.korma/luo-db (:db luetut-asetukset))
           _ (json-gen/add-encoder org.joda.time.LocalDate
               (fn [c json-generator]
                 (.writeString json-generator (.toString c "yyyy-MM-dd"))))
-          portti (-> asetukset :server :port Integer/parseInt)
+          portti (-> luetut-asetukset :server :port Integer/parseInt)
           sammuta (hs/run-server (->
-                                   (reitit asetukset)
+                                   (reitit luetut-asetukset)
                                    wrap-keyword-params
                                    wrap-json-params
                                    (wrap-resource "public/app")
                                    (wrap-locale
                                      :ei-redirectia #"/api/.*"
-                                     :base-url (-> asetukset :server :base-url))
+                                     :base-url (-> luetut-asetukset :server :base-url))
                                    wrap-params
                                    wrap-content-type
                                    log-request-wrapper)
