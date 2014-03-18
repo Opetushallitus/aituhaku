@@ -170,8 +170,7 @@ module.exports = function (grunt) {
       dist_select2 : {
         expand : true,
         cwd : 'src',
-        src : ['bower_components/select2/select2.png',
-               'bower_components/select2/select2-spinner.gif'],
+        src : ['bower_components/select2/*.{png,gif}'],
         dest : distDir + '/select2',
         flatten : true
       }
