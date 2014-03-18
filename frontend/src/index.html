@@ -18,13 +18,13 @@
   <script src="bower_components/modernizr/modernizr.js"></script>
   <!-- endbuild -->
 </head>
-<body ng-controller="AituhakuController">
+<body ng-cloak ng-controller="AituhakuController">
   <section id="page-container">
     <header>
       <section class="app-wrapper">
         <a id="oph-logo" href="http://www.oph.fi"></a>
         <a id="turre-logo" href="{{baseUrl}}/"></a>
-        <h1><a href="{{baseUrl}}/">{{i18n.yleiset.palvelun_otsikko}}</a></h1>
+        <h1><a href="{{baseUrl}}/" ng-bind="i18n.yleiset.palvelun_otsikko"></a></h1>
       </section>
     </header>
     <section class="app-wrapper">
@@ -35,9 +35,9 @@
   <footer>
     <section class="info">
       <div class="app-wrapper">
-        <h3>{{i18n.yleiset.footer_info_otsikko}}</h3>
-        <p>{{i18n.yleiset.footer_info_teksti}}</p>
-        <p class="footer-contact">{{i18n.yleiset.ota_yhteytta}} : <a href="mailto:nayttotutkintohaku@opetushallitus.fi">nayttotutkintohaku(at)opetushallitus.fi</a></p>
+        <h3 ng-bind="i18n.yleiset.footer_info_otsikko"></h3>
+        <p ng-bind="i18n.yleiset.footer_info_otsikko"></p>
+        <p class="footer-contact"><span ng-bind="i18n.yleiset.ota_yhteytta"></span> : <a href="mailto:nayttotutkintohaku@opetushallitus.fi">nayttotutkintohaku(at)opetushallitus.fi</a></p>
       </div>
     </section>
     <section class="copyright">
