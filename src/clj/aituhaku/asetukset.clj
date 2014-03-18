@@ -29,7 +29,7 @@
             :base-url ""}
    :development-mode false ; oletusarvoisesti ei olla kehitysmoodissa. Pitää erikseen kääntää päälle jos tarvitsee kehitysmoodia.
    :logback {:properties-file "resources/logback.xml"}
-   :response-cache-max-age "86400"
+   :response-cache-max-age "0"
    :db {:host "127.0.0.1"
         :port "2345"
         :name "ttk"
