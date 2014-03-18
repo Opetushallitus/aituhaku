@@ -14,11 +14,40 @@
   <!-- build:css select2/select2.css -->
   <link rel="stylesheet" href="bower_components/select2/select2.css">
   <!-- endbuild -->
+  <!-- build:js js/modernizer.js -->
+  <script src="bower_components/modernizr/modernizr.js"></script>
+  <!-- endbuild -->
 </head>
 <body ng-controller="AituhakuController">
-
-  <div ng-view></div>
-
+  <section id="page-container">
+    <header>
+      <section class="app-wrapper">
+        <a id="oph-logo" href="http://www.oph.fi"></a>
+        <a id="turre-logo" href="{{baseUrl}}/"></a>
+        <h1><a href="{{baseUrl}}/">{{i18n.yleiset.palvelun_otsikko}}</a></h1>
+      </section>
+    </header>
+    <section class="app-wrapper">
+      <kielen-vaihto></kielen-vaihto>
+    </section>
+    <section class="app-wrapper main-content" ng-view></section>
+  </section>
+  <footer>
+    <section class="info">
+      <div class="app-wrapper">
+        <h3>{{i18n.yleiset.footer_info_otsikko}}</h3>
+        <p>{{i18n.yleiset.footer_info_teksti}}</p>
+        <p class="footer-contact">{{i18n.yleiset.ota_yhteytta}} : <a href="mailto:nayttotutkintohaku@opetushallitus.fi">nayttotutkintohaku(at)opetushallitus.fi</a></p>
+      </div>
+    </section>
+    <section class="copyright">
+      <div class="app-wrapper">
+        <div class="vertical-wrapper">
+          <span copyright></span>
+        </div>
+      </div>
+    </section>
+  </footer>
   <!-- build:js js/libs.js -->
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
   <script src="bower_components/angular/angular.min.js"></script>
@@ -35,6 +64,7 @@
   <script src="js/toimikunnat/toimikunta.js"></script>
   <script src="js/tutkinnot/ui.js"></script>
   <script src="js/tutkinnot/tutkinto.js"></script>
+  <script src="js/yhteiset/direktiivit/copyright.js"></script>
   <script src="js/yhteiset/direktiivit/hakutulokset.js"></script>
   <script src="js/yhteiset/direktiivit/hakutuloslaskuri.js"></script>
   <script src="js/yhteiset/direktiivit/hakuvalitsin.js"></script>

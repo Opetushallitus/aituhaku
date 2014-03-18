@@ -45,6 +45,9 @@
   (first
     (remove blank? (map w/text (w/find-elements {:css ".hakutuloslaskuri p"})))))
 
+(defn tutkinto-sivun-otsikko []
+  (w/text "h2"))
+
 (defn testaa-hakutuloslistan-sivua [tutkinnot-osajoukko]
   (is (= (nakyvien-tutkintojen-tiedot "hakutulos.nimi")
          (map :nimi_fi tutkinnot-osajoukko)))
@@ -122,4 +125,4 @@
               (hae-nimella haettavan-tutkinnon-nimi)
               (w/click {:text haettavan-tutkinnon-nimi})
               (odota-angular-pyyntoa)
-              (is (= (sivun-otsikko) "HAETTAVA TUTKINTO A1")))))))))
+              (is (= (tutkinto-sivun-otsikko) "HAETTAVA TUTKINTO A1")))))))))

@@ -14,7 +14,12 @@
 
 'use strict';
 
-angular.module('aituhaku', ['tutkinnot.ui', 'toimikunnat.ui', 'yhteiset.palvelut.i18n', 'yhteiset.suodattimet.lokalisoi', 'ui.select2'])
+angular.module('aituhaku', ['tutkinnot.ui',
+                            'toimikunnat.ui',
+                            'yhteiset.direktiivit.copyright',
+                            'yhteiset.palvelut.i18n',
+                            'yhteiset.suodattimet.lokalisoi',
+                            'ui.select2'])
 
   .controller('AituhakuController', ['$scope', 'i18n', function($scope, i18n){
     $scope.i18n = i18n;

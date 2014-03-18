@@ -2,17 +2,11 @@
   top: 250px;
 }
 
-ul.kielen-vaihto {
-  @include clearfix;
-  float: right;
-  list-style: none;
-  li {
-    float: left;
-    &:first-child:after {content: '|'; margin-left: $marginS; margin-right: $marginS;}
-  }
-}
-
 .select2-container .select2-choice abbr {
   right: 28px !important;
   top : 7px !important;
+}
+
+.search-results {
+  min-height: 0;
 }

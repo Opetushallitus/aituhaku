@@ -42,6 +42,9 @@
                   (.column "jarjestaja.nimi")
                   w/find-elements)))
 
+(defn tutkinto-sivun-otsikko []
+  (w/text "h2"))
+
 (deftest tutkintosivu-test
   (let [testidata (tutkinnot-oletus-testidata)
         tutkinto (-> testidata :tutkinnot first)]
@@ -50,7 +53,7 @@
         (avaa-aituhaku (tutkintosivu (:tutkintotunnus tutkinto)))
         (testing
           "sivun otsikko näkyy"
-          (is (= (.toLowerCase (sivun-otsikko)) (.toLowerCase (:nimi_fi tutkinto)))))
+          (is (= (.toLowerCase (tutkinto-sivun-otsikko)) (.toLowerCase (:nimi_fi tutkinto)))))
         (testing
           "tutkinnon tiedot näkyvät oikein"
           (testing

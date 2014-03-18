@@ -1,0 +1,33 @@
+$footer-info-section-height: 230px;
+$footer-copyright-section-height: 80px;
+$footer-height: $footer-copyright-section-height + $footer-info-section-height;
+
+footer {
+  $info-section-bgcolor: #333333;
+  &  > section {
+    color: #ffffff;
+    & > section {
+      display: table-cell;
+      vertical-align: middle;
+    }
+    a {
+      color: $lighter-primary;
+    }
+  }
+  .info {
+    @include  border-box;
+    padding-top: $marginL;
+    background-color: $info-section-bgcolor;
+    height: $footer-info-section-height;
+    h3, p {margin: 0;}
+    p.footer-contact {margin-top: $marginM;}
+  }
+  .copyright {
+    background-color: $darkest-gray;
+    .vertical-wrapper {
+      height: $footer-copyright-section-height;
+      display: table-cell;
+      vertical-align: middle;
+    }
+  }
+}

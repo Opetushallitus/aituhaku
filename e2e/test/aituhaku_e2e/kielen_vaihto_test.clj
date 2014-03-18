@@ -23,34 +23,28 @@
 (defn avaa-aituhaku-suomeksi [] (avaa-aituhaku "/fi/#/tutkinnot"))
 (defn avaa-aituhaku-ruotsiksi [] (avaa-aituhaku "/sv/#/tutkinnot"))
 
-(defn suomeksi-linkki-nakyvissa [] (w/exists? {:css ".fi.valittu a:not(.ng-hide)"}))
-(defn suomeksi-span-nakyvissa [] (w/exists? {:css ".fi.ei-valittu span:not(.ng-hide)"}))
-(defn ruotsiksi-linkki-nakyvissa [] (w/exists? {:css ".sv.valittu a:not(.ng-hide)"}))
-(defn ruotsiksi-span-nakyvissa [] (w/exists? {:css ".sv.ei-valittu span:not(.ng-hide)"}))
+(defn suomeksi-linkki-nakyvissa [] (w/exists? {:css "#fi-link:not(.ng-hide)"}))
+(defn ruotsiksi-linkki-nakyvissa [] (w/exists? {:css "#sv-link:not(.ng-hide)"}))
 
 (defn vaihda-kielta-suomeksi []
-  (w/click {:css ".fi.valittu a"})
-  (w/wait-until #(suomeksi-span-nakyvissa)))
+  (w/click {:css "#fi-link"})
+  (w/wait-until #(ruotsiksi-linkki-nakyvissa)))
 
 (defn vaihda-kielta-ruotsiksi []
-  (w/click {:css ".sv.valittu a"})
-  (w/wait-until #(ruotsiksi-span-nakyvissa)))
+  (w/click {:css "#sv-link"})
+  (w/wait-until #(suomeksi-linkki-nakyvissa)))
 
 (deftest kielenvaihto-test
   (testing "kielenvaihto"
-    (testing "/fi/ url:iin mentäessä FI- linkki ei ole näkyvissä ja SV- linkki on näkyvissä."
+    (testing "/fi/ url:iin mentäessä Suomeksi-linkki ei ole näkyvissä ja På svenska- linkki on näkyvissä."
       (with-webdriver
         (avaa-aituhaku-suomeksi)
         (is (not (suomeksi-linkki-nakyvissa)))
-        (is (suomeksi-span-nakyvissa))
-        (is (not(ruotsiksi-span-nakyvissa)))
         (is (ruotsiksi-linkki-nakyvissa))))
-    (testing "/sv/ url:iin mentäessä SV- linkki ei ole näkyvissä ja FI- linkki on näkyvissä."
+    (testing "/sv/ url:iin mentäessä På svenska- linkki ei ole näkyvissä ja Suomeksi- linkki on näkyvissä."
       (with-webdriver
         (avaa-aituhaku-ruotsiksi)
         (is (suomeksi-linkki-nakyvissa))
-        (is (not (suomeksi-span-nakyvissa)))
-        (is (ruotsiksi-span-nakyvissa))
         (is (not (ruotsiksi-linkki-nakyvissa)))))
     (testing "kielen vaihtaminen suomesta ruotsiin onnistuu"
       (with-webdriver

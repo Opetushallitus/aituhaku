@@ -11,6 +11,7 @@
     "angular-bootstrap": "0.10.0",
     "jquery": "2.1.0",
     "angular-ui-select2": "0.0.5",
-    "select2": "3.4.5"
+    "select2": "3.4.5",
+    "modernizr": "~2.7.2"
   }
 }

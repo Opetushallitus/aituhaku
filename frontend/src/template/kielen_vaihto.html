@@ -1,6 +1,4 @@
-<ul class="kielen-vaihto">
-  <li class="valittu fi" ng-if="kieli!='fi'"><a href="{{baseUrl}}/fi/">FI</a></li>
-  <li class="ei-valittu fi" ng-if="kieli=='fi'"><span>FI</span></li>
-  <li class="valittu sv" ng-if="kieli!='sv'"><a href="{{baseUrl}}/sv/">SV</a></li>
-  <li class="ei-valittu sv" ng-if="kieli=='sv'"><span>SV</span></li>
-</ul>
+<div class="kielen-vaihto">
+  <a id="fi-link" ng-if="kieli!='fi'" href="{{baseUrl}}/fi/">{{i18n.yleiset.suomeksi}}</a>
+  <a id="sv-link" ng-if="kieli!='sv'" href="{{baseUrl}}/sv/">{{i18n.yleiset.ruotsiksi}}</a>
+</div>
