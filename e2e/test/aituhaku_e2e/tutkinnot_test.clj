@@ -23,13 +23,16 @@
 
 (def tutkinnot "/fi/#/tutkinnot")
 
+(defn tyhjenna-nimi-input []
+  (tyhjenna-input "hakuModel.tutkinnonNimi"))
+
 (defn hae-nimella [nimi]
-  (tyhjenna-input "tutkinnonNimi")
-  (w/input-text (str "input[ng-model=\"tutkinnonNimi\"]") nimi)
+  (tyhjenna-nimi-input)
+  (w/input-text (str "input[ng-model=\"hakuModel.tutkinnonNimi\"]") nimi)
   (odota-angular-pyyntoa))
 
 (defn hae-opintoalalla [opintoala]
-  (valitse-select2-optio "opintoala" "opintoala_tkkoodi" opintoala)
+  (valitse-select2-optio "hakuModel.opintoala" "opintoala_tkkoodi" opintoala)
   (odota-angular-pyyntoa))
 
 (defn nakyvien-tutkintojen-tiedot [kentta]
@@ -55,6 +58,14 @@
          (map :tutkintotunnus tutkinnot-osajoukko)))
   (is (every? #(= % "Opintoala 1") (nakyvien-tutkintojen-tiedot "hakutulos.opintoala_nimi_fi"))))
 
+(defn paina-paluupainiketta []
+  (w/click "button.palaa-hakuun")
+  (odota-angular-pyyntoa))
+
+(defn paina-tutkinnon-nimi-linkkia [nimi]
+  (w/click {:text nimi})
+  (odota-angular-pyyntoa))
+
 (deftest tutkinnot-haku-test
   (let [toisen-opintoalan-tutkinnot (drop 25 (luo-tutkintoja-opintoalaan 26 "OA2"))
         testidata (update-in (tutkinnot-oletus-testidata) [:tutkinnot] concat toisen-opintoalan-tutkinnot)
@@ -69,7 +80,7 @@
           (is (= (sivun-otsikko) "NÄYTTÖTUTKINTOHAKU")))
         (testing
           "hakutulokset:"
-          (testing "nimellä haku"
+          (testing "nimellä haku:"
             (testing
               "hakuehdolla ei löydy tuloksia"
               (hae-nimella vaara-hakuehto)
@@ -79,8 +90,8 @@
               (hae-nimella tutkinnon-nimi-ehto)
               (testaa-hakutuloslistan-sivua (take 1 (:tutkinnot testidata)))
               (is (= (hakutuloslaskurin-teksti) "1 hakutulos"))))
-          (tyhjenna-input "tutkinnonNimi")
-          (testing "opintoalalla haku"
+          (tyhjenna-nimi-input)
+          (testing "opintoalalla haku:"
             (hae-opintoalalla opintoalan-nimi-ehto)
             (testaa-hakutuloslistan-sivua toisen-opintoalan-tutkinnot)
             (is (= (hakutuloslaskurin-teksti) "1 hakutulos")))
@@ -103,7 +114,7 @@
       (with-webdriver
         (avaa-aituhaku tutkinnot)
           (testing
-            "sivutus"
+            "sivutus:"
             (hae-nimella "haettava tutkinto")
             (testing
               "ensimmäinen sivu:"
@@ -120,9 +131,28 @@
               (testaa-hakutuloslistan-sivua (take 5 (drop 20 (:tutkinnot testidata))))
               (is (= (hakutuloslaskurin-teksti) "hakutulokset 21 - 25 / yhteensä 25 hakutulosta")))
           (testing
-            "tutkinnon sivulle siirtyminen"
-            (let [haettavan-tutkinnon-nimi "Haettava tutkinto a1"]
-              (hae-nimella haettavan-tutkinnon-nimi)
-              (w/click {:text haettavan-tutkinnon-nimi})
-              (odota-angular-pyyntoa)
-              (is (= (tutkinto-sivun-otsikko) "HAETTAVA TUTKINTO A1")))))))))
+            "tutkinnon sivulle siirtyminen:"
+            (testing "hakunäkymästä voi siirtyä tutkinnon sivulle"
+              (let [haettavan-tutkinnon-nimi "Haettava tutkinto a1"]
+                (hae-nimella haettavan-tutkinnon-nimi)
+                (paina-tutkinnon-nimi-linkkia haettavan-tutkinnon-nimi)
+                (is (= (tutkinto-sivun-otsikko) "HAETTAVA TUTKINTO A1"))))))))))
+
+(deftest tutkinnot-paluu-hakuun-test
+  (let [testidata (tutkinnot-oletus-testidata)]
+    (with-data testidata
+      (with-webdriver
+        (avaa-aituhaku tutkinnot)
+        (testing "paluu painike:"
+          (testing "tutkinnon sivulta voi siirtyä takaisin hakunäkymään käyttämällä paluupainiketta ja edellisen haun tulokset ovat muistissa"
+            (hae-nimella "haettava tutkinto")
+            (paina-tutkinnon-nimi-linkkia "Haettava tutkinto a1")
+            (is (= (tutkinto-sivun-otsikko) "HAETTAVA TUTKINTO A1"))
+            (paina-paluupainiketta)
+            (testaa-hakutuloslistan-sivua (take 10 (:tutkinnot testidata)))
+          (testing "hakutuloslistan valittu sivu jää muistiin ja näkyy jos tuloksiin palataan paluupainikkeesta"
+            (seuraava-sivu)
+            (paina-tutkinnon-nimi-linkkia "Haettava tutkinto b2")
+            (is (= (tutkinto-sivun-otsikko) "HAETTAVA TUTKINTO B2"))
+            (paina-paluupainiketta)
+            (testaa-hakutuloslistan-sivua (take 10 (drop 10 (:tutkinnot testidata)))))))))))

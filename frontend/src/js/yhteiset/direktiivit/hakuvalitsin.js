@@ -24,6 +24,7 @@ angular.module('yhteiset.direktiivit.hakuvalitsin', [])
       otsikko : '@',
       url : '@',
       model : '=',
+      change : '&',
       // Select2 hävittää saamastaan model-oliosta kenttiä valinnan
       // vaihtuessa. Tämän vuoksi ei voida antaa Angular-scopessa olevaa
       // modelia suoraan Select2:lle, vaan annetaan sille eri olio, ja
@@ -37,27 +38,6 @@ angular.module('yhteiset.direktiivit.hakuvalitsin', [])
       var modelIdProp = $scope.modelIdProperty;
       var modelTextProp = $scope.modelTextProperty;
       var searchPropertyMap = $scope.$eval($scope.searchPropertyMap);
-
-      $scope.selection = $scope.model || {};
-
-      $scope.$watch('selection', function(value){
-        if(value && value[modelIdProp]) {
-          $scope.model = $scope.model || {};
-          $scope.model[modelIdProp] = value[modelIdProp];
-          $scope.model[modelTextProp] = value[modelTextProp];
-        }
-        else if ($scope.model) {
-          delete $scope.model[modelIdProp];
-          delete $scope.model[modelTextProp];
-        }
-      });
-
-      $scope.$watch('model', function(value) {
-        if (value) {
-          $scope.selection[modelIdProp] = value[modelIdProp];
-          $scope.selection[modelTextProp] = value[modelTextProp];
-        }
-      });
 
       function lokalisoituTeksti(obj, textProp) {
         var teksti = '';

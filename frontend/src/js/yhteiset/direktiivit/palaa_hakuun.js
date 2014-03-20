@@ -14,19 +14,17 @@
 
 'use strict';
 
-angular.module('toimikunnat.ui', ['toimikunnat.toimikunta',
-                                  'ngRoute',
-                                  'yhteiset.direktiivit.palaaHakuun'])
+angular.module('yhteiset.direktiivit.palaaHakuun', [])
 
-  .config(['$routeProvider', function($routeProvider) {
-    $routeProvider
-      .when('/toimikunta/:tkunta', {
-        controller: 'ToimikuntaController',
-        templateUrl: 'template/toimikunnat/toimikunta.html'
-      });
-  }])
-
-  .controller('ToimikuntaController', ['Toimikunta', '$routeParams', '$scope', function(Toimikunta, $routeParams, $scope) {
-    $scope.toimikunta = Toimikunta.get({tkunta: $routeParams.tkunta});
+  .directive('palaaHakuun', ['$location', function($location){
+    return {
+      restrict: 'E',
+      replace: true,
+      templateUrl : 'template/yhteiset/direktiivit/palaa_hakuun.html',
+      link : function(scope) {
+        scope.palaaHakuun = function() {
+          $location.path('/');
+        };
+      }
+    };
   }]);
-

@@ -4,19 +4,24 @@
 <form>
   <fieldset class="search-field">
     <label>{{i18n.tutkinnot.tutkinnon_nimi}}</label>
-    <input type="text" ng-model="tutkinnonNimi">
+    <input ng-change="hakuehdotMuuttuneet()" type="text" ng-model="hakuModel.tutkinnonNimi">
   </fieldset>
   <hakuvalitsin
     otsikko="{{i18n.tutkinnot.opintoala}}"
     url="api/opintoala/haku"
-    model="opintoala"
+    model="hakuModel.opintoala"
     model-id-property="opintoala_tkkoodi"
-    model-text-property="opintoala_nimi">
+    model-text-property="opintoala_nimi"
+    change="hakuehdotMuuttuneet()">
   </hakuvalitsin>
 </form>
 
-<div class="search-results" latausindikaattori lataa="hakujaKaynnissa > 0">
-  <hakutulokset tuloksia-sivulla="10" otsikot="[i18n.tutkinnot.tutkintotunnus, i18n.tutkinnot.tutkinnon_nimi, i18n.tutkinnot.opintoala]" hakutulokset="tutkinnot">
+<div class="search-results" latausindikaattori lataa="hakuModel.hakujaKaynnissa > 0">
+  <hakutulokset
+    nykyinen-sivu="hakuModel.nykyinenSivu"
+    tuloksia-sivulla="10"
+    otsikot="[i18n.tutkinnot.tutkintotunnus, i18n.tutkinnot.tutkinnon_nimi, i18n.tutkinnot.opintoala]"
+    hakutulokset="hakuModel.tutkinnot">
     <div class="table-cell">{{hakutulos.tutkintotunnus}}</div>
     <div class="table-cell"><a ng-href="#/tutkinto/{{hakutulos.tutkintotunnus}}">{{hakutulos.nimi | lokalisoi:hakutulos:'nimi'}}</a></div>
     <div class="table-cell">{{hakutulos.opintoala_nimi | lokalisoi:hakutulos:'opintoala_nimi'}}</div>

@@ -26,15 +26,10 @@ angular.module('yhteiset.direktiivit.hakutulokset', [
       scope: {
         hakutulokset: '=',
         tuloksiaSivulla: '=',
-        otsikot: '='
+        otsikot: '=',
+        nykyinenSivu: '='
       },
       transclude: true,
-      templateUrl: 'template/yhteiset/direktiivit/hakutulokset.html',
-      link: function(scope) {
-        scope.nykyinenSivu = 1;
-        scope.$watchCollection('hakutulokset', function() {
-          scope.nykyinenSivu = 1;
-        });
-      }
+      templateUrl: 'template/yhteiset/direktiivit/hakutulokset.html'
     };
   });

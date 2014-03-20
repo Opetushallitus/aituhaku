@@ -20,6 +20,7 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
                                 'yhteiset.palvelut.debounce',
                                 'yhteiset.direktiivit.latausindikaattori',
                                 'yhteiset.direktiivit.hakuvalitsin',
+                                'yhteiset.direktiivit.palaaHakuun',
                                 'ngRoute'])
 
   .config(['$routeProvider', function($routeProvider) {
@@ -42,30 +43,49 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
     minHakuehtoPituus : 3
   })
 
-  .controller('TutkinnotController', ['Tutkinto', '$scope', '$filter', 'debounce', 'hakuAsetukset', function(Tutkinto, $scope, $filter, debounce, asetukset) {
+  .factory('TutkintoHakuModel', function() {
+    return {
+      tutkinnonNimi : '',
+      opintoala : {},
+      tutkinnot : null,
+      hakujaKaynnissa : 0,
+      nykyinenSivu : 1
+    };
+  })
 
-    $scope.hakujaKaynnissa = 0;
-    $scope.tutkinnonNimi = '';
-    $scope.opintoala = {};
+  .controller('TutkinnotController', ['Tutkinto',
+                                      'TutkintoHakuModel',
+                                      '$scope',
+                                      '$rootScope',
+                                      '$filter',
+                                      'debounce',
+                                      'hakuAsetukset',
+                                     function(Tutkinto,
+                                              TutkintoHakuModel,
+                                              $scope,
+                                              $rootScope,
+                                              $filter,
+                                              debounce,
+                                              asetukset) {
+
+    $scope.hakuModel = TutkintoHakuModel;
 
     function tutkinnotHakuVastaus(tutkinnot) {
-      $scope.hakujaKaynnissa--;
-      $scope.tutkinnot = $filter('jarjestaLokalisoidullaNimella')(tutkinnot, 'nimi');
+      TutkintoHakuModel.hakujaKaynnissa--;
+      TutkintoHakuModel.nykyinenSivu = 1;
+      TutkintoHakuModel.tutkinnot = $filter('jarjestaLokalisoidullaNimella')(tutkinnot, 'nimi');
     }
 
     function hae() {
-      var tutkinnonNimi = $scope.tutkinnonNimi;
-      var opintoala = _.isEmpty($scope.opintoala) ? null : $scope.opintoala.opintoala_tkkoodi;
+      var tutkinnonNimi = TutkintoHakuModel.tutkinnonNimi;
+      var opintoala = _.isEmpty(TutkintoHakuModel.opintoala) ? null : TutkintoHakuModel.opintoala.opintoala_tkkoodi;
       if(tutkinnonNimi.length >= asetukset.minHakuehtoPituus || opintoala) {
         $scope.hakujaKaynnissa++;
         Tutkinto.haeEhdoilla({nimi: tutkinnonNimi, opintoala: opintoala}, tutkinnotHakuVastaus);
       }
     }
 
-    var hakuehdotMuuttuneet = debounce(hae, asetukset.viive);
-
-    $scope.$watch('tutkinnonNimi', hakuehdotMuuttuneet);
-    $scope.$watch('opintoala.opintoala_tkkoodi', hakuehdotMuuttuneet);
+    $scope.hakuehdotMuuttuneet = debounce(hae, asetukset.viive);
 
   }])
 

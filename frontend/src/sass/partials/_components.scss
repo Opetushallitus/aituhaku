@@ -1,0 +1,10 @@
+.kielen-vaihto {
+  float: right;
+  margin-top: 5px;
+}
+
+.palaa-hakuun {
+  font-size: 1em;
+  padding-left: 35px;
+  @include icon-before(-22px, 2px){@include left-arrow;};
+}
