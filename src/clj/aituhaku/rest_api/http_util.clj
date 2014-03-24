@@ -15,3 +15,10 @@
                 "Cache-control" (str "max-age=" (:response-cache-max-age @asetukset))}}))
   ([data schema]
    (json-response (s/validate (s/maybe schema) data))))
+
+(defn json-response-nocache
+  [data]
+  (let [response (json-response data)]
+    (if (:headers response)
+      (assoc-in response [:headers "Cache-control"] "max-age=0")
+      response)))

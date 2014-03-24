@@ -17,7 +17,7 @@
                       ResourceBundle))
   (:require [compojure.core :as c]
             [schema.core :as schema]
-            [aituhaku.rest-api.http-util :refer [json-response]]
+            [aituhaku.rest-api.http-util :refer [json-response-nocache]]
             [aitu.util :refer [pisteavaimet->puu]]))
 
 (defn validoi-kieli []
@@ -34,4 +34,4 @@
 (c/defroutes reitit
   (c/GET "/:kieli" [kieli :as req]
     (schema/validate (validoi-kieli) kieli)
-    (json-response (hae-tekstit kieli))))
+    (json-response-nocache (hae-tekstit kieli))))
