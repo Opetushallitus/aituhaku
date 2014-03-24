@@ -18,7 +18,4 @@
 
 (defn json-response-nocache
   [data]
-  (let [response (json-response data)]
-    (if (:headers response)
-      (assoc-in response [:headers "Cache-control"] "max-age=0")
-      response)))
+  (assoc-in (json-response data) [:headers "Cache-control"] "max-age=0"))
