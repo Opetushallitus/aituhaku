@@ -64,7 +64,7 @@
           _ (json-gen/add-encoder org.joda.time.LocalDate
               (fn [c json-generator]
                 (.writeString json-generator (.toString c "yyyy-MM-dd"))))
-          portti (-> luetut-asetukset :server :port Integer/parseInt)
+          portti (get-in luetut-asetukset [:server :port])
           sammuta (hs/run-server (->
                                    (reitit luetut-asetukset)
                                    wrap-keyword-params
@@ -72,7 +72,7 @@
                                    (wrap-resource "public/app")
                                    (wrap-locale
                                      :ei-redirectia #"/api/.*"
-                                     :base-url (-> luetut-asetukset :server :base-url))
+                                     :base-url (get-in luetut-asetukset [:server :base-url]))
                                    wrap-params
                                    wrap-content-type
                                    log-request-wrapper)
