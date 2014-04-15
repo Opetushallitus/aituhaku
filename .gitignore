@@ -18,3 +18,4 @@ compiled_css
 resources/public/app/
 .tmp
 aituhaku.properties
+*.swp
