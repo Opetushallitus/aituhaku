@@ -12,4 +12,3 @@ aituhaku
 ** Eclipse: Counterclockwisen kanssa projektiin tulee turhat default-tiedostot, jotka pitää käsin poistaa kun projektin luo.
   (Luultavasti korjaantuu tulevassa Eclipse/Counterclockwise versiossa)
 
-
