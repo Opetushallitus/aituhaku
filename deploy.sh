@@ -20,6 +20,8 @@ then
     exit 1
 fi
 
+dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 service=${AITUHAKU_SERVICE:-aituhaku}
 
 version_jarfile=$1
@@ -32,7 +34,7 @@ set -x
 # Ei tarkisteta isäntäavaimia, koska testiajoihin käytettävien
 # virtuaalipalvelinten IP:t vaihtuvat, kun ne tuhotaan ja luodaan uudelleen
 echo "kopioidaan uusi versio etäpalvelimelle $user_host"
-scp -i $ssh_key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p start-aituhaku.sh stop-aituhaku.sh $version_jarfile $user_host:~
+scp -i $ssh_key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -p $dir/start-aituhaku.sh $dir/stop-aituhaku.sh $version_jarfile $user_host:~
 
 echo "päivitetään sovellus"
 
