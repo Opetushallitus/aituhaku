@@ -1,6 +1,7 @@
 .DS_Store
 .project
 .classpath
+.settings
 /bin
 /target
 /classes
@@ -17,3 +18,4 @@ compiled_css
 resources/public/app/
 .tmp
 aituhaku.properties
+*.swp
