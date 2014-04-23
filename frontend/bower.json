@@ -3,15 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "angular": "1.2.12",
+    "angular": "1.2.16",
     "lodash": "2.4.1",
-    "angular-mocks": "1.2.12",
-    "angular-route": "1.2.12",
-    "angular-resource": "1.2.12",
+    "angular-mocks": "1.2.16",
+    "angular-route": "1.2.16",
+    "angular-resource": "1.2.16",
     "angular-bootstrap": "0.10.0",
-    "jquery": "2.1.0",
+    "jquery": "2.1.1-rc2",
     "angular-ui-select2": "0.0.5",
-    "select2": "3.4.5",
-    "modernizr": "~2.7.2"
+    "select2": "3.4.6",
+    "modernizr": "2.7.2"
   }
 }

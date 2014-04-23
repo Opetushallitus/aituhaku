@@ -23,8 +23,8 @@
 (defn avaa-aituhaku-suomeksi [] (avaa-aituhaku "/fi/#/tutkinnot"))
 (defn avaa-aituhaku-ruotsiksi [] (avaa-aituhaku "/sv/#/tutkinnot"))
 
-(defn suomeksi-linkki-nakyvissa [] (w/exists? {:css "#fi-link:not(.ng-hide)"}))
-(defn ruotsiksi-linkki-nakyvissa [] (w/exists? {:css "#sv-link:not(.ng-hide)"}))
+(defn suomeksi-linkki-nakyvissa [] (> (count (filter w/displayed? (w/find-elements {:css "#fi-link"}))) 0))
+(defn ruotsiksi-linkki-nakyvissa [] (> (count (filter w/displayed? (w/find-elements {:css "#sv-link"}))) 0))
 
 (defn vaihda-kielta-suomeksi []
   (w/click {:css "#fi-link"})

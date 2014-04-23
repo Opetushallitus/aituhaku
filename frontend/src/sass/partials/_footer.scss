@@ -19,8 +19,6 @@ footer {
     padding-top: $marginL;
     background-color: $info-section-bgcolor;
     height: $footer-info-section-height;
-    h3, p {margin: 0;}
-    p.footer-contact {margin-top: $marginM;}
   }
   .copyright {
     background-color: $darkest-gray;
@@ -28,6 +26,11 @@ footer {
       height: $footer-copyright-section-height;
       display: table-cell;
       vertical-align: middle;
+    }
+
+    .app-wrapper {
+      background: url("../img/oph_logo_footer.svg") right 15px center no-repeat;
+      .no-svg & {background-image: url("../img/oph_logo_footer.png")}
     }
   }
 }
