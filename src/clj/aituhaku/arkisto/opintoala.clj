@@ -9,8 +9,8 @@
        (timeutil/pvm-tuleva-tai-tanaan? (:voimassa_loppupvm opintoala))))
 
 (defn hae-termilla
-  "Hakee opintoalan nimestä termillä."
-  [termi]
+  "Hakee opintoalan kentista termillä."
+  [termi kieli]
   (->> (opintoala-sql/hae)
       (filter opintoala-voimassa?)
-      (filter #(sisaltaako-kentat? % [:opintoala_nimi_fi :opintoala_nimi_sv] termi))))
+      (filter #(sisaltaako-kentat? % [(keyword (str "opintoala_nimi_" kieli))] termi))))

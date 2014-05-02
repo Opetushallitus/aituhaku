@@ -25,10 +25,6 @@ angular.module('yhteiset.direktiivit.hakuvalitsin', [])
       url : '@',
       model : '=',
       change : '&',
-      // Select2 hävittää saamastaan model-oliosta kenttiä valinnan
-      // vaihtuessa. Tämän vuoksi ei voida antaa Angular-scopessa olevaa
-      // modelia suoraan Select2:lle, vaan annetaan sille eri olio, ja
-      // pidetään watcheilla niiden id- ja text-kentät synkassa.
       modelIdProperty : '@',
       modelTextProperty : '@',
       searchPropertyMap : '@'
@@ -70,7 +66,8 @@ angular.module('yhteiset.direktiivit.hakuvalitsin', [])
           quietMillis: 500,
           data: function (term) {
             return {
-              termi: term // search term
+              termi: term, // search term
+              kieli: kieli
             };
           },
           results: function (data) {

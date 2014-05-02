@@ -6,8 +6,8 @@
             [aituhaku.arkisto.opintoala :as arkisto]))
 
 (c/defroutes reitit
-  (c/GET "/haku" [termi :as req]
+  (c/GET "/haku" [termi kieli]
     (schema/validate schema/Str termi)
-      (json-response
-        (arkisto/hae-termilla termi)
-        [Opintoala])))
+    (json-response
+      (arkisto/hae-termilla termi kieli)
+      [Opintoala])))
