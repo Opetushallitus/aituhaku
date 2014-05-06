@@ -22,7 +22,7 @@ angular.module('yhteiset.direktiivit.palaaHakuun', [])
       replace: true,
       templateUrl : 'template/yhteiset/direktiivit/palaa_hakuun.html',
       link : function(scope) {
-        scope.palaaHakuun = function() {
+        scope.palaaHakuun = function() {
           $location.path('/');
         };
       }
