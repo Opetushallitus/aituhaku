@@ -43,7 +43,7 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
     minHakuehtoPituus : 3
   })
 
-  .factory('TutkintoHakuModel', function() {
+  .factory('TutkintoHakuModel', function() {
     return {
       tutkinnonNimi : '',
       opintoala : {},
