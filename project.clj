@@ -40,4 +40,6 @@
                        :aot :all}}
   :source-paths ["src/clj"]
   :main aituhaku.palvelin
-  :repl-options {:init-ns user})
+  :repl-options {:init-ns user}
+  :jar-name "aituhaku.jar"
+  :uberjar-name "aituhaku-standalone.jar")
