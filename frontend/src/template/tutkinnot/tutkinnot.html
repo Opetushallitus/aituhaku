@@ -6,10 +6,11 @@
 <form class="search-form">
   <fieldset class="search-field">
     <label>{{i18n.tutkinnot.tutkinnon_nimi}}</label>
-    <input ng-change="hakuehdotMuuttuneet()" type="text" ng-model="hakuModel.tutkinnonNimi">
+    <input ng-change="hakuehdotMuuttuneet()" type="text" ng-model="hakuModel.tutkinnonNimi" placeholder="{{i18n.tutkinnot.tutkinnon_nimi_placeholder}}">
   </fieldset>
   <hakuvalitsin
     otsikko="{{i18n.tutkinnot.opintoala}}"
+    placeholder="{{i18n.tutkinnot.opintoala_placeholder}}"
     url="api/opintoala/haku"
     model="hakuModel.opintoala"
     model-id-property="opintoala_tkkoodi"

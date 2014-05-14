@@ -22,6 +22,7 @@ angular.module('yhteiset.direktiivit.hakuvalitsin', [])
     replace: true,
     scope : {
       otsikko : '@',
+      placeholder: '@',
       url : '@',
       model : '=',
       change : '&',
