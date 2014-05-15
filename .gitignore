@@ -19,3 +19,4 @@ resources/public/app/
 .tmp
 aituhaku.properties
 *.swp
+ansible/aituhaku_vagrant/salasanat/
