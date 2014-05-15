@@ -4,14 +4,8 @@
 [oph_palvelu]
 192.168.50.52
 
-[all:vars]
-ansible_ssh_user = aituadmin
-
-[oph_db:vars]
-tietokanta = aituhaku
-tietokannan_peruskayttaja = aituhaku
-
 [oph_palvelu:vars]
+ansible_ssh_user = aituadmin
 palvelu = aituhaku
 asennushakemisto = /data00/aituhaku
 sovelluksen_asetustiedosto = aituhaku.properties
