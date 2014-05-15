@@ -2,8 +2,9 @@ $icon-images : url('../img/oph-icon-sprite.png');
 $icon-images-svg : url('../img/oph-icon-sprite.svg');
 
 @mixin icon-images {
-  background-image: $icon-images-svg;
-  .no-svg & {background-image: $icon-images;}
+  background-image: $icon-images-svg !important;
+  background-size: inherit !important;
+  .no-svg & {background-image: $icon-images !important;}
 }
 
 @mixin icon-hover($position) {
@@ -150,6 +151,7 @@ Esim: @include icon-after(11px, 11px){@include user-icon;}; */
   width: 8px;
   height: 5px;
   background-position: 0 -1550px;
+  
 }
 
 @mixin small-collapse-icon {

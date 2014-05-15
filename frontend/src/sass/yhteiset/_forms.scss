@@ -204,8 +204,8 @@ fieldset.datepicker-field {
 .tyhja-:empty {
   &:after {
     /*
-      Oikeasti haluttiin sisällöksi vain {content: "-";}, mutta tietyissä tilanteissa IE9 kaatui em. ratkaisuun,
-      joten kierettiin ongelma ao. tyylillä.
+      Oikeasti haluttiin sis��ll��ksi vain {content: "-";}, mutta tietyiss�� tilanteissa IE9 kaatui em. ratkaisuun,
+      joten kierettiin ongelma ao. tyylill��.
     */
     width: 4px;
     height: 1px;
