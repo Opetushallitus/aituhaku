@@ -13,6 +13,9 @@ footer {
     a {
       color: $lighter-primary;
     }
+    a:hover{
+    	color: $lightest-primary;
+    }
   }
   .info {
     @include  border-box;
