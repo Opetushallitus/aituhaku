@@ -63,6 +63,21 @@ table:not(.table-condensed), .table {
   display: table-row;
 }
 
+.table.hakutulokset div div:nth-child(1){
+	width: 10%;
+	min-width: 100px;
+}
+
+.table.hakutulokset div div:nth-child(2){
+	width: 50%;
+	min-width: 200px;
+}
+
+.table.hakutulokset div div:nth-child(3){
+	width: 40%;
+	min-width: 200px;
+}
+
 .table-cell {
   display: table-cell;
 
