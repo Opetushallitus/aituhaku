@@ -19,7 +19,7 @@ angular.module('yhteiset.direktiivit.hakutulokset', [
     'yhteiset.direktiivit.sivutusnavigaatio',
     'yhteiset.suodattimet.sivuta'
   ])
-  .directive('hakutulokset', function() {
+  .directive('hakutulokset', ['$location', function($location) {
     return {
       restrict: 'E',
       replace: true,
@@ -30,6 +30,13 @@ angular.module('yhteiset.direktiivit.hakutulokset', [
         nykyinenSivu: '='
       },
       transclude: true,
-      templateUrl: 'template/yhteiset/direktiivit/hakutulokset.html'
+      templateUrl: 'template/yhteiset/direktiivit/hakutulokset.html',
+      link: function(scope) {
+        scope.go = function ( tutkintotunnus ) {
+          $location.path('/tutkinto/'+tutkintotunnus);
+        };
+      }
     };
-  });
+  }]);
+
+
