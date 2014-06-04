@@ -19,7 +19,7 @@
   <fieldset class="toimikunta-lista">
     <label>{{i18n.tutkinnot.toimikunta}}</label>
     <div ng-repeat="toimikunta in tutkinto.toimikunnat">
-      <a ng-href="#/toimikunta/{{toimikunta.tkunta}}">{{toimikunta.nimi | lokalisoi:toimikunta:'nimi'}}</a>
+      <a ng-href="#/toimikunta/{{toimikunta.tkunta}}?tutkinto={{tutkinto.tutkintotunnus}}">{{toimikunta.nimi | lokalisoi:toimikunta:'nimi'}}</a>
     </div>
   </fieldset>
 </section>
