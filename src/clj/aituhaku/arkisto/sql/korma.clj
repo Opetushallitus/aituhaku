@@ -96,3 +96,6 @@
 
 (defentity opintoala_view
   (sql/table :aituhaku.opintoala_view))
+
+(defentity toimikuntien_jasenet_view
+  (sql/table :aituhaku.toimikuntien_jasenet_view))

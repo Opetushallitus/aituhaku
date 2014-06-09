@@ -32,11 +32,16 @@
                      :nimi_sv s/Str
                      :tkunta s/Str})
 
+(def Jasen {:etunimi s/Str
+            :sukunimi s/Str
+            :rooli s/Str})
+
 (def Toimikunta (merge ToimikuntaNimi
                        {:sahkoposti (s/maybe s/Str)
                         :toimikausi_alku org.joda.time.LocalDate
                         :toimikausi_loppu org.joda.time.LocalDate
-                        :kielisyys s/Str}))
+                        :kielisyys s/Str
+                        :jasenet [Jasen]}))
 
 (def Jarjestaja {:oppilaitoskoodi s/Str
                  :nimi s/Str})

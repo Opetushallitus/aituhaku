@@ -18,5 +18,9 @@
 
 (defn hae
   [tkunta]
-  (first (sql/select toimikunta_view
-           (sql/where {:tkunta tkunta}))))
+  (let [toimikunta (first (sql/select toimikunta_view
+                            (sql/where {:tkunta tkunta})))
+        jasenet (sql/select toimikuntien_jasenet_view
+                  (sql/fields :etunimi :sukunimi :rooli)
+                  (sql/where {:toimikunta tkunta}))]
+    (assoc toimikunta :jasenet jasenet)))
