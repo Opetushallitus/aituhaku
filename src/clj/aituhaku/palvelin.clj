@@ -16,6 +16,7 @@
   (:gen-class)
   (:require [clojure.java.io :as io]
             [clojure.tools.logging :as log]
+            [clojure.pprint :refer [pprint]]
             [compojure.core :as c]
             [org.httpkit.server :as hs]
             [ring.middleware.json :refer [wrap-json-params]]
@@ -29,6 +30,7 @@
             [aitu.infra.print-wrapper :refer [log-request-wrapper]]
             [aituhaku.asetukset :refer [asetukset lue-asetukset oletusasetukset konfiguroi-lokitus]]
             [aituhaku.infra.i18n :refer [wrap-locale]]
+            [aituhaku.infra.status :refer [status]]
             [stencil.core :as s]
             aituhaku.rest-api.i18n
             aituhaku.rest-api.opintoala
@@ -47,6 +49,11 @@
     (c/context "/api/toimikunta" [] aituhaku.rest-api.toimikunta/reitit)
     (c/context "/api/i18n" [] aituhaku.rest-api.i18n/reitit)
     (c/context "/api/opintoala" [] aituhaku.rest-api.opintoala/reitit)
+    (c/GET "/status" [] (s/render-file "status" (assoc (status)
+                                                       :asetukset (with-out-str
+                                                                    (-> asetukset
+                                                                      (assoc-in [:db :password] "*****")
+                                                                      pprint)))))
     (c/GET "/" [] (s/render-file "public/app/index.html" {:base-url (-> asetukset :server :base-url)}))))
 
 (defn sammuta [palvelin]
