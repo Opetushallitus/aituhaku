@@ -15,6 +15,7 @@
 (ns aituhaku.infra.status
   (:require [clojure.java.io :refer [resource]]))
 
+;; Postwalk käsittelee yksittäisen avain-arvo-parin vektorina, ei MapEntryna.
 (defn piilota-salasanat [status]
   (clojure.walk/postwalk #(if (and (vector? %)
                                    (= :password (first %)))
