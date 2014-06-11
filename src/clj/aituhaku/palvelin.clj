@@ -30,7 +30,7 @@
             [aitu.infra.print-wrapper :refer [log-request-wrapper]]
             [aituhaku.asetukset :refer [asetukset lue-asetukset oletusasetukset konfiguroi-lokitus]]
             [aituhaku.infra.i18n :refer [wrap-locale]]
-            [aituhaku.infra.status :refer [status]]
+            [aituhaku.infra.status :refer [status piilota-salasanat]]
             [stencil.core :as s]
             aituhaku.rest-api.i18n
             aituhaku.rest-api.opintoala
@@ -52,7 +52,7 @@
     (c/GET "/status" [] (s/render-file "status" (assoc (status)
                                                        :asetukset (with-out-str
                                                                     (-> asetukset
-                                                                      (assoc-in [:db :password] "*****")
+                                                                      piilota-salasanat
                                                                       pprint)))))
     (c/GET "/" [] (s/render-file "public/app/index.html" {:base-url (-> asetukset :server :base-url)}))))
 

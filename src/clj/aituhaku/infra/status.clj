@@ -15,6 +15,13 @@
 (ns aituhaku.infra.status
   (:require [clojure.java.io :refer [resource]]))
 
+(defn piilota-salasanat [status]
+  (clojure.walk/postwalk #(if (and (vector? %)
+                                   (= :password (first %)))
+                            [:password "*****"]
+                            %)
+                         status))
+
 (defn status []
   {:build-id (if-let [r (resource "build-id.txt")]
                (.trim (slurp r))
