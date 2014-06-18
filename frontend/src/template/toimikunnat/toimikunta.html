@@ -17,7 +17,9 @@
   </fieldset>
   <fieldset>
     <label>{{i18n.toimikunta.jasenet}}</label>
-    <p ng-repeat="jasen in toimikunta.jasenet">{{jasen.etunimi}} {{jasen.sukunimi}}, {{i18n.toimikunta.jasen[jasen.rooli]}}</p>
+      <ul>
+        <li ng-repeat="jasen in toimikunta.jasenet">{{jasen.etunimi}} {{jasen.sukunimi}}, {{i18n.toimikunta.jasen[jasen.rooli]}}</li>
+      </ul>
   </fieldset>
   <fieldset>
     <p><span ng-bind="i18n.toimikunta.lisatietolinkki_teksti"></span> <a href="{{i18n.toimikunta.lisatietolinkki}}" ng-bind="i18n.toimikunta.lisatietolinkki_otsikko"></a></p>
