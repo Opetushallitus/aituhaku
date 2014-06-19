@@ -14,12 +14,14 @@
 
 'use strict';
 
-angular.module('aituhaku', ['tutkinnot.ui',
+angular.module('aituhaku', ['angular-loading-bar',
+                            'tutkinnot.ui',
                             'toimikunnat.ui',
                             'yhteiset.direktiivit.copyright',
                             'yhteiset.palvelut.i18n',
                             'yhteiset.suodattimet.lokalisoi',
-                            'ui.select2'])
+                            'ui.select2'
+                            ])
 
   .controller('AituhakuController', ['$scope', 'i18n', function($scope, i18n){
     $scope.i18n = i18n;
@@ -29,6 +31,11 @@ angular.module('aituhaku', ['tutkinnot.ui',
   .constant('asetukset', {
     requestTimeout : 120000 //2min timeout kaikille pyynnöille
   })
+
+  .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
+    cfpLoadingBarProvider.latencyThreshold = 10;
+    cfpLoadingBarProvider.includeSpinner = false;
+  }])
 
   .directive('kielenVaihto', ['kieli', function(kieli){
     return {

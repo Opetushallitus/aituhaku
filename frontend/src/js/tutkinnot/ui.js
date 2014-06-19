@@ -18,7 +18,6 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
                                 'yhteiset.direktiivit.hakutulokset',
                                 'yhteiset.suodattimet.jarjestaLokalisoidullaNimella',
                                 'yhteiset.palvelut.debounce',
-                                'yhteiset.direktiivit.latausindikaattori',
                                 'yhteiset.direktiivit.hakuvalitsin',
                                 'yhteiset.direktiivit.palaaHakuun',
                                 'ngRoute'])

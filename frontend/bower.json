@@ -12,6 +12,7 @@
     "jquery": "2.1.1-rc2",
     "angular-ui-select2": "0.0.5",
     "select2": "3.4.6",
-    "modernizr": "2.7.2"
+    "modernizr": "2.7.2",
+    "angular-loading-bar": "~0.4.3"
   }
 }
