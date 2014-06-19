@@ -38,6 +38,6 @@
         (avaa-aituhaku (toimikuntasivu "ILMA"))
         ;;Niin
         (are [elementti teksti] (= (elementin-teksti elementti) teksti)
-             "toimikunta.nimi_fi" "ILMASTOINTIALAN TUTKINTOTOIMIKUNTA"
+             "toimikunta.nimi" "ILMASTOINTIALAN TUTKINTOTOIMIKUNTA"
              "i18n.kielisyys[toimikunta.kielisyys]" "suomi"
              "toimikunta.toimikausi_alku" "01.08.2013 – 31.07.2016")))))
