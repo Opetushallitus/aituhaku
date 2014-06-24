@@ -25,7 +25,8 @@
 </section>
 
 <h2>{{i18n.tutkinnot.tutkinnon_jarjestajat}}</h2>
-<div class="table">
+<div ng-if="tutkinto.jarjestajat.length == 0">{{i18n.tutkinnot.ei_jarjestajia}}</div>
+<div class="table" ng-if="tutkinto.jarjestajat.length > 0">
   <div class="table-header">
     <div class="table-cell">{{i18n.tutkinnot.tutkinnon_jarjestaja}}</div>
   </div>
