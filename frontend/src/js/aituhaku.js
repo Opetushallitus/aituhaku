@@ -33,7 +33,7 @@ angular.module('aituhaku', ['angular-loading-bar',
   })
 
   .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
-    cfpLoadingBarProvider.latencyThreshold = 10;
+    cfpLoadingBarProvider.latencyThreshold = 100;
     cfpLoadingBarProvider.includeSpinner = false;
   }])
 

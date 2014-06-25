@@ -1,0 +1,66 @@
+.print {
+  display: none;
+}
+
+@media print {
+  * {
+    page-break-after: avoid;
+  }
+
+  .print {
+    display: block;
+  }
+
+  .logo {
+    float: left;
+    max-width: 30%;
+  }
+
+  header section.app-wrapper h1 a {
+    display: block;
+    float: left;
+    font-size: 0.8em;
+    text-align: left;
+    max-width: 70%;
+    margin-left: 30px;
+  }
+
+  .kielen-vaihto,
+  button.palaa-hakuun,
+  section.info,
+  .table .table-header,
+  footer,
+  section.app-wrapper,
+  header section.app-wrapper a {
+    display: none;
+  }
+
+  section.main-content {
+    padding-bottom: 0px;
+  }
+
+  fieldset label {
+    margin: 0;
+  }
+
+  html, body, #page-container {
+    height: auto !important;
+  }
+
+  section.app-wrapper.main-content,
+  header section.app-wrapper {
+    display: block;
+    margin: 0px !important;
+    padding: 0px !important;
+  }
+
+  header {
+    height: auto !important;
+    padding-bottom: 20px;
+  }
+
+  #turre-logo {
+    border: 1px solid red;
+    display: none;
+  }
+}
