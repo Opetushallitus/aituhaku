@@ -14,14 +14,15 @@ footer {
       color: $lighter-primary;
     }
     a:hover{
-    	color: $lightest-primary;
+      color: $lightest-primary;
     }
   }
   .info {
     @include  border-box;
-    padding-top: $marginL;
+    padding: 1px 0;
     background-color: $info-section-bgcolor;
-    height: $footer-info-section-height;
+    height: auto;
+    min-height: $footer-info-section-height;
   }
   .copyright {
     background-color: $darkest-gray;
@@ -34,6 +35,7 @@ footer {
     .app-wrapper {
       background: url("../img/oph_logo_footer.svg") right 15px center no-repeat;
       .no-svg & {background-image: url("../img/oph_logo_footer.png")}
+
     }
   }
 }

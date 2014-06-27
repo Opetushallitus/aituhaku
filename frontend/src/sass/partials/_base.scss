@@ -5,7 +5,9 @@ html {
   height: 100%;
 }
 
-html, body, #page-container { height: 100%; }
+html, body, #page-container {
+  height: 100%;
+}
 
 body {
   width: 100%;
@@ -13,7 +15,10 @@ body {
   padding: 0;
 }
 
-body > #page-container { height: auto; min-height: 100%; }
+body > #page-container {
+  height: auto;
+  min-height: 100%;
+}
 
 header {
   height: 120px;
@@ -76,4 +81,5 @@ footer {
   .no-svg & {
     background-image: url("../img/opetushallitus.gif");
   }
+  background-size: 100% 100%;
 }

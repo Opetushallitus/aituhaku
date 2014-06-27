@@ -1,0 +1,55 @@
+@media only screen and (max-width: 690px) {
+  #oph-logo {
+    width: 30%;
+  }
+  header h1 {
+    font-size: 2.1em;
+  }
+  footer .copyright .app-wrapper {
+    background-size: 30% 30%;
+  }
+  fieldset, .search-field {
+    width: 70%;
+  }
+  div.table-cell {
+    padding: 3px 5px;
+    min-width: 30px;
+  }
+  div.table.hakutulokset div.table-header div.table-cell:first-child,
+  div.table.hakutulokset div.table-row div.table-cell:first-child {
+    display: none;
+  }
+
+  /* Pagination styles for small screen */
+  .pagination li a {
+    margin-right: 2px;
+  }
+  .pagination li:first-child + li + li + li a {
+    padding-right: 27px;
+  }
+  .pagination li:first-child + li + li + li a:after {
+    margin-left: 5px;
+  }
+  .pagination li:first-child a:before {
+    margin-left: -21px;
+  }
+  .pagination li:first-child a {
+    padding-left: 33px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  header h1 {
+    font-size: 1.8em;
+  }
+  #oph-logo {
+    width: 50%;
+    position: absolute;
+    top: 5px;
+    right: 0px;
+    height: 30px;
+  }
+  fieldset, .search-field {
+    width: 100%;
+  }
+}
