@@ -50,7 +50,7 @@
         tutkinto (-> testidata :tutkinnot first)]
     (with-webdriver
       (with-data testidata
-        (avaa-aituhaku (tutkintosivu (:tutkintotunnus tutkinto)))
+        (avaa (tutkintosivu (:tutkintotunnus tutkinto)))
         (testing
           "sivun otsikko näkyy"
           (is (= (.toLowerCase (tutkinto-sivun-otsikko)) (.toLowerCase (:nimi_fi tutkinto)))))

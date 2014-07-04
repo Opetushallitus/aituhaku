@@ -13,13 +13,12 @@
 ;; European Union Public Licence for more details.
 
 (ns aituhaku-e2e.util
-  (:require [aitu-e2e.util :refer [avaa]]))
+  (:require [aitu-e2e.util :refer [avaa-url]]))
 
 (defn aituhaku-url [polku]
   (str (or (System/getenv "AITUHAKU_URL")
            "http://localhost:8081")
        polku))
 
-(defn avaa-aituhaku
-  [polku]
-  (aitu-e2e.util/avaa aituhaku-url polku))
+(defn avaa [polku]
+  (avaa-url (aituhaku-url polku)))

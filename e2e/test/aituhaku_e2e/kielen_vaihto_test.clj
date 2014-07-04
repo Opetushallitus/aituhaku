@@ -20,8 +20,8 @@
             [aitu-e2e.data-util :refer [with-data]]
             [aituhaku-e2e.util :refer :all]))
 
-(defn avaa-aituhaku-suomeksi [] (avaa-aituhaku "/fi/#/tutkinnot"))
-(defn avaa-aituhaku-ruotsiksi [] (avaa-aituhaku "/sv/#/tutkinnot"))
+(defn avaa-suomeksi [] (avaa "/fi/#/tutkinnot"))
+(defn avaa-ruotsiksi [] (avaa "/sv/#/tutkinnot"))
 
 (defn suomeksi-linkki-nakyvissa [] (> (count (filter w/displayed? (w/find-elements {:css "#fi-link"}))) 0))
 (defn ruotsiksi-linkki-nakyvissa [] (> (count (filter w/displayed? (w/find-elements {:css "#sv-link"}))) 0))
@@ -38,23 +38,23 @@
   (testing "kielenvaihto"
     (testing "/fi/ url:iin mentäessä Suomeksi-linkki ei ole näkyvissä ja På svenska- linkki on näkyvissä."
       (with-webdriver
-        (avaa-aituhaku-suomeksi)
+        (avaa-suomeksi)
         (is (not (suomeksi-linkki-nakyvissa)))
         (is (ruotsiksi-linkki-nakyvissa))))
     (testing "/sv/ url:iin mentäessä På svenska- linkki ei ole näkyvissä ja Suomeksi- linkki on näkyvissä."
       (with-webdriver
-        (avaa-aituhaku-ruotsiksi)
+        (avaa-ruotsiksi)
         (is (suomeksi-linkki-nakyvissa))
         (is (not (ruotsiksi-linkki-nakyvissa)))))
     (testing "kielen vaihtaminen suomesta ruotsiin onnistuu"
       (with-webdriver
-        (avaa-aituhaku-suomeksi)
+        (avaa-suomeksi)
         (is (not (suomeksi-linkki-nakyvissa)))
         (vaihda-kielta-ruotsiksi)
         (is (suomeksi-linkki-nakyvissa))))
     (testing "kielen vaihtaminen ruotsista suomeen onnistuu"
       (with-webdriver
-        (avaa-aituhaku-ruotsiksi)
+        (avaa-ruotsiksi)
         (is (not (ruotsiksi-linkki-nakyvissa)))
         (vaihda-kielta-suomeksi)
         (is (ruotsiksi-linkki-nakyvissa))))))

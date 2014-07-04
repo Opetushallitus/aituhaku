@@ -74,7 +74,7 @@
         opintoalan-nimi-ehto (-> (:opintoalat testidata) second :selite_fi)]
     (with-data testidata
       (with-webdriver
-        (avaa-aituhaku tutkinnot)
+        (avaa tutkinnot)
         (testing
           "sivun otsikko"
           (is (= (sivun-otsikko) "NÄYTTÖTUTKINTOHAKU")))
@@ -112,7 +112,7 @@
   (let [testidata (tutkinnot-oletus-testidata)]
     (with-data testidata
       (with-webdriver
-        (avaa-aituhaku tutkinnot)
+        (avaa tutkinnot)
           (testing
             "sivutus:"
             (hae-nimella "haettava tutkinto")
@@ -142,7 +142,7 @@
   (let [testidata (tutkinnot-oletus-testidata)]
     (with-data testidata
       (with-webdriver
-        (avaa-aituhaku tutkinnot)
+        (avaa tutkinnot)
         (testing "paluu painike:"
           (testing "tutkinnon sivulta voi siirtyä takaisin hakunäkymään käyttämällä paluupainiketta ja edellisen haun tulokset ovat muistissa"
             (hae-nimella "haettava tutkinto")

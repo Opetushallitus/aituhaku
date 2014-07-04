@@ -35,7 +35,7 @@
                                  :toimikausi_loppu "2016-07-31"
                                  :tkunta "ILMA"}]}
         ;; Kun
-        (avaa-aituhaku (toimikuntasivu "ILMA"))
+        (avaa (toimikuntasivu "ILMA"))
         ;;Niin
         (are [elementti teksti] (= (elementin-teksti elementti) teksti)
              "toimikunta.nimi" "ILMASTOINTIALAN TUTKINTOTOIMIKUNTA"
