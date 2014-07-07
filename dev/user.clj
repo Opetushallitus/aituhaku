@@ -37,7 +37,7 @@
   (with-sh-dir "frontend"
     (doseq [komento frontend-kaannoskomennot]
       (println "$" komento)
-      (let [{:keys [err out]} (sh "bash" "-c" komento)]
+      (let [{:keys [err out]} (sh "bash" "-l" "-c" komento)]
         (println err out)))))
 
 (defn ^:private kaynnista! []
