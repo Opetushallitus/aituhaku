@@ -81,5 +81,5 @@ footer {
   .no-svg & {
     background-image: url("../img/opetushallitus.gif");
   }
-  background-size: 100% 100%;
+  background-size: contain;
 }
