@@ -29,8 +29,10 @@
                  [prismatic/schema "0.2.0"]
                  [korma "0.3.0-RC6"]
                  [postgresql "9.1-901.jdbc4"]
-                 [stencil "0.3.2"]]
-  :plugins [[test2junit "1.0.1"]]
+                 [stencil "0.3.2"]
+                 [org.clojure/core.typed "0.2.53"]]
+  :plugins [[test2junit "1.0.1"]
+            [lein-typed "0.3.4"]]
   :profiles {:dev {:source-paths ["dev"]
                    :dependencies [[org.clojure/tools.namespace "0.2.4"]
                                   [clj-webdriver "0.6.0"]
@@ -42,4 +44,5 @@
   :main aituhaku.palvelin
   :repl-options {:init-ns user}
   :jar-name "aituhaku.jar"
-  :uberjar-name "aituhaku-standalone.jar")
+  :uberjar-name "aituhaku-standalone.jar"
+  :core.typed {:check [aituhaku.arkisto.tutkinto]})

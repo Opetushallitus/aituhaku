@@ -14,7 +14,8 @@
 
 (ns aitu.util
   "Yleisiä apufunktioita."
-  (:require [cheshire.core :as cheshire]
+  (:require [clojure.core.typed :as t]
+            [cheshire.core :as cheshire]
             [clj-time.core :as time]
             [clj-time.format :as time-format]
             [clojure.string :as string]
@@ -22,6 +23,8 @@
             [clojure.set :refer [union]]
             [clojure.walk :refer [keywordize-keys]]
             [clojure.tools.logging :as log]))
+
+(t/tc-ignore
 
 ;; http://clojuredocs.org/clojure_contrib/clojure.contrib.map-utils/deep-merge-with
 (defn deep-merge-with
@@ -140,16 +143,22 @@
                        (for [arvo arvot
                              polku polut]
                          (get-in-list arvo polku)))]
-    (reduce max-date (time/date-time 1970 1 1 0 0 1) muokkausajat)))
+    (reduce max-date (time/date-time 1970 1 1 0 0 1) muokkausajat))))
 
+(t/ann ^:no-check clojure.string/lower-case [String -> String])
+(t/ann ^:no-check clojure.string/join [String (t/Coll t/Any) -> String])
+(t/ann sisaltaako-kentat? (t/All [k]
+                            [(t/Map k t/Any) (t/Coll k) String -> Boolean]))
 (defn sisaltaako-kentat?
   "Predikaatti joka palauttaa true, jos annettujen kenttien sisältö sisältää annetun termin. Kirjainkoolla ei ole väliä.
    Kenttien sisältö konkatenoidaan yhteen välilyönnillä erotettuna."
   [entity kentat termi]
   (let [termi (string/lower-case termi)
-        kenttien-sisallot (for [kentta kentat] (entity kentta))
+        kenttien-sisallot (t/for [kentta :- k kentat] (entity kentta))
         sisalto (string/lower-case (string/join " " kenttien-sisallot))]
     (.contains sisalto termi)))
+
+(t/tc-ignore
 
 (defn some-value [pred coll]
   (first (filter pred coll)))
@@ -176,4 +185,4 @@
           (throw t))))))
 
 (defmacro retrying [expected-throwable attempts & body]
-  `(retrying* ~expected-throwable ~attempts (fn [] ~@body)))
+  `(retrying* ~expected-throwable ~attempts (fn [] ~@body))))

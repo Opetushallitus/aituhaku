@@ -13,23 +13,29 @@
 ;; European Union Public Licence for more details.
 
 (ns aitu.timeutil
-  (:require [clj-time.core :as ctime]
-            [clj-time.coerce :as tcoerce]))
+  (:require [clojure.core.typed :as t]
+            [clj-time.core :as ctime]
+            [clj-time.coerce :as tcoerce])
+  (:import org.joda.time.LocalDate))
+
+(t/ann ^:no-check clj-time.core/before? [LocalDate LocalDate -> Boolean])
+(t/ann ^:no-check clj-time.core/after? [LocalDate LocalDate -> Boolean])
+(t/ann ^:no-check clj-time.core/today [-> LocalDate])
+(t/ann ^:no-check clj-time.core/local-date [t/AnyInteger t/AnyInteger t/AnyInteger -> LocalDate])
 
 ; työn alla..
 ; mutta tarkoitus on kerätä tänne kamaa, jolla voidaan käsitellä versiointia ja voimassaoloa järkevästi
+
+(t/ann time-forever LocalDate)
 (def time-forever (ctime/local-date 2199 1 1))
 
-(defn pvm-menneisyydessa?
-  [pvm]
-  {:pre [(not (nil? pvm))]}
+(t/ann pvm-menneisyydessa? [LocalDate -> Boolean])
+(defn pvm-menneisyydessa? [pvm]
   (let [nytpvm (ctime/today)]
     (ctime/after? nytpvm pvm)))
 
-
-(defn pvm-tulevaisuudessa?
-  [pvm]
-  {:pre [(not (nil? pvm))]}
+(t/ann pvm-tulevaisuudessa? [LocalDate -> Boolean])
+(defn pvm-tulevaisuudessa? [pvm]
   (let [nytpvm (ctime/today)]
     (ctime/before? nytpvm pvm)))
 

@@ -35,7 +35,7 @@ fi
 
 cd $repo_path
 if [ "$run_tests" = yes ]; then
-    lein do test, clean, uberjar
+    lein do typed check, test, clean, uberjar
 else
     lein do clean, uberjar
 fi

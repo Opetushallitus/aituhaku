@@ -13,23 +13,28 @@
 ;; European Union Public Licence for more details.
 
 (ns aituhaku.arkisto.tutkinto
-  (:require [aituhaku.arkisto.sql.tutkinto :as tutkinto-sql]
+  (:require [clojure.core.typed :as t]
+            [aituhaku.arkisto.sql.tutkinto :as tutkinto-sql
+             :refer [TutkinnonPerustiedot Tutkinto]]
             [aitu.util :refer [sisaltaako-kentat?]]
             [aitu.timeutil :as timeutil]))
 
+(t/ann tutkinto-voimassa? [TutkinnonPerustiedot -> Boolean])
 (defn tutkinto-voimassa?
   [tutkinto]
   (and (timeutil/pvm-mennyt-tai-tanaan? (:voimassa_alkupvm tutkinto))
        (timeutil/pvm-tuleva-tai-tanaan? (:siirtymaajan_loppupvm tutkinto))))
 
+(t/ann hae-ehdoilla [String String -> (t/Seq TutkinnonPerustiedot)])
 (defn hae-ehdoilla
   "Hakee kentistä ehdoilla."
   [nimi opintoala]
   (->> (tutkinto-sql/hae-tutkintojen-tiedot opintoala)
     (filter tutkinto-voimassa?)
-    (filter #(sisaltaako-kentat? % [:nimi_fi :nimi_sv] nimi))))
+    (filter (t/ann-form #(sisaltaako-kentat? % [:nimi_fi :nimi_sv] nimi)
+                        [TutkinnonPerustiedot -> Boolean]))))
 
+(t/ann hae [String -> (t/Option Tutkinto)])
 (defn hae
   [tutkintotunnus]
   (first (tutkinto-sql/hae tutkintotunnus)))
-
