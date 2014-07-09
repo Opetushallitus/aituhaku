@@ -25,16 +25,21 @@
 (t/defalias Jarjestaja (t/HMap :mandatory {:nimi String
                                            :oppilaitoskoodi String}))
 
-(t/defalias TutkinnonPerustiedot (t/HMap :mandatory {:tutkintotunnus String
-                                                     :tutkintotaso String
-                                                     :nimi_fi String
-                                                     :nimi_sv (t/Option String)
-                                                     :opintoala_nimi_fi String
-                                                     :opintoala_nimi_sv (t/Option String)
-                                                     :opintoala_tkkoodi String
-                                                     :voimassa_alkupvm LocalDate
-                                                     :voimassa_loppupvm LocalDate
-                                                     :siirtymaajan_loppupvm LocalDate}))
+(t/defalias TutkinnonVoimassaoloPvm (t/HMap :mandatory {:voimassa_alkupvm LocalDate
+                                                        :voimassa_loppupvm LocalDate
+                                                        :siirtymaajan_loppupvm LocalDate}))
+
+(t/defalias TutkinnonPerustiedot (t/I TutkinnonVoimassaoloPvm
+                                      (t/HMap :mandatory {:tutkintotunnus String
+                                                          :tutkintotaso String
+                                                          :nimi_fi String
+                                                          :nimi_sv (t/Option String)
+                                                          :opintoala_nimi_fi String
+                                                          :opintoala_nimi_sv (t/Option String)
+                                                          :opintoala_tkkoodi String
+                                                          :voimassa_alkupvm LocalDate
+                                                          :voimassa_loppupvm LocalDate
+                                                          :siirtymaajan_loppupvm LocalDate})))
 
 (t/defalias Tutkinto (t/I TutkinnonPerustiedot
                           (t/HMap :mandatory {:koulutusala_nimi_fi String

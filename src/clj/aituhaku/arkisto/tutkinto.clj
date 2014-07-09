@@ -14,16 +14,34 @@
 
 (ns aituhaku.arkisto.tutkinto
   (:require [clojure.core.typed :as t]
+            [clj-time.core :as time]
             [aituhaku.arkisto.sql.tutkinto :as tutkinto-sql
              :refer [TutkinnonPerustiedot Tutkinto]]
             [aitu.util :refer [sisaltaako-kentat?]]
-            [aitu.timeutil :as timeutil]))
+            [aitu.timeutil :as timeutil])
+  (:import org.joda.time.LocalDate))
 
 (t/ann tutkinto-voimassa? [TutkinnonPerustiedot -> Boolean])
 (defn tutkinto-voimassa?
   [tutkinto]
   (and (timeutil/pvm-mennyt-tai-tanaan? (:voimassa_alkupvm tutkinto))
        (timeutil/pvm-tuleva-tai-tanaan? (:siirtymaajan_loppupvm tutkinto))))
+
+(t/defalias TutkinnonVoimassaolo (t/U ':voimassa ':ei-voimassa ':siirtymaajalla))
+
+(t/ann voimassaolo [LocalDate tutkinto-sql/TutkinnonVoimassaoloPvm -> TutkinnonVoimassaolo])
+(defn voimassaolo [ajankohta voimassaolo-pvm]
+  (let [{:keys [voimassa_alkupvm siirtymaajan_loppupvm voimassa_loppupvm]}
+        voimassaolo-pvm]
+    (if (time/before? siirtymaajan_loppupvm ajankohta)
+      :ei-voimassa
+      (if (and (time/before? voimassa_alkupvm ajankohta)
+               (time/after? voimassa_loppupvm ajankohta))
+        (if (and (not= siirtymaajan_loppupvm timeutil/time-forever)
+                 (time/after? siirtymaajan_loppupvm ajankohta))
+          :siirtymaajalla
+          :voimassa)
+        :ei-voimassa))))
 
 (t/ann hae-ehdoilla [String String -> (t/Seq TutkinnonPerustiedot)])
 (defn hae-ehdoilla

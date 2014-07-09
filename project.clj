@@ -35,12 +35,11 @@
             [lein-typed "0.3.4"]]
   :profiles {:dev {:source-paths ["dev"]
                    :dependencies [[org.clojure/tools.namespace "0.2.4"]
-                                  [clj-webdriver "0.6.0"]
-                                  [clj-http "0.7.6"]
-                                  [ring-mock "0.1.5"]]}
+                                  [org.clojure/test.check "0.5.8"]]}
              :uberjar {:main aituhaku.palvelin
                        :aot :all}}
   :source-paths ["src/clj"]
+  :test-paths ["test/clj"]
   :main aituhaku.palvelin
   :repl-options {:init-ns user}
   :jar-name "aituhaku.jar"
