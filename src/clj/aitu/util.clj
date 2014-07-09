@@ -146,7 +146,6 @@
     (reduce max-date (time/date-time 1970 1 1 0 0 1) muokkausajat))))
 
 (t/ann ^:no-check clojure.string/lower-case [String -> String])
-(t/ann ^:no-check clojure.string/join [String (t/Coll t/Any) -> String])
 (t/ann sisaltaako-kentat? (t/All [k]
                             [(t/Map k t/Any) (t/Coll k) String -> Boolean]))
 (defn sisaltaako-kentat?

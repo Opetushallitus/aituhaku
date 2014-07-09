@@ -48,7 +48,10 @@
 
 (def TutkintoTiedot (merge Tutkinto
                            {:jarjestajat [Jarjestaja]
-                            :toimikunnat [ToimikuntaNimi]}))
+                            :toimikunnat [ToimikuntaNimi]
+                            :voimassaolo (s/enum :ei-voimassa
+                                                 :voimassa
+                                                 :siirtymaajalla)}))
 
 (def Opintoala {:opintoala_nimi_fi s/Str
                 :opintoala_nimi_sv s/Str

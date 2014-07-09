@@ -52,7 +52,12 @@
     (filter (t/ann-form #(sisaltaako-kentat? % [:nimi_fi :nimi_sv] nimi)
                         [TutkinnonPerustiedot -> Boolean]))))
 
-(t/ann hae [String -> (t/Option Tutkinto)])
-(defn hae
-  [tutkintotunnus]
-  (first (tutkinto-sql/hae tutkintotunnus)))
+(t/defalias TutkintoJaVoimassaolo
+  (t/I Tutkinto
+       (t/HMap :mandatory {:voimassaolo TutkinnonVoimassaolo})))
+
+(t/ann hae [String -> (t/Option TutkintoJaVoimassaolo)])
+(defn hae [tutkintotunnus]
+  {:post [((t/pred (t/Option TutkintoJaVoimassaolo)) %)]}
+  (when-let [tutkinto (first (tutkinto-sql/hae tutkintotunnus))]
+    (assoc-in tutkinto [:voimassaolo] (voimassaolo (time/today) tutkinto))))
