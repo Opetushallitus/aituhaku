@@ -13,7 +13,7 @@
 ;; European Union Public Licence for more details.
 
 (ns aituhaku-e2e.tutkintosivu-test
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [clojure.test :refer :all]
             [clj-webdriver.taxi :as w]
             [aitu-e2e.util :refer :all]
             [aitu-e2e.data-util :refer [with-data]]
@@ -73,3 +73,55 @@
           (testing
             "tutkinnon järjestäjät"
             (is (= (set (tutkinnon-jarjestajien-nimet)) (set (map :nimi (:oppilaitokset testidata)))))))))))
+
+(defn tutkinto [tutkintotunnus siirtymaajan-loppupvm voimassa-loppupvm]
+  {:koulutusalat [{:koodi "KA"
+                   :selite_fi "Koulutusala"}]
+   :opintoalat [{:koodi "OA"
+                 :selite_fi "Opintoala"
+                 :koulutusala "KA"}]
+   :tutkinnot [{:tutkintotunnus tutkintotunnus
+                :opintoala "OA"
+                :nimi_fi "Tutkinto"
+                :voimassa_alkupvm "1899-01-01"
+                :siirtymaajan_loppupvm siirtymaajan-loppupvm
+                :voimassa_loppupvm voimassa-loppupvm}]})
+
+(defn voimassaoleva-tutkinto [tutkintotunnus]
+  (tutkinto tutkintotunnus "2199-01-01" "2100-01-01"))
+
+(defn siirtymaajalla-oleva-tutkinto [tutkintotunnus]
+  (tutkinto tutkintotunnus "2100-01-01" "2100-01-01"))
+
+(defn vanhentunut-tutkinto [tutkintotunnus]
+  (tutkinto tutkintotunnus "2000-01-01" "2000-01-01"))
+
+(defn ilmoitus-siirtymaajasta-nakyvissa? []
+  (some-> (w/find-element {:css ".huom.siirtymaajalla"}) w/visible?))
+
+(defn ilmoitus-vanhentumisesta-nakyvissa? []
+  (some-> (w/find-element {:css ".huom.vanhentunut"}) w/visible?))
+
+(deftest voimassaoleva-ilmoitus-test
+  (with-webdriver
+    (testing "Voimassaolevalle tutkinnolle ei näytetä vanhentumiseen liittyviä ilmoituksia"
+       (with-data (voimassaoleva-tutkinto "123")
+         (avaa (tutkintosivu "123"))
+         (is (not (ilmoitus-siirtymaajasta-nakyvissa?)))
+         (is (not (ilmoitus-vanhentumisesta-nakyvissa?)))))))
+
+(deftest siirtymaajalla-ilmoitus-test
+  (with-webdriver
+    (testing "Siirtymäajalla olevalle tutkinnolle näytetään ilmoitus siirtymäajasta"
+      (with-data (siirtymaajalla-oleva-tutkinto "456")
+        (avaa (tutkintosivu "456"))
+        (is (ilmoitus-siirtymaajasta-nakyvissa?))
+        (is (not (ilmoitus-vanhentumisesta-nakyvissa?)))))))
+
+(deftest vanhentunut-ilmoitus-test
+  (with-webdriver
+    (testing "Vanhentuneelle tutkinnolle näytetään ilmoitus vanhentumisesta"
+      (with-data (vanhentunut-tutkinto "789")
+        (avaa (tutkintosivu "789"))
+        (is (not (ilmoitus-siirtymaajasta-nakyvissa?)))
+        (is (ilmoitus-vanhentumisesta-nakyvissa?))))))

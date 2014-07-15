@@ -1,6 +1,14 @@
 <palaa-hakuun></palaa-hakuun>
 <h2>{{tutkinto.nimi | lokalisoi:tutkinto:'nimi'}}</h2>
 
+<div ng-if="tutkinto.voimassaolo == 'ei-voimassa'" class="huom vanhentunut">
+  Tutkinto on vanhentunut.
+</div>
+
+<div ng-if="tutkinto.voimassaolo == 'siirtymaajalla'" class="huom siirtymaajalla">
+  Tutkinto on siirtymäajalla.
+</div>
+
 <section class="info-section">
   <fieldset>
     <label>{{i18n.tutkinnot.tutkintotunnus}}</label>
