@@ -15,6 +15,14 @@
     model-text-property="opintoala_nimi"
     change="hakuehdotMuuttuneet()">
   </hakuvalitsin>
+  <fieldset class="select2-fieldset">
+    <label>{{i18n.tutkinnot.suorituskieli}}</label>
+    <select ui-select2="{width:'100%',allowClear:true}" ng-model="hakuModel.kieli">
+      <option value=""></option>
+      <option value="fi">{{i18n.kielisyys.fi}}</option>
+      <option value="sv">{{i18n.kielisyys.sv}}</option>
+    </select>
+  </fieldset>
 </form>
 
 <div class="search-results">
