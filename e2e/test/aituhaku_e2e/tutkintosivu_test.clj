@@ -108,7 +108,7 @@
   (huomautus-nakyvissa? #"vanhentunut"))
 
 (defn nakyva-siirtymaajan-paattymispvm []
-  (some-> (w/find-element {:css ".huom.siirtymaajalla"})
+  (some-> (w/find-element {:css ".huom"})
     w/text
     (->> (re-find #"[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{4}"))))
 
