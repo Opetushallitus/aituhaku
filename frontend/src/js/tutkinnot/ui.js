@@ -88,7 +88,13 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
 
   }])
 
-  .controller('TutkintoController', ['Tutkinto', '$scope', '$routeParams', function(Tutkinto, $scope, $routeParams) {
-    $scope.tutkinto = Tutkinto.hae($routeParams.tutkintotunnus);
-  }]);
+  .controller('TutkintoController',
+    ['Tutkinto', '$scope', '$routeParams', 'dateFilter',
+    function(Tutkinto, $scope, $routeParams, dateFilter) {
+      $scope.tutkinto = Tutkinto.hae($routeParams.tutkintotunnus);
+      $scope.tutkinto.$promise.then(function(){
+        $scope.siirtymaajan_loppupvm_muotoiltu =
+          dateFilter($scope.tutkinto.siirtymaajan_loppupvm, 'd.M.yyyy');
+      });
+    }]);
 

@@ -1,12 +1,13 @@
 <palaa-hakuun></palaa-hakuun>
 <h2>{{tutkinto.nimi | lokalisoi:tutkinto:'nimi'}}</h2>
 
-<div ng-if="tutkinto.voimassaolo == 'ei-voimassa'" class="huom vanhentunut">
-  Tutkinto on vanhentunut.
+<div ng-if="tutkinto.voimassaolo == 'ei-voimassa'" class="huom">
+  <p>{{i18n.tutkinnot.vanhentunut}}</p>
 </div>
 
-<div ng-if="tutkinto.voimassaolo == 'siirtymaajalla'" class="huom siirtymaajalla">
-  Tutkinto on siirtymäajalla.
+<div ng-if="tutkinto.voimassaolo == 'siirtymaajalla'" class="huom">
+  <p>{{i18n.tutkinnot.siirtymaajalla}} {{i18n.tutkinnot.siirtymaaika_paattyy | sprintf:siirtymaajan_loppupvm_muotoiltu}}</p>
+  <p>{{i18n.tutkinnot.siirtymaaika_selite}}</p>
 </div>
 
 <section class="info-section">

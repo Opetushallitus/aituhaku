@@ -90,17 +90,27 @@
 (defn voimassaoleva-tutkinto [tutkintotunnus]
   (tutkinto tutkintotunnus "2199-01-01" "2100-01-01"))
 
-(defn siirtymaajalla-oleva-tutkinto [tutkintotunnus]
-  (tutkinto tutkintotunnus "2100-01-01" "2100-01-01"))
+(defn siirtymaajalla-oleva-tutkinto [tutkintotunnus siirtymaajan-loppupvm]
+  (tutkinto tutkintotunnus siirtymaajan-loppupvm "2100-01-01"))
 
 (defn vanhentunut-tutkinto [tutkintotunnus]
   (tutkinto tutkintotunnus "2000-01-01" "2000-01-01"))
 
+(defn huomautus-nakyvissa? [re]
+  (when-let [h (w/find-element {:css ".huom"})]
+     (and (w/visible? h)
+          (re-find re (w/text h)))))
+
 (defn ilmoitus-siirtymaajasta-nakyvissa? []
-  (some-> (w/find-element {:css ".huom.siirtymaajalla"}) w/visible?))
+  (huomautus-nakyvissa? #"siirtymäajalla"))
 
 (defn ilmoitus-vanhentumisesta-nakyvissa? []
-  (some-> (w/find-element {:css ".huom.vanhentunut"}) w/visible?))
+  (huomautus-nakyvissa? #"vanhentunut"))
+
+(defn nakyva-siirtymaajan-paattymispvm []
+  (some-> (w/find-element {:css ".huom.siirtymaajalla"})
+    w/text
+    (->> (re-find #"[0-9]{1,2}\.[0-9]{1,2}\.[0-9]{4}"))))
 
 (deftest voimassaoleva-ilmoitus-test
   (with-webdriver
@@ -113,9 +123,10 @@
 (deftest siirtymaajalla-ilmoitus-test
   (with-webdriver
     (testing "Siirtymäajalla olevalle tutkinnolle näytetään ilmoitus siirtymäajasta"
-      (with-data (siirtymaajalla-oleva-tutkinto "456")
+      (with-data (siirtymaajalla-oleva-tutkinto "456" "2100-01-01")
         (avaa (tutkintosivu "456"))
         (is (ilmoitus-siirtymaajasta-nakyvissa?))
+        (is (= (nakyva-siirtymaajan-paattymispvm) "1.1.2100"))
         (is (not (ilmoitus-vanhentumisesta-nakyvissa?)))))))
 
 (deftest vanhentunut-ilmoitus-test

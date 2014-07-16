@@ -20,6 +20,7 @@ angular.module('aituhaku', ['angular-loading-bar',
                             'yhteiset.direktiivit.copyright',
                             'yhteiset.palvelut.i18n',
                             'yhteiset.suodattimet.lokalisoi',
+                            'yhteiset.suodattimet.sprintf',
                             'ui.select2'
                             ])
 
