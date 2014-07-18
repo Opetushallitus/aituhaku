@@ -51,14 +51,31 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
     };
   })
 
-  .controller('TutkinnotController', ['Tutkinto',
+  .factory('TutkinnotControllerFunktiot', ['hakuAsetukset', function(asetukset){
+    function hakuehdot(hakuModel) {
+      var tutkinnonNimi = hakuModel.tutkinnonNimi;
+      var opintoala = _.isEmpty(hakuModel.opintoala) ? null : hakuModel.opintoala.opintoala_tkkoodi;
+      if (tutkinnonNimi.length >= asetukset.minHakuehtoPituus || opintoala) {
+        return {nimi: tutkinnonNimi, opintoala: opintoala};
+      } else {
+        return null;
+      }
+    }
+    return {
+      hakuehdot: hakuehdot
+    }
+  }])
+
+  .controller('TutkinnotController', ['TutkinnotControllerFunktiot',
+                                      'Tutkinto',
                                       'TutkintoHakuModel',
                                       '$scope',
                                       '$rootScope',
                                       '$filter',
                                       'debounce',
                                       'hakuAsetukset',
-                                     function(Tutkinto,
+                                     function(f,
+                                              Tutkinto,
                                               TutkintoHakuModel,
                                               $scope,
                                               $rootScope,
@@ -73,10 +90,9 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
     }
 
     function hae() {
-      var tutkinnonNimi = TutkintoHakuModel.tutkinnonNimi;
-      var opintoala = _.isEmpty(TutkintoHakuModel.opintoala) ? null : TutkintoHakuModel.opintoala.opintoala_tkkoodi;
-      if(tutkinnonNimi.length >= asetukset.minHakuehtoPituus || opintoala) {
-        Tutkinto.haeEhdoilla({nimi: tutkinnonNimi, opintoala: opintoala}, tutkinnotHakuVastaus);
+      var hakuehdot = f.hakuehdot(TutkintoHakuModel);
+      if (hakuehdot) {
+        Tutkinto.haeEhdoilla(hakuehdot, tutkinnotHakuVastaus);
       }
     }
 
