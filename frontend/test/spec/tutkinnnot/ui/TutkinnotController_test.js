@@ -29,19 +29,22 @@ describe('tutkinnot.ui.TutkinnotController', function(){
     $controller('TutkinnotController', {$scope: $scope});
   }));
 
-  it('Liian lyhyen nimen syöttäminen ei tee hakua', function(){
-    $scope.hakuModel.tutkinnonNimi = 'A';
+  function syotaHakuehdot(ehdot) {
+    _.assign($scope.hakuModel, ehdot);
+    $scope.$digest();
     $scope.hakuehdotMuuttuneet();
     $timeout.flush();
+    try{ $httpBackend.flush(); }catch(_){}
+  }
+
+  it('Liian lyhyen nimen syöttäminen ei tee hakua', function(){
+    syotaHakuehdot({tutkinnonNimi: 'A'});
     expect($scope.hakuModel.tutkinnot).toBeNull();
   });
 
   it('Riittävän pitkän nimen syöttäminen tekee haun', function(){
-    $httpBackend.whenGET('').respond([{nimi_fi: "Autoalan perustutkinto"}]);
-    $scope.hakuModel.tutkinnonNimi = 'Auto';
-    $scope.hakuehdotMuuttuneet();
-    $timeout.flush();
-    $httpBackend.flush();
+    $httpBackend.whenGET('').respond([{nimi_fi: 'Autoalan perustutkinto'}]);
+    syotaHakuehdot({tutkinnonNimi: 'Auto'});
     expect($scope.hakuModel.tutkinnot.length).toBeGreaterThan(0);
   });
 
