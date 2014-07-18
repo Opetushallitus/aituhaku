@@ -42,6 +42,6 @@ describe('tutkinnot.ui.TutkinnotControllerFunktiot', function(){
       .toEqual({nimi: 'A',
                 opintoala: '123'});
     });
-  })
+  });
 
 });

@@ -63,7 +63,7 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
     }
     return {
       hakuehdot: hakuehdot
-    }
+    };
   }])
 
   .controller('TutkinnotController', ['TutkinnotControllerFunktiot',
@@ -99,8 +99,8 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
     var haunLaukaisevatKentat = ['tutkinnonNimi', 'opintoala'];
 
     _(haunLaukaisevatKentat).each(function(k){
-      $scope.$watch('hakuModel.'+k, debounce(hae, asetukset.viive))
-    })
+      $scope.$watch('hakuModel.'+k, debounce(hae, asetukset.viive));
+    });
   }])
 
   .controller('TutkintoController',
