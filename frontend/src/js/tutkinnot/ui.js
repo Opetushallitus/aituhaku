@@ -47,7 +47,6 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
       tutkinnonNimi : '',
       opintoala : {},
       tutkinnot : null,
-      hakujaKaynnissa : 0,
       nykyinenSivu : 1
     };
   })
@@ -70,7 +69,6 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
     $scope.hakuModel = TutkintoHakuModel;
 
     function tutkinnotHakuVastaus(tutkinnot) {
-      TutkintoHakuModel.hakujaKaynnissa--;
       TutkintoHakuModel.nykyinenSivu = 1;
       TutkintoHakuModel.tutkinnot = $filter('jarjestaLokalisoidullaNimella')(tutkinnot, 'nimi');
     }
@@ -79,7 +77,6 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
       var tutkinnonNimi = TutkintoHakuModel.tutkinnonNimi;
       var opintoala = _.isEmpty(TutkintoHakuModel.opintoala) ? null : TutkintoHakuModel.opintoala.opintoala_tkkoodi;
       if(tutkinnonNimi.length >= asetukset.minHakuehtoPituus || opintoala) {
-        $scope.hakujaKaynnissa++;
         Tutkinto.haeEhdoilla({nimi: tutkinnonNimi, opintoala: opintoala}, tutkinnotHakuVastaus);
       }
     }
