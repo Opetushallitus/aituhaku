@@ -82,7 +82,6 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
     }
 
     $scope.hakuehdotMuuttuneet = debounce(hae, asetukset.viive);
-
   }])
 
   .controller('TutkintoController',
