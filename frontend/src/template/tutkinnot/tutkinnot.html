@@ -4,7 +4,7 @@
 <form class="search-form">
   <fieldset class="search-field">
     <label>{{i18n.tutkinnot.tutkinnon_nimi}}</label>
-    <input ng-change="hakuehdotMuuttuneet()" type="text" ng-model="hakuModel.tutkinnonNimi" placeholder="{{i18n.tutkinnot.tutkinnon_nimi_placeholder}}">
+    <input type="text" ng-model="hakuModel.tutkinnonNimi" placeholder="{{i18n.tutkinnot.tutkinnon_nimi_placeholder}}">
   </fieldset>
   <hakuvalitsin
     otsikko="{{i18n.tutkinnot.opintoala}}"
@@ -12,8 +12,7 @@
     url="api/opintoala/haku"
     model="hakuModel.opintoala"
     model-id-property="opintoala_tkkoodi"
-    model-text-property="opintoala_nimi"
-    change="hakuehdotMuuttuneet()">
+    model-text-property="opintoala_nimi">
   </hakuvalitsin>
   <fieldset class="select2-fieldset">
     <label>{{i18n.tutkinnot.suorituskieli}}</label>
