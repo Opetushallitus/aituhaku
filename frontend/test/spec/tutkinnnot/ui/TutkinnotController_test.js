@@ -31,7 +31,7 @@ describe('tutkinnot.ui.TutkinnotController', function(){
 
   function syotaHakuehdot(ehdot) {
     _.assign($scope.hakuModel, ehdot);
-    $scope.$digest();
+    $scope.hakuehdotMuuttuneet();
     try{ $timeout.flush(); }catch(_){}
     try{ $httpBackend.flush(); }catch(_){}
   }

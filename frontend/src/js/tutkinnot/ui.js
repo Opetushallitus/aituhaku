@@ -96,11 +96,7 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
       }
     }
 
-    var haunLaukaisevatKentat = ['tutkinnonNimi', 'opintoala'];
-
-    _(haunLaukaisevatKentat).each(function(k){
-      $scope.$watch('hakuModel.'+k, debounce(hae, asetukset.viive));
-    });
+    $scope.hakuehdotMuuttuneet = debounce(hae, asetukset.viive);
   }])
 
   .controller('TutkintoController',
