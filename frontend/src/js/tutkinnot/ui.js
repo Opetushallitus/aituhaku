@@ -42,15 +42,6 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
     minHakuehtoPituus : 3
   })
 
-  .factory('TutkintoHakuModel', function() {
-    return {
-      tutkinnonNimi : '',
-      opintoala : {},
-      tutkinnot : null,
-      nykyinenSivu : 1
-    };
-  })
-
   .factory('TutkinnotControllerFunktiot', ['hakuAsetukset',
                                            '$filter',
                                            'Tutkinto',
@@ -86,13 +77,16 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
 
   .controller('TutkinnotController', ['TutkinnotControllerFunktiot',
                                       'Tutkinto',
-                                      'TutkintoHakuModel',
                                       '$scope',
                                      function(f,
                                               Tutkinto,
-                                              TutkintoHakuModel,
                                               $scope) {
-    $scope.hakuModel = TutkintoHakuModel;
+    $scope.hakuModel = {
+      tutkinnonNimi : '',
+      opintoala : {},
+      tutkinnot : null,
+      nykyinenSivu : 1
+    };
     $scope.hakuehdotMuuttuneet = function(){
       f.hae(f.hakuehdot($scope.hakuModel), function(tutkinnot){
         f.paivitaHakutulokset($scope.hakuModel, tutkinnot);
