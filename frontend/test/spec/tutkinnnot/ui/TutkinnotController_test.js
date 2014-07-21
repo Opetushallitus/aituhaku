@@ -19,12 +19,14 @@ describe('tutkinnot.ui.TutkinnotController', function(){
   var $timeout;
   var $httpBackend;
   var $scope;
+  var $controller;
 
   beforeEach(module('tutkinnot.ui'));
 
-  beforeEach(inject(function(_$timeout_, _$httpBackend_, $rootScope, $controller) {
+  beforeEach(inject(function(_$timeout_, _$httpBackend_, $rootScope, _$controller_) {
     $timeout = _$timeout_;
     $httpBackend = _$httpBackend_;
+    $controller = _$controller_;
     $scope = $rootScope.$new();
     $controller('TutkinnotController', {$scope: $scope});
   }));
@@ -45,6 +47,12 @@ describe('tutkinnot.ui.TutkinnotController', function(){
     $httpBackend.whenGET('').respond([{nimi_fi: 'Autoalan perustutkinto'}]);
     syotaHakuehdot({tutkinnonNimi: 'Auto'});
     expect($scope.hakuModel.tutkinnot.length).toBeGreaterThan(0);
+  });
+
+  it('Haun tila pysyy tallessa kun navigoidaan sivulta pois ja takaisin', function(){
+    syotaHakuehdot({tutkinnonNimi: 'Auto'});
+    $controller('TutkinnotController', {$scope: $scope});
+    expect($scope.hakuModel.tutkinnonNimi).toEqual('Auto');
   });
 
 });

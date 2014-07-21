@@ -42,6 +42,18 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
     minHakuehtoPituus : 3
   })
 
+  // Modelia ei voida alustaa TutkinnotControllerissa, koska silloin hakuehdot
+  // tyhjenisivät aina kun hakusivulle navigoidaan (hakuehtojen halutaan
+  // säilyvän esim. kun hakusivulle palataan selaimen Takaisin-napilla).
+  .factory('TutkintoHakuModel', function() {
+    return {
+      tutkinnonNimi : '',
+      opintoala : {},
+      tutkinnot : null,
+      nykyinenSivu : 1
+    };
+  })
+
   .factory('TutkinnotControllerFunktiot', ['hakuAsetukset',
                                            '$filter',
                                            'Tutkinto',
@@ -77,16 +89,13 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
 
   .controller('TutkinnotController', ['TutkinnotControllerFunktiot',
                                       'Tutkinto',
+                                      'TutkintoHakuModel',
                                       '$scope',
                                      function(f,
                                               Tutkinto,
+                                              TutkintoHakuModel,
                                               $scope) {
-    $scope.hakuModel = {
-      tutkinnonNimi : '',
-      opintoala : {},
-      tutkinnot : null,
-      nykyinenSivu : 1
-    };
+    $scope.hakuModel = TutkintoHakuModel;
     $scope.hakuehdotMuuttuneet = function(){
       f.hae(f.hakuehdot($scope.hakuModel), function(tutkinnot){
         f.paivitaHakutulokset($scope.hakuModel, tutkinnot);
