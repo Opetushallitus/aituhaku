@@ -53,7 +53,9 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
 
   .factory('TutkinnotControllerFunktiot', ['hakuAsetukset',
                                            '$filter',
-                                           function(asetukset, $filter){
+                                           'Tutkinto',
+                                           'debounce',
+                                           function(asetukset, $filter, Tutkinto, debounce){
     function hakuehdot(hakuModel) {
       return {nimi: hakuModel.tutkinnonNimi,
               opintoala: _.isEmpty(hakuModel.opintoala)
@@ -71,10 +73,17 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
       hakuModel.tutkinnot = $filter('jarjestaLokalisoidullaNimella')(tutkinnot, 'nimi');
     }
 
+    var hae = debounce(function(hakuehdot, callback){
+      if (riittavatHakuehdot(hakuehdot)) {
+        Tutkinto.haeEhdoilla(hakuehdot, callback);
+      }
+    }, asetukset.viive);
+
     return {
       hakuehdot: hakuehdot,
       riittavatHakuehdot: riittavatHakuehdot,
-      paivitaHakutulokset: paivitaHakutulokset
+      paivitaHakutulokset: paivitaHakutulokset,
+      hae: hae
     };
   }])
 
@@ -95,17 +104,11 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
                                               debounce,
                                               asetukset) {
     $scope.hakuModel = TutkintoHakuModel;
-
-    function hae() {
-      var hakuehdot = f.hakuehdot(TutkintoHakuModel);
-      if (f.riittavatHakuehdot(hakuehdot)) {
-        Tutkinto.haeEhdoilla(hakuehdot, function(tutkinnot){
-          f.paivitaHakutulokset(TutkintoHakuModel, tutkinnot)
-        });
-      }
-    }
-
-    $scope.hakuehdotMuuttuneet = debounce(hae, asetukset.viive);
+    $scope.hakuehdotMuuttuneet = function(){
+      f.hae(f.hakuehdot($scope.hakuModel), function(tutkinnot){
+        f.paivitaHakutulokset($scope.hakuModel, tutkinnot)
+      })
+    };
   }])
 
   .controller('TutkintoController',

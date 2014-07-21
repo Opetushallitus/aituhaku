@@ -17,11 +17,19 @@
 describe('tutkinnot.ui.TutkinnotControllerFunktiot', function(){
 
   var f;
+  var Tutkinto;
+  var $timeout;
 
   beforeEach(module('tutkinnot.ui'));
 
-  beforeEach(inject(function(TutkinnotControllerFunktiot) {
+  beforeEach(module(function($provide){
+    Tutkinto = jasmine.createSpyObj('Tutkinto', ['haeEhdoilla']);
+    $provide.value('Tutkinto', Tutkinto);
+  }));
+
+  beforeEach(inject(function(TutkinnotControllerFunktiot, _$timeout_) {
     f = TutkinnotControllerFunktiot;
+    $timeout = _$timeout_;
   }));
 
   describe('hakuehdot', function(){
@@ -57,6 +65,31 @@ describe('tutkinnot.ui.TutkinnotControllerFunktiot', function(){
       f.paivitaHakutulokset(hakuModel, [{nimi_fi: "b"}, {nimi_fi: "a"}]);
       expect(hakuModel.tutkinnot).toEqual([{nimi_fi: "a"}, {nimi_fi: "b"}]);
     });
-  })
+  });
+
+  describe('hae', function(){
+    it('ei tee hakua puutteellisilla hakuehdoilla', function(){
+      var callback = jasmine.createSpy('callback');
+      f.hae({nimi: ''}, callback);
+      $timeout.flush();
+      expect(Tutkinto.haeEhdoilla.calls.any()).toEqual(false);
+    });
+
+    it('tekee haun, jos riittävät hakuehdot annettu', function(){
+      var callback = jasmine.createSpy('callback');
+      f.hae({nimi: 'Auto'}, callback);
+      $timeout.flush();
+      expect(Tutkinto.haeEhdoilla.calls.allArgs()).toEqual([[{nimi: 'Auto'}, callback]]);
+    });
+
+    it('kerää useat peräkkäiset hakupyynnöt yhteen hakuun', function(){
+      var callback = jasmine.createSpy('callback');
+      f.hae({nimi: 'Autoa'}, callback);
+      f.hae({nimi: 'Autoal'}, callback);
+      f.hae({nimi: 'Autoala'}, callback);
+      $timeout.flush();
+      expect(Tutkinto.haeEhdoilla.calls.allArgs()).toEqual([[{nimi: 'Autoala'}, callback]]);
+    });
+  });
 
 });
