@@ -44,4 +44,12 @@ describe('tutkinnot.ui.TutkinnotControllerFunktiot', function(){
     });
   });
 
+  describe('paivitaHakutulokset', function(){
+    it('järjestää hakutulokset tutkinnon nimen perusteella', function(){
+      var hakuModel = {};
+      f.paivitaHakutulokset(hakuModel, [{nimi_fi: "b"}, {nimi_fi: "a"}]);
+      expect(hakuModel.tutkinnot).toEqual([{nimi_fi: "a"}, {nimi_fi: "b"}]);
+    });
+  })
+
 });

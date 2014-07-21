@@ -51,7 +51,9 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
     };
   })
 
-  .factory('TutkinnotControllerFunktiot', ['hakuAsetukset', function(asetukset){
+  .factory('TutkinnotControllerFunktiot', ['hakuAsetukset',
+                                           '$filter',
+                                           function(asetukset, $filter){
     function hakuehdot(hakuModel) {
       var tutkinnonNimi = hakuModel.tutkinnonNimi;
       var opintoala = _.isEmpty(hakuModel.opintoala) ? null : hakuModel.opintoala.opintoala_tkkoodi;
@@ -61,8 +63,15 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
         return null;
       }
     }
+
+    function paivitaHakutulokset(hakuModel, tutkinnot) {
+      hakuModel.nykyinenSivu = 1;
+      hakuModel.tutkinnot = $filter('jarjestaLokalisoidullaNimella')(tutkinnot, 'nimi');
+    }
+
     return {
-      hakuehdot: hakuehdot
+      hakuehdot: hakuehdot,
+      paivitaHakutulokset: paivitaHakutulokset
     };
   }])
 
@@ -84,15 +93,12 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
                                               asetukset) {
     $scope.hakuModel = TutkintoHakuModel;
 
-    function tutkinnotHakuVastaus(tutkinnot) {
-      TutkintoHakuModel.nykyinenSivu = 1;
-      TutkintoHakuModel.tutkinnot = $filter('jarjestaLokalisoidullaNimella')(tutkinnot, 'nimi');
-    }
-
     function hae() {
       var hakuehdot = f.hakuehdot(TutkintoHakuModel);
       if (hakuehdot) {
-        Tutkinto.haeEhdoilla(hakuehdot, tutkinnotHakuVastaus);
+        Tutkinto.haeEhdoilla(hakuehdot, function(tutkinnot){
+          f.paivitaHakutulokset(TutkintoHakuModel, tutkinnot)
+        });
       }
     }
 
@@ -108,4 +114,3 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
           dateFilter($scope.tutkinto.siirtymaajan_loppupvm, 'd.M.yyyy');
       });
     }]);
-
