@@ -25,22 +25,29 @@ describe('tutkinnot.ui.TutkinnotControllerFunktiot', function(){
   }));
 
   describe('hakuehdot', function(){
+    it('ei opintoalaa', function(){
+      var hakuModel = {tutkinnonNimi: 'Auto'};
+      expect(f.hakuehdot(hakuModel)).toEqual({nimi: 'Auto', opintoala: null});
+    });
+
+    it('Opintoala', function(){
+      var hakuModel = {tutkinnonNimi: 'Auto',
+                       opintoala: {opintoala_tkkoodi: '123'}};
+      expect(f.hakuehdot(hakuModel)).toEqual({nimi: 'Auto', opintoala: '123'});
+    });
+  });
+
+  describe('riittavatHakuehdot', function(){
     it('Pitkä tutkinnon nimi ilman opintoalaa', function(){
-      expect(f.hakuehdot({tutkinnonNimi: 'Auto'}))
-      .toEqual({nimi: 'Auto',
-                opintoala: null});
+      expect(f.riittavatHakuehdot({nimi: 'Auto'})).toBe(true);
     });
 
     it('Lyhyt tutkinnon nimi ilman opintoalaa', function(){
-      expect(f.hakuehdot({tutkinnonNimi: 'A'}))
-      .toBe(null);
+      expect(f.riittavatHakuehdot({nimi: 'A'})).toBe(false);
     });
 
     it('Lyhyt tutkinnon nimi ja opintoala', function(){
-      expect(f.hakuehdot({tutkinnonNimi: 'A',
-                          opintoala: {opintoala_tkkoodi: '123'}}))
-      .toEqual({nimi: 'A',
-                opintoala: '123'});
+      expect(f.riittavatHakuehdot({nimi: 'A', opintoala: '123'})).toBe(true);
     });
   });
 

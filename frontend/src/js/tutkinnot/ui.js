@@ -55,13 +55,15 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
                                            '$filter',
                                            function(asetukset, $filter){
     function hakuehdot(hakuModel) {
-      var tutkinnonNimi = hakuModel.tutkinnonNimi;
-      var opintoala = _.isEmpty(hakuModel.opintoala) ? null : hakuModel.opintoala.opintoala_tkkoodi;
-      if (tutkinnonNimi.length >= asetukset.minHakuehtoPituus || opintoala) {
-        return {nimi: tutkinnonNimi, opintoala: opintoala};
-      } else {
-        return null;
-      }
+      return {nimi: hakuModel.tutkinnonNimi,
+              opintoala: _.isEmpty(hakuModel.opintoala)
+                         ? null
+                         : hakuModel.opintoala.opintoala_tkkoodi};
+    }
+
+    function riittavatHakuehdot(hakuehdot) {
+      return hakuehdot.nimi.length >= asetukset.minHakuehtoPituus
+             || !!hakuehdot.opintoala;
     }
 
     function paivitaHakutulokset(hakuModel, tutkinnot) {
@@ -71,6 +73,7 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
 
     return {
       hakuehdot: hakuehdot,
+      riittavatHakuehdot: riittavatHakuehdot,
       paivitaHakutulokset: paivitaHakutulokset
     };
   }])
@@ -95,7 +98,7 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
 
     function hae() {
       var hakuehdot = f.hakuehdot(TutkintoHakuModel);
-      if (hakuehdot) {
+      if (f.riittavatHakuehdot(hakuehdot)) {
         Tutkinto.haeEhdoilla(hakuehdot, function(tutkinnot){
           f.paivitaHakutulokset(TutkintoHakuModel, tutkinnot)
         });
