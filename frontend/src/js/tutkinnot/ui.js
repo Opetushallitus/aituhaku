@@ -58,14 +58,11 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
                                            function(asetukset, $filter, Tutkinto, debounce){
     function hakuehdot(hakuModel) {
       return {nimi: hakuModel.tutkinnonNimi,
-              opintoala: _.isEmpty(hakuModel.opintoala)
-                         ? null
-                         : hakuModel.opintoala.opintoala_tkkoodi};
+              opintoala: _.isEmpty(hakuModel.opintoala) ? null : hakuModel.opintoala.opintoala_tkkoodi};
     }
 
     function riittavatHakuehdot(hakuehdot) {
-      return hakuehdot.nimi.length >= asetukset.minHakuehtoPituus
-             || !!hakuehdot.opintoala;
+      return hakuehdot.nimi.length >= asetukset.minHakuehtoPituus || !!hakuehdot.opintoala;
     }
 
     function paivitaHakutulokset(hakuModel, tutkinnot) {
@@ -91,23 +88,15 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
                                       'Tutkinto',
                                       'TutkintoHakuModel',
                                       '$scope',
-                                      '$rootScope',
-                                      '$filter',
-                                      'debounce',
-                                      'hakuAsetukset',
                                      function(f,
                                               Tutkinto,
                                               TutkintoHakuModel,
-                                              $scope,
-                                              $rootScope,
-                                              $filter,
-                                              debounce,
-                                              asetukset) {
+                                              $scope) {
     $scope.hakuModel = TutkintoHakuModel;
     $scope.hakuehdotMuuttuneet = function(){
       f.hae(f.hakuehdot($scope.hakuModel), function(tutkinnot){
-        f.paivitaHakutulokset($scope.hakuModel, tutkinnot)
-      })
+        f.paivitaHakutulokset($scope.hakuModel, tutkinnot);
+      });
     };
   }])
 
