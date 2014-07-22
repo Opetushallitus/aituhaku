@@ -30,9 +30,9 @@
                  [korma "0.3.0-RC6"]
                  [postgresql "9.1-901.jdbc4"]
                  [stencil "0.3.2"]
-                 [org.clojure/core.typed "0.2.53"]]
+                 [org.clojure/core.typed "0.2.61"]]
   :plugins [[test2junit "1.0.1"]
-            [lein-typed "0.3.4"]]
+            [lein-typed "0.3.5"]]
   :profiles {:dev {:source-paths ["dev"]
                    :dependencies [[org.clojure/tools.namespace "0.2.4"]
                                   [org.clojure/test.check "0.5.8"]]}

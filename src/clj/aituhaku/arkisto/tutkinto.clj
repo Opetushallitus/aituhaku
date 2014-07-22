@@ -58,6 +58,5 @@
 
 (t/ann hae [String -> (t/Option TutkintoJaVoimassaolo)])
 (defn hae [tutkintotunnus]
-  {:post [((t/pred (t/Option TutkintoJaVoimassaolo)) %)]}
   (when-let [tutkinto (first (tutkinto-sql/hae tutkintotunnus))]
-    (assoc-in tutkinto [:voimassaolo] (voimassaolo (time/today) tutkinto))))
+    (assoc tutkinto :voimassaolo (voimassaolo (time/today) tutkinto))))
