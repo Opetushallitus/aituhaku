@@ -20,27 +20,55 @@ describe('tutkinnot.ui.TutkinnotController', function(){
   var $httpBackend;
   var $scope;
   var $controller;
+  var $browser;
 
   beforeEach(module('tutkinnot.ui'));
 
-  beforeEach(inject(function(_$timeout_, _$httpBackend_, $rootScope, _$controller_) {
+  beforeEach(inject(function(_$timeout_, _$httpBackend_, $rootScope, _$controller_, _$browser_) {
     $timeout = _$timeout_;
     $httpBackend = _$httpBackend_;
     $controller = _$controller_;
     $scope = $rootScope.$new();
-    $controller('TutkinnotController', {$scope: $scope});
+    $browser = _$browser_;
+
+    alustaController();
   }));
+
+  afterEach(function(){
+    $timeout.verifyNoPendingTasks();
+  });
+
+  // $timeout.flush() heittää poikkeuksen, jos jonossa ei ole timeouteja.
+  // Käytetään Angularin yksityistä APIa tämän tilanteen tarkastamiseksi.
+  function timeoutFlush() {
+    if ($browser.deferredFns.length > 0) {
+      $timeout.flush();
+    }
+  }
+
+  function httpBackendFlush() {
+    // $httpBackend.flush() heittää poikkeuksen, jos jonossa ei ole vastauksia.
+    try { $httpBackend.flush(); } catch(_){}
+    // $httpBackend.flush() tekee uuden timeoutin
+    timeoutFlush();
+  }
+
+  function alustaController() {
+    $controller('TutkinnotController', {$scope: $scope});
+    $scope.$digest();
+    timeoutFlush();
+  }
 
   function syotaHakuehdot(ehdot) {
     _.assign($scope.hakuModel, ehdot);
-    $scope.hakuehdotMuuttuneet();
-    try{ $timeout.flush(); }catch(_){}
-    try{ $httpBackend.flush(); }catch(_){}
+    $scope.$digest();
+    timeoutFlush();
+    httpBackendFlush();
   }
 
   it('Liian lyhyen nimen syöttäminen ei tee hakua', function(){
     syotaHakuehdot({tutkinnonNimi: 'A'});
-    expect($scope.hakuModel.tutkinnot).toBeNull();
+    $httpBackend.verifyNoOutstandingRequest();
   });
 
   it('Riittävän pitkän nimen syöttäminen tekee haun', function(){
@@ -50,9 +78,17 @@ describe('tutkinnot.ui.TutkinnotController', function(){
   });
 
   it('Haun tila pysyy tallessa kun navigoidaan sivulta pois ja takaisin', function(){
+    $httpBackend.whenGET('').respond([{nimi_fi: 'Autoalan perustutkinto'}]);
     syotaHakuehdot({tutkinnonNimi: 'Auto'});
-    $controller('TutkinnotController', {$scope: $scope});
+    alustaController();
     expect($scope.hakuModel.tutkinnonNimi).toEqual('Auto');
+  });
+
+  it('Sivulle palaaminen ei aiheuta uutta hakua', function(){
+    $httpBackend.whenGET('').respond([{nimi_fi: 'Autoalan perustutkinto'}]);
+    syotaHakuehdot({tutkinnonNimi: 'Auto'});
+    alustaController();
+    $httpBackend.verifyNoOutstandingRequest();
   });
 
 });

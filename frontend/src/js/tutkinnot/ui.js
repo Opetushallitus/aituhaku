@@ -96,11 +96,20 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
                                               TutkintoHakuModel,
                                               $scope) {
     $scope.hakuModel = TutkintoHakuModel;
-    $scope.hakuehdotMuuttuneet = function(){
-      f.hae(f.hakuehdot($scope.hakuModel), function(tutkinnot){
-        f.paivitaHakutulokset($scope.hakuModel, tutkinnot);
+
+    var haunLaukaisevatKentat = ['tutkinnonNimi', 'opintoala'];
+
+    _(haunLaukaisevatKentat).each(function(k){
+      $scope.$watch('hakuModel.'+k, function(n, o){
+        // Jätetään Angularin alustuksen aiheuttama kutsu huomiotta, ks.
+        // http://stackoverflow.com/a/18915585
+        if (n !== o) {
+          f.hae(f.hakuehdot($scope.hakuModel), function(tutkinnot){
+            f.paivitaHakutulokset($scope.hakuModel, tutkinnot);
+          });
+        }
       });
-    };
+    });
   }])
 
   .controller('TutkintoController',
