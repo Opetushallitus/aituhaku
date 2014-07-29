@@ -23,7 +23,10 @@
                                            :nimi_sv (t/Option String)}))
 
 (t/defalias Jarjestaja (t/HMap :mandatory {:nimi String
-                                           :oppilaitoskoodi String}))
+                                           :oppilaitoskoodi String
+                                           :www_osoite (t/Option String)
+                                           :ktnimi_fi String
+                                           :ktnimi_sv String}))
 
 (t/defalias TutkinnonVoimassaoloPvm (t/HMap :mandatory {:voimassa_alkupvm LocalDate
                                                         :voimassa_loppupvm LocalDate
@@ -62,7 +65,7 @@
   {:post [((t/pred (t/Seq Tutkinto)) %)]}
   (sql/select tutkinnot_view
     (sql/with tutkinnon_jarjestajat_view
-      (sql/fields :oppilaitoskoodi :nimi))
+      (sql/fields :oppilaitoskoodi :nimi :www_osoite :ktnimi_fi :ktnimi_sv))
     (sql/with tutkinnon_toimikunnat_view
       (sql/fields :nimi_fi :nimi_sv :tkunta))
     (sql/where {:tutkintotunnus tutkintotunnus})))
