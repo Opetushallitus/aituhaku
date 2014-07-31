@@ -21,6 +21,7 @@ angular.module('aituhaku', ['angular-loading-bar',
                             'yhteiset.palvelut.i18n',
                             'yhteiset.suodattimet.lokalisoi',
                             'yhteiset.suodattimet.sprintf',
+                            'yhteiset.palvelut.virheLogitus',
                             'ui.select2'
                             ])
 

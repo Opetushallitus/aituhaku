@@ -180,6 +180,11 @@ module.exports = function (grunt) {
     },
     exec: {
       buildAngularBoostrap : 'cd src/bower_components/angular-bootstrap && npm install && grunt html2js && grunt build'
+    },
+    globals: {
+      $ : true,
+      printStackTrace : true,
+      hakuBaseUrl : true
     }
   });
 
