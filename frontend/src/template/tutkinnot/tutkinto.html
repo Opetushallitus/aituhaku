@@ -43,7 +43,7 @@
   </div>
   <div class="table-row" ng-repeat="jarjestaja in tutkinto.jarjestajat | orderBy:'nimi'">
     <div class="table-cell">{{jarjestaja.nimi}}</div>
-    <div class="table-cell">{{jarjestaja.www_osoite}}</div>
+    <div class="table-cell"><a href="{{jarjestaja.www_osoite}}">{{jarjestaja.www_osoite}}</a></div>
     <div class="table-cell">{{jarjestaja.ktnimi_fi}}</div>
   </div>
 </div>
