@@ -44,7 +44,10 @@
                         :jasenet [Jasen]}))
 
 (def Jarjestaja {:oppilaitoskoodi s/Str
-                 :nimi s/Str})
+                 :nimi s/Str
+                 :www_osoite (s/maybe s/Str)
+                 :ktnimi_fi s/Str
+                 :ktnimi_sv s/Str})
 
 (def TutkintoTiedot (merge Tutkinto
                            {:jarjestajat [Jarjestaja]
