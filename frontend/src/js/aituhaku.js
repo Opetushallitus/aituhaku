@@ -48,4 +48,8 @@ angular.module('aituhaku', ['angular-loading-bar',
         scope.kieli = kieli;
       }
     };
+  }])
+  
+  .factory('$exceptionHandler', ['virheLogitus', function(virheLogitus) {
+    return virheLogitus;
   }]);

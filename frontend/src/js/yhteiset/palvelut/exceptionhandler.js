@@ -16,7 +16,7 @@
 
 /*global $: true, hakuBaseUrl: true, printStackTrace: true */
 
-angular.module('yhteiset.palvelut', [])
+angular.module('yhteiset.palvelut.virheLogitus', [])
 
     .factory('virheLogitusApi', ['$log', '$window', function($log, $window ){
     return {
