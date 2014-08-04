@@ -184,7 +184,7 @@ module.exports = function (grunt) {
     globals: {
       $ : true,
       printStackTrace : true,
-      hakuBaseUrl : true
+      ophBaseUrl : true
     }
   });
 

@@ -27,7 +27,7 @@ angular.module('aituhaku', ['angular-loading-bar',
 
   .controller('AituhakuController', ['$scope', 'i18n', function($scope, i18n){
     $scope.i18n = i18n;
-    $scope.baseUrl = _.has(window, 'hakuBaseUrl') ?  window.hakuBaseUrl : '';
+    $scope.baseUrl = _.has(window, 'ophBaseUrl') ?  window.ophBaseUrl : '';
   }])
 
   .constant('asetukset', {
