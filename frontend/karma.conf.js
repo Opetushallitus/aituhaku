@@ -34,6 +34,7 @@ module.exports = function(config) {
       'src/bower_components/angular-mocks/angular-mocks.js',
       'src/bower_components/sprintf/dist/sprintf.min.js',
       'src/bower_components/stacktrace/stacktrace.js',
+      'src/bower_components/aituaipaljs/**/*.js',
       'src/js/*.js',
       'src/js/**/*.js',
       'test/mock/**/*.js',
