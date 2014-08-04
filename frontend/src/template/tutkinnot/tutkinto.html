@@ -6,8 +6,11 @@
 </div>
 
 <div ng-if="tutkinto.voimassaolo == 'siirtymaajalla'" class="huom">
-  <p>{{i18n.tutkinnot.siirtymaajalla}} {{i18n.tutkinnot.siirtymaaika_paattyy | sprintf:siirtymaajan_loppupvm_muotoiltu}}</p>
-  <p>{{i18n.tutkinnot.siirtymaaika_selite}}</p>
+  <button>!</button>
+  <span>
+    {{i18n.tutkinnot.siirtymaajalla}} {{i18n.tutkinnot.siirtymaaika_paattyy | sprintf:siirtymaajan_loppupvm_muotoiltu}}<br>
+    {{i18n.tutkinnot.siirtymaaika_selite}}
+  </span>
 </div>
 
 <section class="info-section">
