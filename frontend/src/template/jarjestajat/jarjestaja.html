@@ -1,0 +1,12 @@
+<palaa-hakuun></palaa-hakuun>
+<h2>{{jarjestaja.nimi}}</h2>
+
+<div class="search-results">
+  <hakutulokset
+    nykyinen-sivu="nykyinenSivu"
+    tuloksia-sivulla="10"
+    otsikot="[i18n.tutkinnot.tutkinnon_nimi]"
+    hakutulokset="jarjestaja.tutkinnot">
+    <div class="table-cell"><a ng-href="#/tutkinto/{{hakutulos.tutkintotunnus}}">{{hakutulos.nimi | lokalisoi:hakutulos:'nimi'}}</a></div>
+  </hakutulokset>
+</div>

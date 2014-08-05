@@ -45,7 +45,7 @@
     <div class="table-cell">&nbsp;</div>
   </div>
   <div class="table-row" ng-repeat="jarjestaja in tutkinto.jarjestajat | orderBy:'nimi'">
-    <div class="table-cell">{{jarjestaja.nimi}}</div>
+    <div class="table-cell"><a ng-href="#/jarjestaja/{{jarjestaja.oppilaitoskoodi}}">{{jarjestaja.nimi}}</a></div>
     <div class="table-cell"><a href="{{jarjestaja.www_osoite}}">{{jarjestaja.www_osoite}}</a></div>
     <div class="table-cell">{{jarjestaja.ktnimi_fi}}</div>
   </div>

@@ -17,6 +17,7 @@
 angular.module('aituhaku', ['angular-loading-bar',
                             'tutkinnot.ui',
                             'toimikunnat.ui',
+                            'jarjestajat.ui',
                             'yhteiset.direktiivit.copyright',
                             'yhteiset.palvelut.i18n',
                             'yhteiset.suodattimet.lokalisoi',
@@ -49,7 +50,7 @@ angular.module('aituhaku', ['angular-loading-bar',
       }
     };
   }])
-  
+
   .factory('$exceptionHandler', ['virheLogitus', function(virheLogitus) {
     return virheLogitus;
   }]);
