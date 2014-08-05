@@ -34,6 +34,7 @@
             [stencil.core :as s]
             aituhaku.rest-api.i18n
             aituhaku.rest-api.js-log
+            aituhaku.rest-api.jarjestaja
             aituhaku.rest-api.opintoala
             aituhaku.rest-api.tutkinto
             aituhaku.rest-api.toimikunta))
@@ -50,6 +51,7 @@
     (c/context "/api/toimikunta" [] aituhaku.rest-api.toimikunta/reitit)
     (c/context "/api/i18n" [] aituhaku.rest-api.i18n/reitit)
     (c/context "/api/opintoala" [] aituhaku.rest-api.opintoala/reitit)
+    (c/context "/api/jarjestaja" [] aituhaku.rest-api.jarjestaja/reitit)
     (c/context "/api/jslog" []  aituhaku.rest-api.js-log/reitit )
     (c/GET "/status" [] (s/render-file "status" (assoc (status)
                                                        :asetukset (with-out-str

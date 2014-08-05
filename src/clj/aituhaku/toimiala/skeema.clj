@@ -15,18 +15,20 @@
 (ns aituhaku.toimiala.skeema
   (:require [schema.core :as s]))
 
-(def Tutkinto {:tutkintotunnus s/Str
-               :nimi_fi s/Str
-               :nimi_sv s/Str
-               :opintoala_nimi_fi s/Str
-               :opintoala_nimi_sv s/Str
-               :opintoala_tkkoodi s/Str
-               (s/optional-key :koulutusala_nimi_fi) s/Str
-               (s/optional-key :koulutusala_nimi_sv) s/Str
-               :tutkintotaso s/Str
-               :voimassa_alkupvm org.joda.time.LocalDate
-               :voimassa_loppupvm org.joda.time.LocalDate
-               :siirtymaajan_loppupvm org.joda.time.LocalDate})
+(def TutkintoPerustiedot {:tutkintotunnus s/Str
+                          :nimi_fi s/Str
+                          :nimi_sv s/Str})
+
+(def Tutkinto (merge TutkintoPerustiedot
+                     {:opintoala_nimi_fi s/Str
+                      :opintoala_nimi_sv s/Str
+                      :opintoala_tkkoodi s/Str
+                      (s/optional-key :koulutusala_nimi_fi) s/Str
+                      (s/optional-key :koulutusala_nimi_sv) s/Str
+                      :tutkintotaso s/Str
+                      :voimassa_alkupvm org.joda.time.LocalDate
+                      :voimassa_loppupvm org.joda.time.LocalDate
+                      :siirtymaajan_loppupvm org.joda.time.LocalDate}))
 
 (def ToimikuntaNimi {:nimi_fi s/Str
                      :nimi_sv s/Str
@@ -48,6 +50,9 @@
                  :www_osoite (s/maybe s/Str)
                  :ktnimi_fi s/Str
                  :ktnimi_sv s/Str})
+
+(def JarjestajanTutkinnot (merge Jarjestaja
+                                 {:tutkinnot [TutkintoPerustiedot]}))
 
 (def TutkintoTiedot (merge Tutkinto
                            {:jarjestajat [Jarjestaja]
