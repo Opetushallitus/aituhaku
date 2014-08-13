@@ -16,5 +16,6 @@ skeeman_peruskayttaja = aituhaku_user
 [oph_palvelu:vars]
 palvelu = aituhaku
 asennushakemisto = /data00/aituhaku
+asenna_asetustiedostot = yes
 sovelluksen_asetustiedosto = aituhaku.properties
 lokituksen_asetustiedosto = logback.xml
