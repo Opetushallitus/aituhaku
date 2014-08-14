@@ -60,6 +60,12 @@ describe('tutkinnot.ui.TutkinnotControllerFunktiot', function(){
   });
 
   describe('paivitaHakutulokset', function(){
+    it('vaihtaa esiin ensimmäisen hakutulossivun', function(){
+      var hakuModel = {nykyinenSivu: 3};
+      f.paivitaHakutulokset(hakuModel, []);
+      expect(hakuModel.nykyinenSivu).toEqual(1);
+    })
+
     it('järjestää hakutulokset tutkinnon nimen perusteella', function(){
       var hakuModel = {};
       f.paivitaHakutulokset(hakuModel, [{nimi_fi: 'b'}, {nimi_fi: 'a'}]);
