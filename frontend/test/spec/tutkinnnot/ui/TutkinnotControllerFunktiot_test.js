@@ -64,7 +64,7 @@ describe('tutkinnot.ui.TutkinnotControllerFunktiot', function(){
       var hakuModel = {nykyinenSivu: 3};
       f.paivitaHakutulokset(hakuModel, []);
       expect(hakuModel.nykyinenSivu).toEqual(1);
-    })
+    });
 
     it('järjestää hakutulokset tutkinnon nimen perusteella', function(){
       var hakuModel = {};
