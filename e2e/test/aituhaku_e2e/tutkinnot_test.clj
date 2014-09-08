@@ -66,7 +66,7 @@
   (w/click {:text nimi})
   (odota-angular-pyyntoa))
 
-(deftest tutkinnot-haku-test
+(deftest ^:no-ie tutkinnot-haku-test
   (let [toisen-opintoalan-tutkinnot (drop 25 (luo-tutkintoja-opintoalaan 26 "OA2"))
         testidata (update-in (tutkinnot-oletus-testidata) [:tutkinnot] concat toisen-opintoalan-tutkinnot)
         vaara-hakuehto "väärä hakuehto"
