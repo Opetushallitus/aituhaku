@@ -26,9 +26,10 @@ angular.module('aituhaku', ['angular-loading-bar',
                             'ui.select2'
                             ])
 
-  .controller('AituhakuController', ['$scope', 'i18n', function($scope, i18n){
+  .controller('AituhakuController', ['$scope', 'i18n', '$filter', function($scope, i18n, $filter){
     $scope.i18n = i18n;
     $scope.baseUrl = _.has(window, 'ophBaseUrl') ?  window.ophBaseUrl : '';
+    $scope.timestamp = $filter('date')(new Date(), 'dd.MM.yyyy HH:mm');
   }])
 
   .constant('asetukset', {

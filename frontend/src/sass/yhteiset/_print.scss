@@ -7,6 +7,14 @@
     page-break-after: avoid;
   }
 
+  body {
+    font-size: 0.64285714285714em !important;
+  }
+
+  a {
+    color: black !important;
+  }
+
   .print {
     display: block;
   }
@@ -39,8 +47,12 @@
     padding-bottom: 0px;
   }
 
-  fieldset label {
+  fieldset *,
+  fieldset {
     margin: 0;
+    padding: 0;
+    height: auto;
+    line-height: 1em;
   }
 
   html, body, #page-container {
@@ -62,5 +74,17 @@
   #turre-logo {
     border: 1px solid red;
     display: none;
+  }
+
+  .table-cell {
+    padding-top: 0px;
+    padding-bottom: 0px;
+    line-height: 1.1em;
+  }
+
+  .timestamp {
+    float: right;
+    color: #808080;
+    font-size: 10px;
   }
 }
