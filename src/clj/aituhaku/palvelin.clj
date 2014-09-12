@@ -18,6 +18,7 @@
             [clojure.tools.logging :as log]
             [clojure.pprint :refer [pprint]]
             [compojure.core :as c]
+            [compojure.route :as r]
             [org.httpkit.server :as hs]
             [ring.middleware.json :refer [wrap-json-params]]
             [ring.middleware.keyword-params :refer [wrap-keyword-params]]
@@ -58,7 +59,8 @@
                                                                     (-> asetukset
                                                                       piilota-salasanat
                                                                       pprint)))))
-    (c/GET "/" [] (s/render-file "public/app/index.html" {:base-url (-> asetukset :server :base-url)}))))
+    (c/GET "/" [] (s/render-file "public/app/index.html" {:base-url (-> asetukset :server :base-url)}))
+    (r/not-found "Not found")))
 
 (defn sammuta [palvelin]
   (log/info "Sammutetaan näyttötutkintohaku")
