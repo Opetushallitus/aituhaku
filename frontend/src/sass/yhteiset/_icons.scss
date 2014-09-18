@@ -1,14 +1,18 @@
-$icon-images : url('../img/oph-icon-sprite.png');
-$icon-images-svg : url('../img/oph-icon-sprite.svg');
+$icon-images: url('../img/oph-icon-sprite.png');
+$icon-images-svg: url('../img/oph-icon-sprite.svg');
 
 @mixin icon-images {
   background-image: $icon-images-svg !important;
   background-size: inherit !important;
-  .no-svg & {background-image: $icon-images !important;}
+  .no-svg & {
+    background-image: $icon-images !important;
+  }
 }
 
 @mixin icon-hover($position) {
-  &:hover {background-position: 0 $position;}
+  &:hover {
+    background-position: 0 $position;
+  }
 }
 
 /* Voidaan käyttää elementissä, jonka perään hakutaan ikoni. Ei tarvitse erillistä dom elementtiä ikonille.
@@ -151,7 +155,7 @@ Esim: @include icon-after(11px, 11px){@include user-icon;}; */
   width: 8px;
   height: 5px;
   background-position: 0 -1550px;
-  
+
 }
 
 @mixin small-collapse-icon {
@@ -183,7 +187,7 @@ Esim: @include icon-after(11px, 11px){@include user-icon;}; */
 }
 
 @mixin help-icon {
-  @include  icon-images;
+  @include icon-images;
   width: 11px;
   height: 14px;
   background-position: 0 -300px;
@@ -202,8 +206,8 @@ Esim: <div class="icon user-icon"></div> */
     @include add-icon;
   }
   &.delete-icon {
-     @include delete-icon;
-   }
+    @include delete-icon;
+  }
   &.calendar-icon {
     @include calendar-icon;
   }
@@ -225,7 +229,9 @@ Esim: <div class="icon user-icon"></div> */
 button.button-with-icon {
   padding-right: 50px;
   &.add-user-icon {
-    @include icon-after(10px, 2px){@include add-user-icon;};
+    @include icon-after(10px, 2px) {
+      @include add-user-icon;
+    }
+  ;
   }
 }
-

@@ -1,6 +1,11 @@
-.kielen-vaihto {
+.kielen-vaihto,
+.print-link{
   float: right;
   margin-top: 5px;
+}
+
+.print-link{
+  margin-right: 10px;
 }
 
 .palaa-hakuun {

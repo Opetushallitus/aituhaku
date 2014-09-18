@@ -30,6 +30,11 @@ angular.module('aituhaku', ['angular-loading-bar',
     $scope.i18n = i18n;
     $scope.baseUrl = _.has(window, 'ophBaseUrl') ?  window.ophBaseUrl : '';
     $scope.timestamp = $filter('date')(new Date(), 'dd.MM.yyyy HH:mm');
+
+    $scope.printPage = function(){
+      window.print();
+    };
+
   }])
 
   .constant('asetukset', {

@@ -30,11 +30,17 @@
         <a id="oph-logo" href="http://www.oph.fi"></a>
         <a id="turre-logo" href="{{baseUrl}}/"></a>
         <h1><a href="{{baseUrl}}/" ng-bind="i18n.yleiset.palvelun_otsikko"></a></h1>
-        <span class="print timestamp">{{timestamp}}</span>
+        <span class="print timestamp">
+            {{timestamp}} <br />
+            <span class="small-type">{{i18n.yleiset.tietolahde}}</span>
+        </span>
       </section>
     </header>
     <section class="app-wrapper">
-      <kielen-vaihto></kielen-vaihto>
+        <kielen-vaihto></kielen-vaihto>
+        <div class="print-link">
+            <a class="ng-scope ng-binding" title="{{i18n.yleiset.tulosta_selite}}" ng-click="printPage();">{{i18n.yleiset.tulosta}}</a>
+        </div>
     </section>
     <section class="app-wrapper main-content" ng-view></section>
   </section>
