@@ -41,8 +41,8 @@
 <div class="table" ng-if="tutkinto.jarjestajat.length > 0">
   <div class="table-header">
     <div class="table-cell">{{i18n.tutkinnot.tutkinnon_jarjestaja}}</div>
-    <div class="table-cell">&nbsp;</div>
-    <div class="table-cell">&nbsp;</div>
+    <div class="table-cell">{{i18n.tutkinnot.tutkinnon_jarjestaja_www}}</div>
+    <div class="table-cell">{{i18n.tutkinnot.koulutustoimija}}</div>
   </div>
   <div class="table-row" ng-repeat="jarjestaja in tutkinto.jarjestajat | orderBy:'nimi'">
     <div class="table-cell"><a ng-href="#/jarjestaja/{{jarjestaja.oppilaitoskoodi}}">{{jarjestaja.nimi}}</a></div>
