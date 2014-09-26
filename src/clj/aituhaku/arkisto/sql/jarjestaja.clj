@@ -16,6 +16,10 @@
     (:require [korma.core :as sql]
               [aituhaku.arkisto.sql.korma :refer :all]))
 
+(defn hae-oppilaitoskoodit []
+  (sql/select tutkinnon_jarjestajat_view
+    (sql/fields :oppilaitoskoodi)))
+  
 (defn hae
   [oppilaitoskoodi]
   (let [jarjestaja (first (sql/select tutkinnon_jarjestajat_view
