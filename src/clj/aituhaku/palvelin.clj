@@ -67,6 +67,19 @@
   ((:sammuta palvelin))
   (log/info "Palvelin sammutettu"))
 
+(defn app [asetukset]
+  (->
+    (reitit asetukset)
+    wrap-keyword-params
+    wrap-json-params
+    (wrap-resource "public/app")
+    (wrap-locale
+      :ei-redirectia #"/api/.*"
+      :base-url (get-in asetukset [:server :base-url]))
+    wrap-params
+    wrap-content-type
+    log-request-wrapper))
+
 (defn kaynnista! [oletusasetukset]
   (try
     (log/info "Käynnistetään näyttötutkintohaku, versio" @build-id)
@@ -78,18 +91,8 @@
               (fn [c json-generator]
                 (.writeString json-generator (.toString c "yyyy-MM-dd"))))
           portti (get-in luetut-asetukset [:server :port])
-          sammuta (hs/run-server (->
-                                   (reitit luetut-asetukset)
-                                   wrap-keyword-params
-                                   wrap-json-params
-                                   (wrap-resource "public/app")
-                                   (wrap-locale
-                                     :ei-redirectia #"/api/.*"
-                                     :base-url (get-in luetut-asetukset [:server :base-url]))
-                                   wrap-params
-                                   wrap-content-type
-                                   log-request-wrapper)
-                                 {:port portti})
+          sammuta (hs/run-server (app asetukset)
+                    {:port portti})
           _ (log/info "Palvelin käynnistetty porttiin " portti)]
       {:sammuta sammuta})
     (catch Throwable t
