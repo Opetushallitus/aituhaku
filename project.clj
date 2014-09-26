@@ -41,6 +41,9 @@
                        :aot :all}}
   :source-paths ["src/clj"]
   :test-paths ["test/clj"]
+  :test-selectors {:kaikki (constantly true)
+                   :default (complement :integraatio)
+                   :integraatio :integraatio}
   :main aituhaku.palvelin
   :repl-options {:init-ns user}
   :jar-name "aituhaku.jar"

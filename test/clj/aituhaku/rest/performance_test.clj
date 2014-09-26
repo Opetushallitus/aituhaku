@@ -21,7 +21,7 @@
           asetukset (haku-asetukset/lue-asetukset dev-asetukset)]
       (alusta-korma! asetukset))))
  
-(deftest jarjestaja-tiedot-yksi-saie []  
+(deftest ^:integraatio jarjestaja-tiedot-yksi-saie []  
   (let [asetukset
         (-> haku-asetukset/oletusasetukset
           (assoc :development-mode true))
