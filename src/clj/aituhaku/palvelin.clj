@@ -91,7 +91,7 @@
               (fn [c json-generator]
                 (.writeString json-generator (.toString c "yyyy-MM-dd"))))
           portti (get-in luetut-asetukset [:server :port])
-          sammuta (hs/run-server (app asetukset)
+          sammuta (hs/run-server (app luetut-asetukset)
                     {:port portti})
           _ (log/info "Palvelin käynnistetty porttiin " portti)]
       {:sammuta sammuta})
