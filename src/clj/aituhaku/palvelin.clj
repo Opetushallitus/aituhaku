@@ -68,6 +68,9 @@
   (log/info "Palvelin sammutettu"))
 
 (defn app [asetukset]
+  (json-gen/add-encoder org.joda.time.LocalDate
+    (fn [c json-generator]
+      (.writeString json-generator (.toString c "yyyy-MM-dd"))))
   (->
     (reitit asetukset)
     wrap-keyword-params
@@ -87,9 +90,6 @@
           _ (deliver asetukset luetut-asetukset )
           _ (konfiguroi-lokitus luetut-asetukset)
           _ (aituhaku.arkisto.sql.korma/luo-db (:db luetut-asetukset))
-          _ (json-gen/add-encoder org.joda.time.LocalDate
-              (fn [c json-generator]
-                (.writeString json-generator (.toString c "yyyy-MM-dd"))))
           portti (get-in luetut-asetukset [:server :port])
           sammuta (hs/run-server (app luetut-asetukset)
                     {:port portti})
