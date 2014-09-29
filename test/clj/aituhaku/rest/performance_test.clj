@@ -62,10 +62,10 @@
 
 (deftest ^:integraatio jarjestaja-tiedot-yksi-saie []
   (with-korma
-    (let [urlit (map oppilaitos->jarjestaja-url (take 100 (jarjestaja-arkisto/hae-oppilaitoskoodit)))]
-      #(time-with-peridot-multi urlit 1 100))))
+    #(let [urlit (map oppilaitos->jarjestaja-url (take 100 (jarjestaja-arkisto/hae-oppilaitoskoodit)))]
+      (time-with-peridot-multi urlit 1 100))))
 
 (deftest ^:integraatio jarjestaja-tiedot-useita-saikeita []  
   (with-korma
-    (let [urlit (map oppilaitos->jarjestaja-url (take 500 (jarjestaja-arkisto/hae-oppilaitoskoodit)))]
-      #(time-with-peridot-multi urlit 5 100))))
+    #(let [urlit (map oppilaitos->jarjestaja-url (take 500 (jarjestaja-arkisto/hae-oppilaitoskoodit)))]
+      (time-with-peridot-multi urlit 5 100))))
