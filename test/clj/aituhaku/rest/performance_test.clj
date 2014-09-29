@@ -38,7 +38,8 @@
         _ (deliver haku-asetukset/asetukset asetukset)]
     
     (let [peridot-session (peridot/session crout)
-          start (java.lang.System/currentTimeMillis)]
+          start (java.lang.System/currentTimeMillis)
+          req-count (* thread-count urls-per-thread)]
       (let [urls-for-threads (for [_ (range thread-count)]
                                (repeatedly urls-per-thread #(rand-nth url-seq)))]
         (doall
@@ -48,13 +49,13 @@
                 (future
                   (doseq [url url-seq]
                     (let [response (peridot/request peridot-session url :request-method :get)]
-                      (is (= (:status (:response response)) 200))
-                      ))))))))
+                      (is (= (:status (:response response)) 200))))))))))
       (let [end (java.lang.System/currentTimeMillis)
             elapsed (- end start)
-            avg (float (/ elapsed 100))]
+            avg (float (/ elapsed req-count))
+            throughput (float (/ 1000 avg))]
         (log/info "average request time " avg " ms")
-        ))))
+        (log/info "request per second, avg " throughput)))))
  
 (defn oppilaitos->jarjestaja-url 
   [oppilaitos]
