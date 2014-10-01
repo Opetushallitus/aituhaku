@@ -13,7 +13,7 @@
 ;; European Union Public Licence for more details.
 
 (ns aituhaku.infra.status
-  (:require [clojure.java.io :refer [resource]]))
+  (:require [clojure.java.io :as io]))
 
 ;; Postwalk käsittelee yksittäisen avain-arvo-parin vektorina, ei MapEntryna.
 (defn piilota-salasanat [status]
@@ -23,10 +23,12 @@
                             %)
                          status))
 
+(def build-id (delay (if-let [resource (io/resource "build-id.txt")]
+                       (.trim (slurp resource))
+                       "dev")))
+
 (defn status []
-  {:build-id (if-let [r (resource "build-id.txt")]
-               (.trim (slurp r))
-               "dev")
+  {:build-id @build-id
    :asennukset (try
                  (slurp "asennukset.txt")
                  (catch java.io.FileNotFoundException _

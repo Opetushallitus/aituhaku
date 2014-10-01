@@ -31,7 +31,7 @@
             [aitu.infra.print-wrapper :refer [log-request-wrapper]]
             [aituhaku.asetukset :refer [asetukset lue-asetukset oletusasetukset konfiguroi-lokitus]]
             [aituhaku.infra.i18n :refer [wrap-locale]]
-            [aituhaku.infra.status :refer [status piilota-salasanat]]
+            [aituhaku.infra.status :refer [status piilota-salasanat build-id]]
             [stencil.core :as s]
             aituhaku.rest-api.i18n
             aituhaku.rest-api.js-log
@@ -41,10 +41,6 @@
             aituhaku.rest-api.toimikunta))
 
 (schema.core/set-fn-validation! true)
-
-(def ^:private build-id (delay (if-let [resource (io/resource "build-id.txt")]
-                                 (.trim (slurp resource))
-                                 "dev")))
 
 (defn ^:private reitit [asetukset]
   (c/routes
