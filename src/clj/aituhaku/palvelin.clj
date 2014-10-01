@@ -54,11 +54,13 @@
     (c/context "/api/opintoala" [] aituhaku.rest-api.opintoala/reitit)
     (c/context "/api/jarjestaja" [] aituhaku.rest-api.jarjestaja/reitit)
     (c/context "/api/jslog" []  aituhaku.rest-api.js-log/reitit )
-    (c/GET "/status" [] (s/render-file "status" (assoc (status)
-                                                       :asetukset (with-out-str
-                                                                    (-> asetukset
-                                                                      piilota-salasanat
-                                                                      pprint)))))
+    (if (:development-mode asetukset)
+      (c/GET "/status" [] (s/render-file "status" (assoc (status)
+                                                         :asetukset (with-out-str
+                                                                      (-> asetukset
+                                                                        piilota-salasanat
+                                                                        pprint)))))
+     (c/GET "/status" [] (s/render-string "OK" {})))
     (c/GET "/" [] (s/render-file "public/app/index.html" {:base-url (-> asetukset :server :base-url)}))
     (r/not-found "Not found")))
 
