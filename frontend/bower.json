@@ -18,5 +18,8 @@
     "sprintf": "~1.0.0",
     "stacktrace": "~0.6.0",
     "aituaipaljs": "https://github.com/Opetushallitus/aituaipaljs.git#0.1.10"
+  },
+  "resolutions": {
+    "angular": "1.2.16"
   }
 }
