@@ -26,15 +26,6 @@ angular.module('toimikunnat.ui', ['toimikunnat.toimikunta',
       });
   }])
 
-  .controller('ToimikuntaController', ['Toimikunta', '$routeParams', '$scope', '$location', function(Toimikunta, $routeParams, $scope, $location) {
+  .controller('ToimikuntaController', ['Toimikunta', '$routeParams', '$scope', function(Toimikunta, $routeParams, $scope) {
     $scope.toimikunta = Toimikunta.get({tkunta: $routeParams.tkunta});
-
-    $scope.palaaHakuunTaiTutkintoon = function() {
-      if ($routeParams.tutkinto) {
-        $location.url('/tutkinto/' + $routeParams.tutkinto);
-      } else {
-        $location.path('/');
-      }
-    };
   }]);
-
