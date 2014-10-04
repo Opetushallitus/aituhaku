@@ -5,6 +5,7 @@
   "dependencies": {
     "angular": "1.2.16",
     "lodash": "2.4.1",
+    "angular-cookies": "1.2.16",
     "angular-mocks": "1.2.16",
     "angular-route": "1.2.16",
     "angular-resource": "1.2.16",
@@ -16,6 +17,9 @@
     "angular-loading-bar": "~0.4.3",
     "sprintf": "~1.0.0",
     "stacktrace": "~0.6.0",
-    "aituaipaljs": "https://github.com/Opetushallitus/aituaipaljs.git#0.1.2"
+    "aituaipaljs": "https://github.com/Opetushallitus/aituaipaljs.git#0.1.10"
+  },
+  "resolutions": {
+    "angular": "1.2.16"
   }
 }

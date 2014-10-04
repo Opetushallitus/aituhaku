@@ -16,14 +16,14 @@
 
 angular.module('yhteiset.direktiivit.palaaHakuun', [])
 
-  .directive('palaaHakuun', ['$location', function($location){
+  .directive('palaaHakuun', ['$location','$window', function($location, $window){
     return {
       restrict: 'E',
       replace: true,
       templateUrl : 'template/yhteiset/direktiivit/palaa_hakuun.html',
       link : function(scope) {
         scope.palaaHakuun = function() {
-          $location.path('/');
+          $window.history.back();
         };
       }
     };
