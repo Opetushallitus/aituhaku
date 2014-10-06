@@ -36,7 +36,7 @@
 (defn domainin-kieli
   "Määrittää kielikoodin käytetyn domainin perusteella"
   [request]
-  (condp contains? (:server-name request)
+  (condp contains? (get-in request [:headers "host"])
     suomenkieliset-domainit "fi"
     ruotsinkieliset-domainit "sv"
     nil))
