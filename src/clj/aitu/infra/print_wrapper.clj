@@ -36,7 +36,8 @@
     (binding [*requestid* (swap! requestid inc)]
       (let [start (System/currentTimeMillis)]
         (log/info (str "Request " *requestid* " start. "
-                       " remote-addr: " (:remote-addr req)
+                       " host: " (get-in req [:headers "host"])
+                       " ,remote-addr: " (:remote-addr req)
                        " ,method: " (http-method->str (:request-method req))
                        " ,uri: " (:uri req)
                        " ,query-string: " (:query-string req)
