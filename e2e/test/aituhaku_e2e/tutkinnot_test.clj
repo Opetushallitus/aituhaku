@@ -138,7 +138,7 @@
                 (paina-tutkinnon-nimi-linkkia haettavan-tutkinnon-nimi)
                 (is (= (tutkinto-sivun-otsikko) "HAETTAVA TUTKINTO A1"))))))))))
 
-(deftest tutkinnot-paluu-hakuun-test
+(deftest ^:no-ie tutkinnot-paluu-hakuun-test
   (let [testidata (tutkinnot-oletus-testidata)]
     (with-data testidata
       (with-webdriver
