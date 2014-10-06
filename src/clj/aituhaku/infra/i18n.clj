@@ -36,10 +36,12 @@
 (defn domainin-kieli
   "Määrittää kielikoodin käytetyn domainin perusteella"
   [request]
-  (condp contains? (get-in request [:headers "host"])
-    suomenkieliset-domainit "fi"
-    ruotsinkieliset-domainit "sv"
-    nil))
+  (let [host (or (get-in request [:headers "x-forwarded-host"])
+                 (get-in request [:headers "host"]))]
+    (condp contains? host
+     suomenkieliset-domainit "fi"
+     ruotsinkieliset-domainit "sv"
+     nil)))
 
 (defn kielikoodi-ja-uri
   "Pilkkoo annetun URI:n kielikoodiin ja muuhun URI:iin."

@@ -34,9 +34,11 @@
   "Logitus requestille. Perustiedot + kestoaika ja uniikki id per request"
   (fn [req]
     (binding [*requestid* (swap! requestid inc)]
-      (let [start (System/currentTimeMillis)]
+      (let [start (System/currentTimeMillis)
+            host (or (get-in req [:headers "x-forwarded-host"])
+                     (get-in req [:headers "host"]))]
         (log/info (str "Request " *requestid* " start. "
-                       " host: " (get-in req [:headers "host"])
+                       " host: " host
                        " ,remote-addr: " (:remote-addr req)
                        " ,method: " (http-method->str (:request-method req))
                        " ,uri: " (:uri req)
