@@ -21,6 +21,26 @@
 
 (def ^:dynamic *locale*)
 
+(def suomenkieliset-domainit #{"xn--nytttutkintohaku-vnb14a.fi"
+                               "www.xn--nytttutkintohaku-vnb14a.fi"
+                               "nayttotutkintohaku.fi"
+                               "www.nayttotutkintohaku.fi"
+                               "haetutkinto.fi"
+                               "www.haetutkinto.fi"})
+
+(def ruotsinkieliset-domainit #{"xn--skexamen-n4a.fi"
+                                "www.xn--skexamen-n4a.fi"
+                                "sokexamen.fi"
+                                "www.sokexamen.fi"})
+
+(defn domainin-kieli
+  "Määrittää kielikoodin käytetyn domainin perusteella"
+  [request]
+  (condp contains? (:server-name request)
+    suomenkieliset-domainit "fi"
+    ruotsinkieliset-domainit "sv"
+    nil))
+
 (defn kielikoodi-ja-uri
   "Pilkkoo annetun URI:n kielikoodiin ja muuhun URI:iin."
   [kysely]
@@ -37,6 +57,7 @@
 (defn wrap-locale [ring-handler & {:keys [ei-redirectia, base-url]}]
   (fn [request]
     (let [[urin-kielikoodi uri] (kielikoodi-ja-uri request)
+          domainin-kielikoodi (domainin-kieli request)
           accept-languagen-kielikoodi (accept-languagen-kielikoodi request)
           kielikoodi (or urin-kielikoodi accept-languagen-kielikoodi)
           ei-redirectia? (some-> ei-redirectia (re-matches (:uri request)))]
@@ -45,4 +66,4 @@
                          {#'*locale* (Locale. kielikoodi)}
                          {})
           (ring-handler (assoc request :uri uri)))
-        (redirect (str base-url "/fi" uri))))))
+        (redirect (str base-url "/" (or domainin-kielikoodi "fi") uri))))))
