@@ -8,13 +8,15 @@
     [aituhaku.arkisto.sql.jarjestaja :as jarjestaja-arkisto]
     ))
 
-
 (defn alusta-korma!
   ([asetukset]
     (let [db-asetukset (merge-with #(or %2 %1)
                          (:db asetukset)
-                         {:host (System/getenv "AMTU_DB_HOST")
-                          :port (System/getenv "AMTU_DB_PORT")})]
+                         {:host (System/getenv "AITUHAKU_DB_HOST")
+                          :port (System/getenv "AITUHAKU_DB_PORT")
+                          :name (System/getenv "AITUHAKU_DB_NAME")
+                          :user (System/getenv "AITUHAKU_DB_USER")
+                          :password (System/getenv "AITUHAKU_DB_PASSWORD")})]
       (aituhaku.arkisto.sql.korma/luo-db db-asetukset)))
     ([]
     (let [dev-asetukset (assoc haku-asetukset/oletusasetukset :development-mode true)
