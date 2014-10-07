@@ -3,5 +3,9 @@
             [aituhaku.arkisto.sql.korma :refer :all]))
 
 (defn hae
-  []
-  (sql/select opintoala_view))
+  [kieli]
+  (if (= "fi" kieli)
+    (sql/select opintoala_view
+      (sql/order :koulutusala_tkkoodi :asc, :opintoala_nimi_fi :asc))
+    (sql/select opintoala_view
+      (sql/order :koulutusala_tkkoodi :asc, :opintoala_nimi_fi :desc))))

@@ -11,6 +11,6 @@
 (defn hae-termilla
   "Hakee opintoalan kentista termillä."
   [termi kieli]
-  (->> (opintoala-sql/hae)
+  (->> (opintoala-sql/hae kieli)
       (filter opintoala-voimassa?)
       (filter #(sisaltaako-kentat? % [(keyword (str "opintoala_nimi_" kieli))] termi))))
