@@ -79,13 +79,13 @@
   [oppilaitos]
   (str "/api/jarjestaja/" (:oppilaitoskoodi oppilaitos)))
 
-(deftest ^:integraatio jarjestaja-tiedot-yksi-saie []
+(deftest ^:performance jarjestaja-tiedot-yksi-saie []
   (log/info "järjestäjätiedot, yksi säie")
   (with-korma
     #(let [urlit (map oppilaitos->jarjestaja-url (take 100 (jarjestaja-arkisto/hae-oppilaitoskoodit)))]
       (time-with-peridot-multi urlit 1 100))))
 
-(deftest ^:integraatio jarjestaja-tiedot-useita-saikeita []  
+(deftest ^:performance jarjestaja-tiedot-useita-saikeita []  
   (log/info "järjestäjätiedot, useita säikeitä")
   (with-korma
     #(let [urlit (map oppilaitos->jarjestaja-url (take 500 (jarjestaja-arkisto/hae-oppilaitoskoodit)))]
@@ -99,7 +99,7 @@
   [termi]
   (str "/api/opintoala/haku?termi=" (java.net.URLEncoder/encode termi "UTF-8") "&kieli=fi&_=1411987692933"))
 
-(deftest ^:integraatio tutkintohaku []
+(deftest ^:performance tutkintohaku []
   (log/info "tutkintohaku, useita säikeitä")
   ; sisältää myös termejä, joilla ei löydy tuloksia
   ; hakutermin oltava vähintään kolme merkkiä, jotta rajapinta palauttaa tuloksia
@@ -108,7 +108,7 @@
       #(let [urlit (map termi->tutkintohaku-url hakutermit)]
         (time-with-peridot-multi urlit 15 100)))))
 
-(deftest ^:integraatio opintoalahaku []
+(deftest ^:performance opintoalahaku []
   (log/info "opintoalahaku, useita säikeitä")
   ; sisältää myös termejä, joilla ei löydy tuloksia
   (let [hakutermit (list "a" "e" "o" "x" "oi" "opet" "ase" "aa" "oi" "ra" "ala" "   " "yxzdfgasdlasqwrojaskn")]

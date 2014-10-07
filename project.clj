@@ -42,7 +42,8 @@
   :source-paths ["src/clj"]
   :test-paths ["test/clj"]
   :test-selectors {:kaikki (constantly true)
-                   :default (complement :integraatio)
+                   :default  (complement (some-fn :integraatio :performance)) 
+                   :performance :performance
                    :integraatio :integraatio}
   :main aituhaku.palvelin
   :repl-options {:init-ns user}
