@@ -9,5 +9,4 @@
   (c/GET "/haku" [termi kieli]
     (schema/validate schema/Str termi)
     (json-response
-      (arkisto/hae-termilla termi kieli)
-      [Opintoala])))
+      (arkisto/hae-termilla termi kieli))))
