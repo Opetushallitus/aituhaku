@@ -8,4 +8,4 @@
     (sql/select opintoala_view
       (sql/order :koulutusala_tkkoodi :asc, :opintoala_nimi_fi :asc))
     (sql/select opintoala_view
-      (sql/order :koulutusala_tkkoodi :asc, :opintoala_nimi_fi :desc))))
+      (sql/order :koulutusala_tkkoodi :asc, :opintoala_nimi_sv :asc))))
