@@ -25,7 +25,7 @@ input[type="text"], a.select2-choice {
 
 a.select2-choice {padding-top: 4px !important;}
 
-div.select2-container.select2-allowclear.select2-container-active .select2-choice abbr {
+div.select2-container.select2-allowclear .select2-choice abbr {
   @include delete-icon;
   right: 45px !important;
   top : 10px !important;
