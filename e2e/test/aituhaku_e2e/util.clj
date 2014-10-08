@@ -13,7 +13,8 @@
 ;; European Union Public Licence for more details.
 
 (ns aituhaku-e2e.util
-  (:require [aitu-e2e.util :refer [avaa-url]]))
+  (:require [clj-webdriver.taxi :as w]
+            [aitu-e2e.util :refer [avaa-url odota-kunnes]]))
 
 (defn aituhaku-url [polku]
   (str (or (System/getenv "AITUHAKU_URL")
@@ -22,3 +23,13 @@
 
 (defn avaa [polku]
   (avaa-url (aituhaku-url polku)))
+
+(defn valitse-puhdas-select2-optio
+  "Valitsee ensimmäisen option hakuehto listalta"
+  [malli hakuehto]
+  (w/execute-script (str "$('select[ng-model=\"" malli "\"]').data('select2').open()"))
+  (odota-kunnes (-> (w/find-elements {:css "#select2-drop input.select2-input"}) (count) (> 0)))
+  (w/clear "#select2-drop input")
+  (w/input-text "#select2-drop input" hakuehto)
+  (odota-kunnes (-> (w/find-elements {:css "#select2-drop input.select2-active"}) (count) (= 0)))
+  (w/click "#select2-drop .select2-results li.select2-result-selectable"))

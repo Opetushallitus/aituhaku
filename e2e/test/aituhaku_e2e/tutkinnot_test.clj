@@ -32,7 +32,7 @@
   (odota-angular-pyyntoa))
 
 (defn hae-opintoalalla [opintoala]
-  (valitse-select2-optio "hakuModel.opintoala" "opintoala_tkkoodi" opintoala)
+  (valitse-puhdas-select2-optio "hakuModel.opintoala" opintoala)
   (odota-angular-pyyntoa))
 
 (defn nakyvien-tutkintojen-tiedot [kentta]
