@@ -6,6 +6,8 @@
   [kieli]
   (if (= "fi" kieli)
     (sql/select opintoala_view
-      (sql/order :koulutusala_tkkoodi :asc, :opintoala_nimi_fi :asc))
+      (sql/order :koulutusala_tkkoodi :asc)
+      (sql/order :opintoala_nimi_fi :asc))
     (sql/select opintoala_view
-      (sql/order :koulutusala_tkkoodi :asc, :opintoala_nimi_sv :asc))))
+      (sql/order :koulutusala_tkkoodi :asc)
+      (sql/order :opintoala_nimi_sv :asc))))
