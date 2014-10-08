@@ -18,6 +18,6 @@
   (let [opintoalat (->> (opintoala-sql/hae kieli)
                         (filter opintoala-voimassa?)
                         (filter #(sisaltaako-kentat? % [(keyword (str "opintoala_nimi_" kieli))] termi)))
-        opintoalat_koulutusaloittain (group-by #(select-keys % [:koulutusala_tkkoodi :koulutusala_nimi_fi :koulutusala_nimi_sv]) opintoalat)
-        koulutusalat (keys opintoalat_koulutusaloittain)]
-    (sort-by :koulutusala_tkkoodi (map #(assoc % :opintoalat (map poista-ylimaaraiset (get opintoalat_koulutusaloittain %))) koulutusalat))))
+        opintoalat-koulutusaloittain (group-by #(select-keys % [:koulutusala_tkkoodi :koulutusala_nimi_fi :koulutusala_nimi_sv]) opintoalat)]
+    (sort-by :koulutusala_tkkoodi (for [[koulutusala opintoalat] opintoalat-koulutusaloittain]
+                                    (assoc koulutusala :opintoalat (map poista-ylimaaraiset opintoalat))))))
