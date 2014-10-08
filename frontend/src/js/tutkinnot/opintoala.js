@@ -28,7 +28,7 @@ angular.module('tutkinnot.opintoala', ['ngResource'])
       haku: function(successCallback, errorCallback) {
         return resource.haku({}, successCallback, errorCallback);
       }
-    }
+    };
   }])
 
 ;
