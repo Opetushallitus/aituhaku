@@ -15,6 +15,7 @@
 'use strict';
 
 angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
+                                'tutkinnot.opintoala',
                                 'yhteiset.direktiivit.hakutulokset',
                                 'yhteiset.suodattimet.jarjestaLokalisoidullaNimella',
                                 'yhteiset.palvelut.debounce',
@@ -61,7 +62,7 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
                                            function(asetukset, $filter, Tutkinto, debounce){
     function hakuehdot(hakuModel) {
       return {nimi: hakuModel.tutkinnonNimi,
-              opintoala: _.isEmpty(hakuModel.opintoala) ? null : hakuModel.opintoala.opintoala_tkkoodi};
+              opintoala: _.isEmpty(hakuModel.opintoala) ? null : hakuModel.opintoala};
     }
 
     function riittavatHakuehdot(hakuehdot) {
@@ -90,12 +91,20 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
   .controller('TutkinnotController', ['TutkinnotControllerFunktiot',
                                       'Tutkinto',
                                       'TutkintoHakuModel',
+                                      'Opintoala',
                                       '$scope',
                                      function(f,
                                               Tutkinto,
                                               TutkintoHakuModel,
+                                              Opintoala,
                                               $scope) {
     $scope.hakuModel = TutkintoHakuModel;
+    $scope.select2Options = {
+      allowClear: true
+    };
+    Opintoala.haku("", "fi", function(data) {
+      $scope.koulutusalat = data;
+    });
 
     var haunLaukaisevatKentat = ['tutkinnonNimi', 'opintoala'];
 
