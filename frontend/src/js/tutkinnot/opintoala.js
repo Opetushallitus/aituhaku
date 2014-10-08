@@ -25,8 +25,8 @@ angular.module('tutkinnot.opintoala', ['ngResource'])
     });
 
     return {
-      haku: function(termi, kieli, successCallback, errorCallback) {
-        return resource.haku({termi: termi, kieli: kieli}, successCallback, errorCallback);
+      haku: function(kieli, successCallback, errorCallback) {
+        return resource.haku({kieli: kieli}, successCallback, errorCallback);
       }
     }
   }])

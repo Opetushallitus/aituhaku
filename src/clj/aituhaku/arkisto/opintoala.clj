@@ -12,12 +12,10 @@
   [opintoala]
   (dissoc opintoala :koulutusala_tkkoodi :koulutusala_nimi_fi :koulutusala_nimi_sv))
 
-(defn hae-termilla
-  "Hakee opintoalan kentista termillä."
-  [termi kieli]
-  (let [opintoalat (->> (opintoala-sql/hae kieli)
-                        (filter opintoala-voimassa?)
-                        (filter #(sisaltaako-kentat? % [(keyword (str "opintoala_nimi_" kieli))] termi)))
+(defn hae
+  "Hakee koulutusalat ja niiden opintoalat"
+  [kieli]
+  (let [opintoalat (filter opintoala-voimassa? (opintoala-sql/hae kieli))
         opintoalat-koulutusaloittain (group-by #(select-keys % [:koulutusala_tkkoodi :koulutusala_nimi_fi :koulutusala_nimi_sv]) opintoalat)]
     (sort-by :koulutusala_tkkoodi (for [[koulutusala opintoalat] opintoalat-koulutusaloittain]
                                     (assoc koulutusala :opintoalat (map poista-ylimaaraiset opintoalat))))))

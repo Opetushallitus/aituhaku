@@ -102,7 +102,7 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
     $scope.select2Options = {
       allowClear: true
     };
-    Opintoala.haku("", "fi", function(data) {
+    Opintoala.haku("fi", function(data) {
       $scope.koulutusalat = data;
     });
 
