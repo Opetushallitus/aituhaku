@@ -22,7 +22,7 @@ describe('tutkinnot.ui.TutkinnotController', function(){
   var $controller;
   var $browser;
 
-  beforeEach(module('tutkinnot.ui'));
+  beforeEach(module('tutkinnot.ui', 'mock.tutkinnot.opintoala'));
 
   beforeEach(inject(function(_$timeout_, _$httpBackend_, $rootScope, _$controller_, _$browser_) {
     $timeout = _$timeout_;

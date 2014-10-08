@@ -40,7 +40,7 @@ describe('tutkinnot.ui.TutkinnotControllerFunktiot', function(){
 
     it('Opintoala', function(){
       var hakuModel = {tutkinnonNimi: 'Auto',
-                       opintoala: {opintoala_tkkoodi: '123'}};
+                       opintoala: '123'};
       expect(f.hakuehdot(hakuModel)).toEqual({nimi: 'Auto', opintoala: '123'});
     });
   });
