@@ -104,7 +104,8 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
     $scope.select2Options = {
       allowClear: true
     };
-    Opintoala.haku(kieli, function(data) {
+    $scope.opintoalaOrder = (kieli === 'fi' ? 'opintoala_nimi_fi' : 'opintoala_nimi_sv');
+    Opintoala.haku(function(data) {
       $scope.koulutusalat = data;
     });
 

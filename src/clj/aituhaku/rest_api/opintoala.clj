@@ -6,7 +6,7 @@
             [aituhaku.arkisto.opintoala :as arkisto]))
 
 (c/defroutes reitit
-  (c/GET "/haku" [kieli]
+  (c/GET "/haku" []
     (json-response
-      (arkisto/hae kieli)
+      (arkisto/hae)
       [Koulutusala])))
