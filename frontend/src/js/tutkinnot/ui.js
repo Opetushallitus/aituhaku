@@ -92,17 +92,19 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
                                       'Tutkinto',
                                       'TutkintoHakuModel',
                                       'Opintoala',
+                                      'kieli',
                                       '$scope',
                                      function(f,
                                               Tutkinto,
                                               TutkintoHakuModel,
                                               Opintoala,
+                                              kieli,
                                               $scope) {
     $scope.hakuModel = TutkintoHakuModel;
     $scope.select2Options = {
       allowClear: true
     };
-    Opintoala.haku("fi", function(data) {
+    Opintoala.haku(kieli, function(data) {
       $scope.koulutusalat = data;
     });
 
