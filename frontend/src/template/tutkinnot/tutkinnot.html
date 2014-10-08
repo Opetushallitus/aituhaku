@@ -6,12 +6,15 @@
     <label>{{i18n.tutkinnot.tutkinnon_nimi}}</label>
     <input type="text" ng-model="hakuModel.tutkinnonNimi" placeholder="{{i18n.tutkinnot.tutkinnon_nimi_placeholder}}">
   </fieldset>
-  <select ui-select2="select2Options" ng-model="hakuModel.opintoala" data-placeholder="{{i18n.tutkinnot.opintoala_placeholder}}" style="width: 600px">
-    <option></option>
-    <optgroup ng-repeat="koulutusala in koulutusalat" label="{{koulutusala.koulutusala_tkkoodi}}. {{koulutusala | lokalisoiKentta:'koulutusala_nimi'}}">
-      <option ng-repeat="opintoala in koulutusala.opintoalat | orderBy:opintoalaOrder" value="{{opintoala.opintoala_tkkoodi}}">{{opintoala | lokalisoiKentta:'opintoala_nimi'}}</option>
-    </optgroup>
-  </select>
+  <fieldset class="select2-fieldset">
+    <label>{{i18n.tutkinnot.opintoala}}</label>
+    <select ui-select2="select2Options" ng-model="hakuModel.opintoala" data-placeholder="{{i18n.tutkinnot.opintoala_placeholder}}">
+      <option></option>
+      <optgroup ng-repeat="koulutusala in koulutusalat" label="{{koulutusala.koulutusala_tkkoodi}}. {{koulutusala | lokalisoiKentta:'koulutusala_nimi'}}">
+        <option ng-repeat="opintoala in koulutusala.opintoalat | orderBy:opintoalaOrder" value="{{opintoala.opintoala_tkkoodi}}">{{opintoala | lokalisoiKentta:'opintoala_nimi'}}</option>
+      </optgroup>
+    </select>
+  </fieldset>
 </form>
 
 <div class="search-results">
