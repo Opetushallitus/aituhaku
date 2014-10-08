@@ -2,12 +2,11 @@
   (:require [compojure.core :as c]
             [schema.core :as schema]
             [aituhaku.rest-api.http-util :refer [json-response]]
-            [aituhaku.toimiala.skeema :refer [Opintoala]]
+            [aituhaku.toimiala.skeema :refer [Koulutusala]]
             [aituhaku.arkisto.opintoala :as arkisto]))
 
 (c/defroutes reitit
-  (c/GET "/haku" [termi kieli]
-    (schema/validate schema/Str termi)
+  (c/GET "/haku" [kieli]
     (json-response
-      (arkisto/hae-termilla termi kieli)
-      [Opintoala])))
+      (arkisto/hae kieli)
+      [Koulutusala])))

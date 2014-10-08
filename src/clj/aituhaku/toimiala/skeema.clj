@@ -65,8 +65,9 @@
                 :opintoala_nimi_sv s/Str
                 :opintoala_tkkoodi s/Str
                 :voimassa_alkupvm org.joda.time.LocalDate
-                :voimassa_loppupvm org.joda.time.LocalDate
-                :koulutusala_nimi_fi s/Str
-                :koulutusala_nimi_sv s/Str
-                :koulutusala_tkkoodi s/Str
-                })
+                :voimassa_loppupvm org.joda.time.LocalDate})
+
+(def Koulutusala {:koulutusala_tkkoodi s/Str
+                  :koulutusala_nimi_fi s/Str
+                  :koulutusala_nimi_sv s/Str
+                  :opintoalat [Opintoala]})
