@@ -23,7 +23,9 @@ angular.module('yhteiset.direktiivit.palaaHakuun', [])
       templateUrl : 'template/yhteiset/direktiivit/palaa_hakuun.html',
       link : function(scope) {
         scope.palaaHakuun = function() {
-          $window.history.back();
+          setTimeout( function() {
+            $window.history.back();
+          }, 0);
         };
       }
     };
