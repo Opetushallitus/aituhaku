@@ -21,3 +21,4 @@ resources/public/app/
 *.swp
 ansible/aituhaku_vagrant/salasanat/
 *.iml
+aituhaku.properties
