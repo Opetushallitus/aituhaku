@@ -28,11 +28,11 @@
 
 (defn hae-nimella [nimi]
   (tyhjenna-nimi-input)
-  (w/input-text (str "input[ng-model=\"hakuModel.tutkinnonNimi\"]") nimi)
+  (w/input-text "input[ng-model=\"hakuModel.tutkinnonNimi\"]" nimi)
   (odota-angular-pyyntoa))
 
 (defn hae-opintoalalla [opintoala]
-  (valitse-puhdas-select2-optio "hakuModel.opintoala" opintoala)
+  (w/select-by-text "select[ng-model=\"hakuModel.opintoala\"]" opintoala)
   (odota-angular-pyyntoa))
 
 (defn nakyvien-tutkintojen-tiedot [kentta]
