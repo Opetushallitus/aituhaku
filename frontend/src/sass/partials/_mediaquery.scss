@@ -15,8 +15,8 @@
     padding: 3px 5px;
     min-width: 30px;
   }
-  div.table.hakutulokset div.table-header div.table-cell:first-child,
-  div.table.hakutulokset div.table-row div.table-cell:first-child {
+  .tutkinnot.search-results div.table.hakutulokset div.table-header div.table-cell:first-child,
+  .tutkinnot.search-results div.table.hakutulokset div.table-row div.table-cell:first-child {
     display: none;
   }
 
