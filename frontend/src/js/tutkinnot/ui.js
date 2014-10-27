@@ -48,7 +48,7 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
   .factory('TutkintoHakuModel', function() {
     return {
       tutkinnonNimi : '',
-      opintoala : {},
+      opintoala : '',
       tutkinnot : null,
       nykyinenSivu : 1
     };

@@ -8,8 +8,8 @@
   </fieldset>
   <fieldset class="select2-fieldset">
     <label>{{i18n.tutkinnot.opintoala}}</label>
-    <select ui-select2="select2Options" ng-model="hakuModel.opintoala" data-placeholder="{{i18n.tutkinnot.opintoala_placeholder}}">
-      <option></option>
+    <select ng-model="hakuModel.opintoala">
+      <option value=""></option>
       <optgroup ng-repeat="koulutusala in koulutusalat" label="{{koulutusala.koulutusala_tkkoodi}}. {{koulutusala | lokalisoiKentta:'koulutusala_nimi'}}">
         <option ng-repeat="opintoala in koulutusala.opintoalat | orderBy:opintoalaOrder" value="{{opintoala.opintoala_tkkoodi}}">{{opintoala | lokalisoiKentta:'opintoala_nimi'}}</option>
       </optgroup>

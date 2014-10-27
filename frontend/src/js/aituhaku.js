@@ -23,8 +23,7 @@ angular.module('aituhaku', ['angular-loading-bar',
                             'yhteiset.suodattimet.lokalisoi',
                             'yhteiset.suodattimet.sprintf',
                             'yhteiset.palvelut.lokalisointi',
-                            'yhteiset.palvelut.virheLogitus',
-                            'ui.select2'
+                            'yhteiset.palvelut.virheLogitus'
                             ])
 
   .controller('AituhakuController', ['$scope', 'i18n', '$filter', function($scope, i18n, $filter){

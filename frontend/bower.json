@@ -12,15 +12,10 @@
     "angular-resource": "1.2.16",
     "angular-bootstrap": "https://github.com/angular-ui/bootstrap.git#7899b120f872e31871b8609a093a99069c1597a3",
     "jquery": "2.1.1-rc2",
-    "angular-ui-select2": "0.0.5",
-    "select2": "3.5.1",
     "modernizr": "2.7.2",
     "angular-loading-bar": "~0.4.3",
     "sprintf": "~1.0.0",
     "stacktrace": "~0.6.0",
     "aituaipaljs": "https://github.com/Opetushallitus/aituaipaljs.git#0.1.10"
-  },
-  "resolutions": {
-    "select2": "3.5.1"
   }
 }

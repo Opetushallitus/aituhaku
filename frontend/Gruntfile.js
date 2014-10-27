@@ -167,13 +167,6 @@ module.exports = function (grunt) {
         dest: distDir + '/js',
         flatten : true
       },
-      dist_select2 : {
-        expand : true,
-        cwd : 'src',
-        src : ['bower_components/select2/*.{png,gif}'],
-        dest : distDir + '/select2',
-        flatten : true
-      }
     },
     usemin: {
       html: [distDir + '/index.html']
@@ -209,6 +202,5 @@ module.exports = function (grunt) {
      'concat',
      'copy:dist',
      'copy:dist_angular_min_map',
-     'copy:dist_select2',
      'usemin']);
 };
