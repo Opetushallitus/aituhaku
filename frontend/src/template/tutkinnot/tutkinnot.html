@@ -17,7 +17,7 @@
   </fieldset>
 </form>
 
-<div class="tutkinnot search-results">
+<div class="tutkinnot search-results no-print">
   <hakutulokset
     nykyinen-sivu="hakuModel.nykyinenSivu"
     tuloksia-sivulla="10"
@@ -27,4 +27,12 @@
     <div class="table-cell"><a ng-href="#/tutkinto/{{hakutulos.tutkintotunnus}}">{{hakutulos.nimi | lokalisoi:hakutulos:'nimi'}}</a></div>
     <div class="table-cell">{{hakutulos.opintoala_nimi | lokalisoi:hakutulos:'opintoala_nimi'}}</div>
   </hakutulokset>
+</div>
+
+<div class="table print hakutulokset">
+  <div class="table-row" ng-repeat="tutkinto in hakuModel.tutkinnot">
+    <div class="table-cell">{{tutkinto.tutkintotunnus}}</div>
+    <div class="table-cell"><a>{{tutkinto.nimi | lokalisoi:tutkinto:'nimi'}}</a></div>
+    <div class="table-cell">{{tutkinto.opintoala_nimi | lokalisoi:tutkinto:'opintoala_nimi'}}</div>
+  </div>
 </div>
