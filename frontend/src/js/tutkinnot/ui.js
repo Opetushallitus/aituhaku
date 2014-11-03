@@ -49,6 +49,7 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
     return {
       tutkinnonNimi : '',
       opintoala : '',
+      opintoalanNimi : {},
       tutkinnot : null,
       nykyinenSivu : 1
     };
@@ -73,6 +74,14 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
       hakuModel.tutkinnot = $filter('jarjestaLokalisoidullaNimella')(tutkinnot, 'nimi');
     }
 
+    function opintoalatKoulutusaloista(koulutusalat) {
+      return _(koulutusalat).map('opintoalat')
+                            .flatten()
+                            .map(function(o) { return [o.opintoala_tkkoodi, {nimi_fi: o.opintoala_nimi_fi, nimi_sv: o.opintoala_nimi_sv}]; })
+                            .zipObject()
+                            .value();
+    }
+
     var hae = debounce(function(hakuehdot, callback){
       if (riittavatHakuehdot(hakuehdot)) {
         Tutkinto.haeEhdoilla(hakuehdot, callback);
@@ -83,6 +92,7 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
       hakuehdot: hakuehdot,
       riittavatHakuehdot: riittavatHakuehdot,
       paivitaHakutulokset: paivitaHakutulokset,
+      opintoalatKoulutusaloista: opintoalatKoulutusaloista,
       hae: hae
     };
   }])
@@ -99,6 +109,7 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
                                               Opintoala,
                                               kieli,
                                               $scope) {
+    var opintoalat = {};
     $scope.hakuModel = TutkintoHakuModel;
     $scope.select2Options = {
       allowClear: true
@@ -106,6 +117,7 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
     $scope.opintoalaOrder = (kieli === 'fi' ? 'opintoala_nimi_fi' : 'opintoala_nimi_sv');
     Opintoala.haku(function(data) {
       $scope.koulutusalat = data;
+      opintoalat = f.opintoalatKoulutusaloista(data);
     });
 
     var haunLaukaisevatKentat = ['tutkinnonNimi', 'opintoala'];
@@ -118,6 +130,9 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
           f.hae(f.hakuehdot($scope.hakuModel), function(tutkinnot){
             f.paivitaHakutulokset($scope.hakuModel, tutkinnot);
           });
+        }
+        if(k === 'opintoala') {
+          $scope.hakuModel.opintoalanNimi = opintoalat[n] || {};
         }
       });
     });

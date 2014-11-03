@@ -63,7 +63,8 @@
   (odota-angular-pyyntoa))
 
 (defn paina-tutkinnon-nimi-linkkia [nimi]
-  (w/click {:text nimi})
+  (w/click {:text nimi
+            :tag :a})
   (odota-angular-pyyntoa))
 
 (deftest ^:no-ie tutkinnot-haku-test

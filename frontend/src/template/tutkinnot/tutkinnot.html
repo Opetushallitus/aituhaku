@@ -4,16 +4,18 @@
 <form class="search-form">
   <fieldset class="search-field">
     <label>{{i18n.tutkinnot.tutkinnon_nimi}}</label>
-    <input type="text" ng-model="hakuModel.tutkinnonNimi" placeholder="{{i18n.tutkinnot.tutkinnon_nimi_placeholder}}">
+    <input class="no-print" type="text" ng-model="hakuModel.tutkinnonNimi" placeholder="{{i18n.tutkinnot.tutkinnon_nimi_placeholder}}">
+    <div class="print">{{hakuModel.tutkinnonNimi}}</div>
   </fieldset>
   <fieldset class="select2-fieldset">
     <label>{{i18n.tutkinnot.opintoala}}</label>
-    <select ng-model="hakuModel.opintoala">
+    <select class="no-print" ng-model="hakuModel.opintoala">
       <option value=""></option>
       <optgroup ng-repeat="koulutusala in koulutusalat" label="{{koulutusala.koulutusala_tkkoodi}}. {{koulutusala | lokalisoiKentta:'koulutusala_nimi'}}">
         <option ng-repeat="opintoala in koulutusala.opintoalat | orderBy:opintoalaOrder" value="{{opintoala.opintoala_tkkoodi}}">{{opintoala | lokalisoiKentta:'opintoala_nimi'}}</option>
       </optgroup>
     </select>
+    <div class="print">{{hakuModel.opintoalanNimi | lokalisoiKentta:'nimi'}}</div>
   </fieldset>
 </form>
 
