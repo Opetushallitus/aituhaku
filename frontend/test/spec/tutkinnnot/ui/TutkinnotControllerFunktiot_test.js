@@ -84,12 +84,15 @@ describe('tutkinnot.ui.TutkinnotControllerFunktiot', function(){
                           {opintoalat: [{opintoala_tkkoodi: '3',
                                          opintoala_nimi_fi: '3 (fi)',
                                          opintoala_nimi_sv: '3 (sv)'}]}];
-      var opintoalat = {'1': {nimi_fi: '1 (fi)',
-                              nimi_sv: '1 (sv)'},
-                        '2': {nimi_fi: '2 (fi)',
-                              nimi_sv: '2 (sv)'},
-                        '3': {nimi_fi: '3 (fi)',
-                              nimi_sv: '3 (sv)'}};
+      var opintoalat = {'1': {opintoala_tkkoodi: '1',
+                              opintoala_nimi_fi: '1 (fi)',
+                              opintoala_nimi_sv: '1 (sv)'},
+                        '2': {opintoala_tkkoodi: '2',
+                              opintoala_nimi_fi: '2 (fi)',
+                              opintoala_nimi_sv: '2 (sv)'},
+                        '3': {opintoala_tkkoodi: '3',
+                              opintoala_nimi_fi: '3 (fi)',
+                              opintoala_nimi_sv: '3 (sv)'}};
       expect(f.opintoalatKoulutusaloista(koulutusalat)).toEqual(opintoalat);
     });
   });

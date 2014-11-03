@@ -77,8 +77,7 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
     function opintoalatKoulutusaloista(koulutusalat) {
       return _(koulutusalat).map('opintoalat')
                             .flatten()
-                            .map(function(o) { return [o.opintoala_tkkoodi, {nimi_fi: o.opintoala_nimi_fi, nimi_sv: o.opintoala_nimi_sv}]; })
-                            .zipObject()
+                            .indexBy('opintoala_tkkoodi')
                             .value();
     }
 

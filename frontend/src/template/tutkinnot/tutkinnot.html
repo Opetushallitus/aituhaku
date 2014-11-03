@@ -15,7 +15,7 @@
         <option ng-repeat="opintoala in koulutusala.opintoalat | orderBy:opintoalaOrder" value="{{opintoala.opintoala_tkkoodi}}">{{opintoala | lokalisoiKentta:'opintoala_nimi'}}</option>
       </optgroup>
     </select>
-    <div class="print">{{hakuModel.opintoalanNimi | lokalisoiKentta:'nimi'}}</div>
+    <div class="print">{{hakuModel.opintoalanNimi | lokalisoiKentta:'opintoala_nimi'}}</div>
   </fieldset>
 </form>
 
