@@ -3,7 +3,7 @@
 <p>{{i18n.tutkinnot.selite}}</p>
 <a href="{{jarjestaja.www_osoite}}">{{jarjestaja.www_osoite}}</a>
 
-<div class="search-results">
+<div class="search-results no-print">
   <hakutulokset
     nykyinen-sivu="nykyinenSivu"
     tuloksia-sivulla="10"
@@ -11,4 +11,10 @@
     hakutulokset="jarjestaja.tutkinnot">
     <div class="table-cell"><a ng-href="#/tutkinto/{{hakutulos.tutkintotunnus}}">{{hakutulos.nimi | lokalisoi:hakutulos:'nimi'}}</a></div>
   </hakutulokset>
+</div>
+
+<div class="table print hakutulokset">
+  <div class="table-row" ng-repeat="tutkinto in jarjestaja.tutkinnot">
+    <div class="table-cell"><a>{{tutkinto.nimi | lokalisoi:tutkinto:'nimi'}}</a></div>
+  </div>
 </div>
