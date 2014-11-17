@@ -65,6 +65,10 @@
   ((:sammuta palvelin))
   (log/info "Palvelin sammutettu"))
 
+(defn wrap-expires [handler]
+  (fn [request]
+    (assoc-in (handler request) [:headers "Expires"] "-1")))
+
 (defn app [asetukset]
   (json-gen/add-encoder org.joda.time.LocalDate
     (fn [c json-generator]
@@ -79,6 +83,7 @@
       :base-url (get-in asetukset [:server :base-url]))
     wrap-params
     wrap-content-type
+    wrap-expires
     log-request-wrapper))
 
 (defn kaynnista! [oletusasetukset]
