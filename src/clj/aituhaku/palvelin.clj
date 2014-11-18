@@ -25,6 +25,7 @@
             [ring.middleware.params :refer [wrap-params]]
             [ring.middleware.resource :refer [wrap-resource]]
             [ring.middleware.content-type :refer [wrap-content-type]]
+            [ring.middleware.not-modified :refer [wrap-not-modified]]
             [ring.util.response :as resp]
             [cheshire.generate :as json-gen]
             schema.core
@@ -83,6 +84,7 @@
       :base-url (get-in asetukset [:server :base-url]))
     wrap-params
     wrap-content-type
+    wrap-not-modified
     wrap-expires
     log-request-wrapper))
 
