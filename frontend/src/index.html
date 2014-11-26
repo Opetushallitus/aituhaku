@@ -42,7 +42,7 @@
     <section class="app-wrapper">
         <kielen-vaihto></kielen-vaihto>
         <div class="print-link">
-            <a class="ng-scope ng-binding" title="{{i18n.yleiset.tulosta_selite}}" ng-click="printPage();">{{i18n.yleiset.tulosta}}</a>
+            <a class="ng-scope ng-binding" title="{{i18n.yleiset.tulosta_selite}}" ng-click="printPage();" ng-bind="i18n.yleiset.tulosta"></a>
         </div>
     </section>
     <section class="app-wrapper main-content" ng-view></section>
