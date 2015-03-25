@@ -22,6 +22,12 @@ angular.module('yhteiset.direktiivit.palaaHakuun', [])
       replace: true,
       templateUrl : 'template/yhteiset/direktiivit/palaa_hakuun.html',
       link : function(scope) {
+        scope.showBackBtn = true;
+
+        if(scope.history.length==1){
+          scope.showBackBtn = false;
+        }
+
         scope.palaaHakuun = function() {
           setTimeout( function() {
             $window.history.back();

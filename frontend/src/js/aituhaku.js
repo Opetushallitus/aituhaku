@@ -26,7 +26,7 @@ angular.module('aituhaku', ['angular-loading-bar',
                             'yhteiset.palvelut.virheLogitus'
                             ])
 
-  .controller('AituhakuController', ['$scope', 'i18n', '$filter', function($scope, i18n, $filter){
+  .controller('AituhakuController', ['$scope', 'i18n', '$filter', '$rootScope', '$location',function($scope, i18n, $filter, $rootScope, $location){
     $scope.i18n = i18n;
     $scope.baseUrl = _.has(window, 'ophBaseUrl') ?  window.ophBaseUrl : '';
     $scope.timestamp = $filter('date')(new Date(), 'dd.MM.yyyy HH:mm');
@@ -35,6 +35,10 @@ angular.module('aituhaku', ['angular-loading-bar',
       window.print();
     };
 
+    $scope.history = [];
+    $rootScope.$on('$routeChangeSuccess', function() {
+      $scope.history.push($location.$$path);
+    });
   }])
 
   .constant('asetukset', {
