@@ -24,7 +24,7 @@ angular.module('yhteiset.direktiivit.palaaHakuun', [])
       link : function(scope) {
         scope.showBackBtn = true;
 
-        if(scope.history.length==1){
+        if(scope.history.length===1){
           scope.showBackBtn = false;
         }
 
