@@ -29,7 +29,7 @@ angular.module('yhteiset.direktiivit.palaaHakuun', [])
         }
 
         scope.etusivulle = function() {
-          $window.location = '/';
+          $window.location = scope.baseUrl;
         };
 
         scope.palaaHakuun = function() {
