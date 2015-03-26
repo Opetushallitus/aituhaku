@@ -28,6 +28,10 @@ angular.module('yhteiset.direktiivit.palaaHakuun', [])
           scope.showBackBtn = false;
         }
 
+        scope.etusivulle = function() {
+          $window.location = '/';
+        };
+
         scope.palaaHakuun = function() {
           setTimeout( function() {
             $window.history.back();

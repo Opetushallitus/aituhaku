@@ -1,1 +1,4 @@
-<button class="palaa-hakuun" ng-show="showBackBtn" ng-click="palaaHakuun()">{{i18n.yleiset.palaa_hakutuloksiin}}</button>
+<div>
+  <button class="palaa-hakuun" ng-show="showBackBtn" ng-click="palaaHakuun()">{{i18n.yleiset.palaa_hakutuloksiin}}</button>
+  <button ng-show="!showBackBtn" ng-click="etusivulle()">{{i18n.yleiset.etusivulle}}</button>
+</div>

@@ -9,6 +9,7 @@ button {
   cursor: pointer;
   padding-left: 15px;
   padding-right: 15px;
+  font-size: 1em;
   font-family: $font-body;
   &:hover {background-color: $darker-primary;}
 }
