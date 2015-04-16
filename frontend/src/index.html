@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html ng-app="aituhaku">
+<!--[if lt IE 9]> <html> <![endif]-->
+<!--[if gte IE 9]><!--> <html ng-app="aituhaku"> <!--<![endif]-->
 <head>
   <!-- mustache
   {{=[[ ]]=}}
@@ -19,6 +20,13 @@
   <!-- endbuild -->
   <meta name="viewport" content="width=device-width, initial-scale=.7, maximum-scale=.7"/>
 </head>
+<!--[if lt IE 9]>
+<body>
+<div style="text-align: center;">
+  <p><strong>Sovellus ei tue käyttämääsi selainta. Ole hyvä ja käytä Internet Explorerin versiota 9 tai uudempaa.</strong></p>
+</div>
+<![endif]-->
+<!--[if gte IE 9]><!-->
 <body ng-cloak ng-controller="AituhakuController">
   <noscript>
     <div class="top-alert">
@@ -65,6 +73,7 @@
       </div>
     </section>
   </footer>
+  <!--<![endif]-->
   <!-- Piwik -->  
   <script type="text/javascript">
     var _paq = _paq || [];
