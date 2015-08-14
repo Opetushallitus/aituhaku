@@ -43,6 +43,18 @@
 
 (schema.core/set-fn-validation! true)
 
+(defn ^:private render-index [asetukset request]
+  (let [fi (aituhaku.rest-api.i18n/hae-tekstit "fi")
+        sv (aituhaku.rest-api.i18n/hae-tekstit "sv")
+        server-name (:server-name request)
+        tekstit (if
+                  (some #(= server-name %) ["www.sokexamen.fi" "www.xn--skexamen-n4a.fi" "sokexamen.fi" "xn--skexamen-n4a.fi"])
+                  sv
+                  fi)]
+    (s/render-file "public/app/index.html" {:base-url (-> asetukset :server :base-url)
+                                            :description (get-in tekstit [:meta :description])
+                                            :keywords (get-in tekstit [:meta :keywords])})))
+
 (defn ^:private reitit [asetukset]
   (c/routes
     (c/context "/api/tutkinto" [] aituhaku.rest-api.tutkinto/reitit)
@@ -58,7 +70,7 @@
                                                                         piilota-salasanat
                                                                         pprint)))))
      (c/GET "/status" [] (s/render-string "OK" {})))
-    (c/GET "/" [] (s/render-file "public/app/index.html" {:base-url (-> asetukset :server :base-url)}))
+    (c/GET "/" request (render-index asetukset request))
     (r/not-found "Not found")))
 
 (defn sammuta [palvelin]
