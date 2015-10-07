@@ -99,3 +99,6 @@
 
 (defentity toimikuntien_jasenet_view
   (sql/table :aituhaku.toimikuntien_jasenet_view))
+
+(defentity tutkintonimike_view
+  (sql/table :aituhaku.tutkintonimike_view))

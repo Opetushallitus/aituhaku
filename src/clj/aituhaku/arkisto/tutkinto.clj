@@ -43,14 +43,19 @@
           :voimassa)
         :ei-voimassa))))
 
+(t/ann sisaltaako-nimi-tai-nimike? [String TutkinnonPerustiedot -> Boolean])
+(defn sisaltaako-nimi-tai-nimike?
+  [nimi tutkinto]
+  (or (sisaltaako-kentat? tutkinto [:nimi_fi :nimi_sv] nimi)
+      (some #(sisaltaako-kentat? % [:nimi_fi :nimi_sv] nimi) (:tutkintonimikkeet tutkinto))))
+
 (t/ann hae-ehdoilla [String String -> (t/Seq TutkinnonPerustiedot)])
 (defn hae-ehdoilla
   "Hakee kentistä ehdoilla."
   [nimi opintoala]
   (->> (tutkinto-sql/hae-tutkintojen-tiedot opintoala)
     (filter tutkinto-voimassa?)
-    (filter (t/ann-form #(sisaltaako-kentat? % [:nimi_fi :nimi_sv] nimi)
-                        [TutkinnonPerustiedot -> Boolean]))))
+    (filter (partial sisaltaako-nimi-tai-nimike? nimi))))
 
 (t/defalias TutkintoJaVoimassaolo
   (t/I Tutkinto

@@ -53,12 +53,16 @@
 (t/ann ^:no-check hae-tutkintojen-tiedot [String -> (t/Seq TutkinnonPerustiedot)])
 (defn hae-tutkintojen-tiedot [opintoala]
   {:post [((t/pred (t/Seq TutkinnonPerustiedot)) %)]}
-  (sql/select tutkinnot_view
-    (sql/fields :tutkintotunnus :nimi_fi :nimi_sv :opintoala_nimi_fi :opintoala_nimi_sv :opintoala_tkkoodi
-                :tutkintotaso :voimassa_alkupvm :voimassa_loppupvm :siirtymaajan_loppupvm)
-    (sql/where (or
-                 (nil? opintoala)
-                 {:opintoala_tkkoodi opintoala}))))
+  (let [tutkinnot (sql/select tutkinnot_view
+                    (sql/fields :tutkintotunnus :nimi_fi :nimi_sv :opintoala_nimi_fi :opintoala_nimi_sv :opintoala_tkkoodi
+                                :tutkintotaso :voimassa_alkupvm :voimassa_loppupvm :siirtymaajan_loppupvm)
+                    (sql/where (or
+                                 (nil? opintoala)
+                                 {:opintoala_tkkoodi opintoala})))
+        nimikkeet (group-by :tutkintotunnus (sql/select tutkintonimike_view))]
+    (for [tutkinto tutkinnot
+          :let [nimikkeet (map #(dissoc % :tutkintotunnus) (get nimikkeet (:tutkintotunnus tutkinto)))]]
+      (assoc tutkinto :tutkintonimikkeet nimikkeet))))
 
 (t/ann ^:no-check hae [String -> (t/Seq Tutkinto)])
 (defn hae [tutkintotunnus]
