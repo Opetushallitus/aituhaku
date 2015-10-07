@@ -23,10 +23,11 @@
   <hakutulokset
     nykyinen-sivu="hakuModel.nykyinenSivu"
     tuloksia-sivulla="10"
-    otsikot="[i18n.tutkinnot.tutkintotunnus, i18n.tutkinnot.tutkinnon_nimi, i18n.tutkinnot.opintoala]"
+    otsikot="[i18n.tutkinnot.tutkintotunnus, i18n.tutkinnot.tutkinnon_nimi, i18n.tutkinnot.tutkintonimikkeet, i18n.tutkinnot.opintoala]"
     hakutulokset="hakuModel.tutkinnot">
     <div class="table-cell">{{hakutulos.tutkintotunnus}}</div>
     <div class="table-cell"><a ng-href="#/tutkinto/{{hakutulos.tutkintotunnus}}">{{hakutulos.nimi | lokalisoi:hakutulos:'nimi'}}</a></div>
+    <div class="table-cell"><span ng-repeat="nimike in hakutulos.tutkintonimikkeet">{{nimike.nimi | lokalisoi:nimike:'nimi'}}<br/></span></div>
     <div class="table-cell">{{hakutulos.opintoala_nimi | lokalisoi:hakutulos:'opintoala_nimi'}}</div>
   </hakutulokset>
 </div>

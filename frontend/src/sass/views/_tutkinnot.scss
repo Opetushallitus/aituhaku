@@ -54,12 +54,17 @@ div.select2-container.select2-dropdown-open .select2-choice abbr {
 }
 
 .table.hakutulokset div div:nth-child(2){
-  width: 50%;
+  width: 40%;
   min-width: 200px;
 }
 
 .table.hakutulokset div div:nth-child(3){
-  width: 40%;
+  width: 15%;
+  min-width: 100px;
+}
+
+.table.hakutulokset div div:nth-child(4){
+  width: 35%;
   min-width: 200px;
 }
 
