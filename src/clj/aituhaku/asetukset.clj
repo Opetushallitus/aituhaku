@@ -17,10 +17,10 @@
             clojure.set
             [clojure.tools.logging :as log]
 
-            [aitu.util :refer [pisteavaimet->puu
-                               deep-merge
-                               deep-update-vals
-                               paths]]
+            [oph.common.util.util :refer [pisteavaimet->puu
+                                          deep-merge
+                                          deep-update-vals
+                                          paths]]
             [schema.core :as s]
             [schema.coerce :as sc])
   (:import [ch.qos.logback.classic.joran JoranConfigurator]

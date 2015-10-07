@@ -18,7 +18,7 @@
   (:require [compojure.core :as c]
             [schema.core :as schema]
             [aituhaku.rest-api.http-util :refer [json-response-nocache]]
-            [aitu.util :refer [pisteavaimet->puu]]))
+            [oph.common.util.util :refer [pisteavaimet->puu]]))
 
 (defn validoi-kieli []
   (schema/pred (fn[k] (or (= k "fi")(= k "sv")))))

@@ -1,6 +1,6 @@
 (ns aituhaku.arkisto.opintoala
   (:require [aituhaku.arkisto.sql.opintoala :as opintoala-sql]
-            [aitu.util :refer [sisaltaako-kentat?]]
+            [oph.common.util.util :refer [sisaltaako-kentat?]]
             [aitu.timeutil :as timeutil]))
 
 (defn opintoala-voimassa?

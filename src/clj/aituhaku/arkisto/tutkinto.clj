@@ -17,7 +17,7 @@
             [clj-time.core :as time]
             [aituhaku.arkisto.sql.tutkinto :as tutkinto-sql
              :refer [TutkinnonPerustiedot Tutkinto]]
-            [aitu.util :refer [sisaltaako-kentat?]]
+            [oph.common.util.util :refer [sisaltaako-kentat?]]
             [aitu.timeutil :as timeutil])
   (:import org.joda.time.LocalDate))
 

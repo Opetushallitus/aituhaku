@@ -17,6 +17,7 @@
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [ring/ring-core "1.2.1"]
                  [http-kit "2.1.18"]
+                 [clj-http "1.0.1"]
                  [compojure "1.1.5"]
                  [ring/ring-json "0.2.0"]
                  [cheshire "5.2.0"]
@@ -29,6 +30,7 @@
                  [prismatic/schema "0.2.0"]
                  [korma "0.3.0-RC6"]
                  [postgresql "9.1-901.jdbc4"]
+                 [com.jolbox/bonecp "0.8.0.RELEASE"]
                  [stencil "0.3.2"]
                  [org.clojure/core.typed "0.2.61"]
                  [peridot "0.3.0"]]
@@ -39,7 +41,8 @@
                                   [org.clojure/test.check "0.5.8"]]}
              :uberjar {:main aituhaku.palvelin
                        :aot :all}}
-  :source-paths ["src/clj"]
+  :source-paths ["src/clj" "../clojure-utils/src/clj"]
+  :java-source-paths ["../clojure-utils/src/java"]
   :test-paths ["test/clj"]
   :test-selectors {:kaikki (constantly true)
                    :default  (complement (some-fn :integraatio :performance)) 
