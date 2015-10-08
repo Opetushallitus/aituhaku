@@ -1,12 +1,11 @@
 (ns aituhaku.arkisto.opintoala
   (:require [aituhaku.arkisto.sql.opintoala :as opintoala-sql]
-            [oph.common.util.util :refer [sisaltaako-kentat?]]
-            [aitu.timeutil :as timeutil]))
+            [oph.common.util.util :refer [sisaltaako-kentat? pvm-mennyt-tai-tanaan? pvm-tuleva-tai-tanaan?]]))
 
 (defn opintoala-voimassa?
   [opintoala]
-  (and (timeutil/pvm-mennyt-tai-tanaan? (:voimassa_alkupvm opintoala))
-       (timeutil/pvm-tuleva-tai-tanaan? (:voimassa_loppupvm opintoala))))
+  (and (pvm-mennyt-tai-tanaan? (:voimassa_alkupvm opintoala))
+       (pvm-tuleva-tai-tanaan? (:voimassa_loppupvm opintoala))))
 
 (defn poista-ylimaaraiset
   [opintoala]

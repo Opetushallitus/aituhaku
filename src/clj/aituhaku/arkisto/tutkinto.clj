@@ -17,15 +17,14 @@
             [clj-time.core :as time]
             [aituhaku.arkisto.sql.tutkinto :as tutkinto-sql
              :refer [TutkinnonPerustiedot Tutkinto]]
-            [oph.common.util.util :refer [sisaltaako-kentat?]]
-            [aitu.timeutil :as timeutil])
+            [oph.common.util.util :refer [sisaltaako-kentat? pvm-mennyt-tai-tanaan? pvm-tuleva-tai-tanaan? time-forever]])
   (:import org.joda.time.LocalDate))
 
 (t/ann tutkinto-voimassa? [TutkinnonPerustiedot -> Boolean])
 (defn tutkinto-voimassa?
   [tutkinto]
-  (and (timeutil/pvm-mennyt-tai-tanaan? (:voimassa_alkupvm tutkinto))
-       (timeutil/pvm-tuleva-tai-tanaan? (:siirtymaajan_loppupvm tutkinto))))
+  (and (pvm-mennyt-tai-tanaan? (:voimassa_alkupvm tutkinto))
+       (pvm-tuleva-tai-tanaan? (:siirtymaajan_loppupvm tutkinto))))
 
 (t/defalias TutkinnonVoimassaolo (t/U ':voimassa ':ei-voimassa ':siirtymaajalla))
 
@@ -37,7 +36,7 @@
       :ei-voimassa
       (if (and (time/before? voimassa_alkupvm ajankohta)
                (time/after? voimassa_loppupvm ajankohta))
-        (if (and (not= siirtymaajan_loppupvm timeutil/time-forever)
+        (if (and (not= siirtymaajan_loppupvm time-forever)
                  (time/after? siirtymaajan_loppupvm ajankohta))
           :siirtymaajalla
           :voimassa)

@@ -44,7 +44,7 @@
 (defspec voimassa-test 2000
   (testing "Tutkinto on voimassa, jos voimassaolon alkupvm on menneisyydessä, voimassaolon loppupvm on tulevaisuudessa ja siirtymäajan loppupvm on time-forever"
     (prop/for-all [v (gen/hash-map :voimassa_alkupvm menneisyydessa-gen
-                                   :siirtymaajan_loppupvm (gen/return aitu.timeutil/time-forever)
+                                   :siirtymaajan_loppupvm (gen/return oph.common.util.util/time-forever)
                                    :voimassa_loppupvm tulevaisuudessa-gen)]
      (= (voimassaolo tanaan v)
         :voimassa))))
