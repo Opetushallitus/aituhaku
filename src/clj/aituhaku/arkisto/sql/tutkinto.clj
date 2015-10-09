@@ -18,9 +18,11 @@
             [aituhaku.arkisto.sql.korma :refer :all])
   (:import org.joda.time.LocalDate))
 
-(t/defalias Toimikunta (t/HMap :mandatory {:tkunta String
-                                           :nimi_fi String
-                                           :nimi_sv (t/Option String)}))
+(t/defalias Nimetty (t/HMap :mandatory {:nimi_fi String
+                                        :nimi_sv (t/Option String)}))
+
+(t/defalias Toimikunta (t/I Nimetty
+                            (t/HMap :mandatory {:tkunta String})))
 
 (t/defalias Jarjestaja (t/HMap :mandatory {:nimi String
                                            :oppilaitoskoodi String
@@ -32,17 +34,19 @@
                                                         :voimassa_loppupvm LocalDate
                                                         :siirtymaajan_loppupvm LocalDate}))
 
+(t/defalias Tutkintonimike Nimetty)
+
 (t/defalias TutkinnonPerustiedot (t/I TutkinnonVoimassaoloPvm
+                                      Nimetty
                                       (t/HMap :mandatory {:tutkintotunnus String
                                                           :tutkintotaso String
-                                                          :nimi_fi String
-                                                          :nimi_sv (t/Option String)
                                                           :opintoala_nimi_fi String
                                                           :opintoala_nimi_sv (t/Option String)
                                                           :opintoala_tkkoodi String
                                                           :voimassa_alkupvm LocalDate
                                                           :voimassa_loppupvm LocalDate
-                                                          :siirtymaajan_loppupvm LocalDate})))
+                                                          :siirtymaajan_loppupvm LocalDate
+                                                          :tutkintonimikkeet (t/Seq Tutkintonimike)})))
 
 (t/defalias Tutkinto (t/I TutkinnonPerustiedot
                           (t/HMap :mandatory {:koulutusala_nimi_fi String

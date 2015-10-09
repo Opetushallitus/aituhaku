@@ -16,8 +16,9 @@
   (:require [clojure.core.typed :as t]
             [clj-time.core :as time]
             [aituhaku.arkisto.sql.tutkinto :as tutkinto-sql
-             :refer [TutkinnonPerustiedot Tutkinto]]
-            [oph.common.util.util :refer [sisaltaako-kentat? pvm-mennyt-tai-tanaan? pvm-tuleva-tai-tanaan? time-forever]])
+             :refer [TutkinnonPerustiedot Tutkinto Nimetty]]
+            [oph.common.util.util :refer [sisaltaako-kentat? pvm-mennyt-tai-tanaan? pvm-tuleva-tai-tanaan? time-forever]]
+            aituhaku.typed)
   (:import org.joda.time.LocalDate))
 
 (t/ann tutkinto-voimassa? [TutkinnonPerustiedot -> Boolean])
@@ -41,12 +42,16 @@
           :siirtymaajalla
           :voimassa)
         :ei-voimassa))))
+(t/ann sisaltaako-nimi? [String Nimetty -> Boolean])
+(defn sisaltaako-nimi?
+  [nimi entity]
+  (sisaltaako-kentat? entity [:nimi_fi :nimi_sv] nimi))
 
 (t/ann sisaltaako-nimi-tai-nimike? [String TutkinnonPerustiedot -> Boolean])
 (defn sisaltaako-nimi-tai-nimike?
   [nimi tutkinto]
-  (or (sisaltaako-kentat? tutkinto [:nimi_fi :nimi_sv] nimi)
-      (some #(sisaltaako-kentat? % [:nimi_fi :nimi_sv] nimi) (:tutkintonimikkeet tutkinto))))
+  (boolean (or (sisaltaako-nimi? nimi tutkinto)
+               (some (partial sisaltaako-nimi? nimi) (:tutkintonimikkeet tutkinto)))))
 
 (t/ann hae-ehdoilla [String String -> (t/Seq TutkinnonPerustiedot)])
 (defn hae-ehdoilla
