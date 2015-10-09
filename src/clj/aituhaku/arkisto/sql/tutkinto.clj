@@ -76,4 +76,6 @@
       (sql/fields :oppilaitoskoodi :nimi :www_osoite :ktnimi_fi :ktnimi_sv))
     (sql/with tutkinnon_toimikunnat_view
       (sql/fields :nimi_fi :nimi_sv :tkunta))
+    (sql/with tutkintonimike_view
+      (sql/fields :nimi_fi :nimi_sv))
     (sql/where {:tutkintotunnus tutkintotunnus})))

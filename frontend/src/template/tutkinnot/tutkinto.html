@@ -19,6 +19,10 @@
     <p>{{tutkinto.tutkintotunnus}}</p>
   </fieldset>
   <fieldset>
+    <label>{{i18n.tutkinnot.tutkintonimikkeet}}</label>
+    <p><span ng-repeat="nimike in tutkinto.tutkintonimikkeet">{{nimike.nimi | lokalisoi:nimike:'nimi'}}<br/></span></p>
+  </fieldset>
+  <fieldset>
     <label>{{i18n.tutkinnot.koulutusala}}</label>
     <p>{{tutkinto.koulutusala_nimi | lokalisoi:tutkinto:'koulutusala_nimi'}}</p>
   </fieldset>

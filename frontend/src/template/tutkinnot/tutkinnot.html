@@ -36,6 +36,7 @@
   <div class="table-row" ng-repeat="tutkinto in hakuModel.tutkinnot">
     <div class="table-cell">{{tutkinto.tutkintotunnus}}</div>
     <div class="table-cell"><a>{{tutkinto.nimi | lokalisoi:tutkinto:'nimi'}}</a></div>
+    <div class="table-cell"><span ng-repeat="nimike in tutkinto.tutkintonimikkeet">{{nimike.nimi | lokalisoi:nimike:'nimi'}}<br/></span></div>
     <div class="table-cell">{{tutkinto.opintoala_nimi | lokalisoi:tutkinto:'opintoala_nimi'}}</div>
   </div>
 </div>

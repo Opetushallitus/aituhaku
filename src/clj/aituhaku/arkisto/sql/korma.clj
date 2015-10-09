@@ -86,12 +86,19 @@
 (defentity tutkinnon_toimikunnat_view
   (sql/table :aituhaku.tutkinnon_toimikunnat_view :toimikunnat))
 
+(defentity tutkintonimike_view
+  (sql/table :aituhaku.tutkintonimike_view :tutkintonimikkeet)
+  (sql/belongs-to tutkinnot_view
+    {:fk :tutkintotunnus}))
+
 (defentity tutkinnot_view
   (sql/table :aituhaku.tutkinnot_view)
   (sql/pk :tutkintotunnus)
   (sql/has-many tutkinnon_jarjestajat_view
     {:fk :tutkintotunnus})
   (sql/has-many tutkinnon_toimikunnat_view
+    {:fk :tutkintotunnus})
+  (sql/has-many tutkintonimike_view
     {:fk :tutkintotunnus}))
 
 (defentity opintoala_view
@@ -99,6 +106,3 @@
 
 (defentity toimikuntien_jasenet_view
   (sql/table :aituhaku.toimikuntien_jasenet_view))
-
-(defentity tutkintonimike_view
-  (sql/table :aituhaku.tutkintonimike_view))

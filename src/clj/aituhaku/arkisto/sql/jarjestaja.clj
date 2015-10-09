@@ -25,9 +25,11 @@
   (let [jarjestaja (first (sql/select tutkinnon_jarjestajat_view
                             (sql/fields :oppilaitoskoodi :nimi :www_osoite :ktnimi_fi :ktnimi_sv)
                             (sql/where {:oppilaitoskoodi oppilaitoskoodi})))
-        tutkinnot (sql/select tutkinnon_jarjestajat_view
-                    (sql/join :inner tutkinnot_view
+        tutkinnot (sql/select tutkinnot_view 
+                    (sql/join :inner tutkinnon_jarjestajat_view 
                               (= :jarjestajat.tutkintotunnus :tutkinnot_view.tutkintotunnus))
+                    (sql/with tutkintonimike_view
+                      (sql/fields :nimi_fi :nimi_sv))
                     (sql/fields :tutkinnot_view.tutkintotunnus :tutkinnot_view.nimi_fi :tutkinnot_view.nimi_sv)
                     (sql/where {:jarjestajat.oppilaitoskoodi oppilaitoskoodi}))]
     (assoc jarjestaja :tutkinnot tutkinnot)))
