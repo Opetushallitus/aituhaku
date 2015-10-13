@@ -25,7 +25,7 @@
 (defn tutkinto-voimassa?
   [tutkinto]
   (and (pvm-mennyt-tai-tanaan? (:voimassa_alkupvm tutkinto))
-       (pvm-tuleva-tai-tanaan? (:siirtymaajan_loppupvm tutkinto))))
+       (pvm-tuleva-tai-tanaan? (:voimassa_loppupvm tutkinto))))
 
 (t/defalias TutkinnonVoimassaolo (t/U ':voimassa ':ei-voimassa ':siirtymaajalla))
 
