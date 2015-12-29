@@ -77,6 +77,9 @@
 
 (declare tutkinnot_view)
 
+(defentity kieli_view
+  (sql/table :aituhaku.kieli_view))
+
 (defentity toimikunta_view
   (sql/table :aituhaku.toimikuntaview))
 

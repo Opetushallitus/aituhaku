@@ -15,12 +15,14 @@
 (ns aituhaku.toimiala.skeema
   (:require [schema.core :as s]))
 
+(def Kieli (s/enum "fi" "sv" "se" "en" "2k"))
+
 (def Tutkintonimike {:nimi_fi s/Str
                      :nimi_sv (s/maybe s/Str)})
 
 (def TutkintoPerustiedot {:tutkintotunnus s/Str
                           :nimi_fi s/Str
-                          :nimi_sv s/Str
+                          :nimi_sv (s/maybe s/Str)
                           :tutkintonimikkeet [Tutkintonimike]})
 
 (def Tutkinto (merge TutkintoPerustiedot
@@ -52,6 +54,7 @@
 (def Jarjestaja {:oppilaitoskoodi s/Str
                  :nimi s/Str
                  :www_osoite (s/maybe s/Str)
+                 :kieli (s/maybe Kieli)
                  :ktnimi_fi s/Str
                  :ktnimi_sv s/Str})
 

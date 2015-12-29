@@ -1,4 +1,4 @@
-;; Copyright (c) 2013 The Finnish National Board of Education - Opetushallitus
+;; Copyright (c) 2015 The Finnish National Board of Education - Opetushallitus
 ;;
 ;; This program is free software:  Licensed under the EUPL, Version 1.1 or - as
 ;; soon as they will be approved by the European Commission - subsequent versions
@@ -12,24 +12,15 @@
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;; European Union Public Licence for more details.
 
-(ns aituhaku.rest-api.tutkinto
+(ns aituhaku.rest-api.kieli
   (:require [compojure.core :as c]
             [schema.core :as schema]
             [aituhaku.rest-api.http-util :refer [json-response]]
-            [aituhaku.toimiala.skeema :refer [Tutkinto TutkintoTiedot Kieli]]
-            [aituhaku.arkisto.tutkinto :as arkisto]))
+            [aituhaku.toimiala.skeema :refer [Kieli]]
+            [aituhaku.arkisto.sql.kieli :as arkisto]))
 
 (c/defroutes reitit
-  (c/GET "/haku" [nimi opintoala kieli]
-    (schema/validate (schema/maybe schema/Str) nimi)
-    (schema/validate (schema/maybe schema/Str) opintoala)
-    (schema/validate (schema/maybe Kieli) kieli)
+  (c/GET "/" []
     (json-response
-      (arkisto/hae-ehdoilla nimi opintoala kieli)
-      [Tutkinto]))
-
-  (c/GET "/:tutkintotunnus" [tutkintotunnus :as req]
-    (schema/validate schema/Str tutkintotunnus)
-    (json-response
-      (arkisto/hae tutkintotunnus)
-      TutkintoTiedot)))
+      (arkisto/hae-kaikki)
+      [{:kieli Kieli}])))

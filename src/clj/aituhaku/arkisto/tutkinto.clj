@@ -53,11 +53,11 @@
   (boolean (or (sisaltaako-nimi? nimi tutkinto)
                (some (partial sisaltaako-nimi? nimi) (:tutkintonimikkeet tutkinto)))))
 
-(t/ann hae-ehdoilla [String String -> (t/Seq TutkinnonPerustiedot)])
+(t/ann hae-ehdoilla [String String String -> (t/Seq TutkinnonPerustiedot)])
 (defn hae-ehdoilla
   "Hakee kentistä ehdoilla."
-  [nimi opintoala]
-  (->> (tutkinto-sql/hae-tutkintojen-tiedot opintoala)
+  [nimi opintoala kieli]
+  (->> (tutkinto-sql/hae-tutkintojen-tiedot opintoala kieli)
     (filter tutkinto-voimassa?)
     (filter (partial sisaltaako-nimi-tai-nimike? nimi))))
 

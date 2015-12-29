@@ -37,6 +37,7 @@
             aituhaku.rest-api.i18n
             aituhaku.rest-api.js-log
             aituhaku.rest-api.jarjestaja
+            aituhaku.rest-api.kieli
             aituhaku.rest-api.opintoala
             aituhaku.rest-api.tutkinto
             aituhaku.rest-api.toimikunta))
@@ -63,6 +64,7 @@
     (c/context "/api/opintoala" [] aituhaku.rest-api.opintoala/reitit)
     (c/context "/api/jarjestaja" [] aituhaku.rest-api.jarjestaja/reitit)
     (c/context "/api/jslog" []  aituhaku.rest-api.js-log/reitit )
+    (c/context "/api/kieli" [] aituhaku.rest-api.kieli/reitit)
     (if (:development-mode asetukset)
       (c/GET "/status" [] (s/render-file "status" (assoc (status)
                                                          :asetukset (with-out-str
