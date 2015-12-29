@@ -16,6 +16,6 @@
     "modernizr": "2.7.2",
     "sprintf": "~1.0.0",
     "stacktrace": "~0.6.0",
-    "aituaipaljs": "https://github.com/Opetushallitus/aituaipaljs.git#0.1.10"
+    "aituaipaljs": "https://github.com/Opetushallitus/aituaipaljs.git#0.1.31"
   }
 }
