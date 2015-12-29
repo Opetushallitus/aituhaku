@@ -16,6 +16,7 @@
 
 angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
                                 'tutkinnot.opintoala',
+                                'tutkinnot.kielet',
                                 'yhteiset.direktiivit.hakutulokset',
                                 'yhteiset.suodattimet.jarjestaLokalisoidullaNimella',
                                 'yhteiset.palvelut.debounce',
@@ -62,11 +63,12 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
                                            function(asetukset, $filter, Tutkinto, debounce){
     function hakuehdot(hakuModel) {
       return {nimi: hakuModel.tutkinnonNimi,
-              opintoala: _.isEmpty(hakuModel.opintoala) ? null : hakuModel.opintoala};
+              opintoala: _.isEmpty(hakuModel.opintoala) ? null : hakuModel.opintoala,
+              kieli: _.isEmpty(hakuModel.kieli) ? null : hakuModel.kieli};
     }
 
     function riittavatHakuehdot(hakuehdot) {
-      return hakuehdot.nimi.length >= asetukset.minHakuehtoPituus || !!hakuehdot.opintoala;
+      return hakuehdot.nimi.length >= asetukset.minHakuehtoPituus || !!hakuehdot.opintoala || !!hakuehdot.kieli;
     }
 
     function paivitaHakutulokset(hakuModel, tutkinnot) {
@@ -100,12 +102,14 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
                                       'Tutkinto',
                                       'TutkintoHakuModel',
                                       'Opintoala',
+                                      'Kielet',
                                       'kieli',
                                       '$scope',
                                      function(f,
                                               Tutkinto,
                                               TutkintoHakuModel,
                                               Opintoala,
+                                              Kielet,
                                               kieli,
                                               $scope) {
     var opintoalat = {};
@@ -118,8 +122,11 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
       $scope.koulutusalat = data;
       opintoalat = f.opintoalatKoulutusaloista(data);
     });
+    Kielet.haku(function(data) {
+      $scope.kielet = data;
+    });
 
-    var haunLaukaisevatKentat = ['tutkinnonNimi', 'opintoala'];
+    var haunLaukaisevatKentat = ['tutkinnonNimi', 'opintoala', 'kieli'];
 
     _(haunLaukaisevatKentat).each(function(k){
       $scope.$watch('hakuModel.'+k, function(n, o){

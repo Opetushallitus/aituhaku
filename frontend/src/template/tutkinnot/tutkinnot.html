@@ -17,6 +17,14 @@
     </select>
     <div class="print">{{hakuModel.opintoalanNimi | lokalisoiKentta:'opintoala_nimi'}}</div>
   </fieldset>
+  <fieldset class="select2-fieldset">
+    <label>{{i18n.tutkinnot.suorituskieli}}</label>
+    <select class="no-print" ng-model="hakuModel.kieli">
+      <option value=""></option>
+      <option ng-repeat="kieli in kielet" value="{{kieli.kieli}}">{{i18n.kielisyys[kieli.kieli]}}</option>
+    </select>
+    <div class="print">{{i18n.kielisyys[hakuModel.kieli.kieli]}}</div>
+  </fieldset>
 </form>
 
 <div class="tutkinnot search-results no-print">
