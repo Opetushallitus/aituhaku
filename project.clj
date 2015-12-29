@@ -22,7 +22,7 @@
                  [com.jolbox/bonecp "0.8.0.RELEASE"]
                  [compojure "1.4.0"]
                  [http-kit "2.1.18"]
-                 [korma "0.3.0-RC6"]
+                 [korma "0.4.0"]
                  [org.clojure/clojure "1.7.0"]
                  [org.clojure/core.typed "0.2.61"]
                  [org.clojure/tools.logging "0.2.6"]
