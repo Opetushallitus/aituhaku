@@ -171,9 +171,6 @@ module.exports = function (grunt) {
     usemin: {
       html: [distDir + '/index.html']
     },
-    exec: {
-      buildAngularBoostrap : 'cd src/bower_components/angular-bootstrap && npm install && grunt html2js && grunt build'
-    },
     globals: {
       $ : true,
       printStackTrace : true,
@@ -188,15 +185,13 @@ module.exports = function (grunt) {
   grunt.registerTask('autotest', ['karma:unit_auto']);
 
   grunt.registerTask('default',
-    ['exec:buildAngularBoostrap',
-     'sass:compile',
+    ['sass:compile',
      'configureProxies:server',
      'connect:server',
      'watch']);
 
   grunt.registerTask('build',
     ['clean',
-     'exec:buildAngularBoostrap',
      'sass:compile',
      'useminPrepare',
      'concat',
