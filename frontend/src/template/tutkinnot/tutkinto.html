@@ -38,6 +38,16 @@
       <a ng-href="#/toimikunta/{{toimikunta.tkunta}}?tutkinto={{tutkinto.tutkintotunnus}}">{{toimikunta.nimi | lokalisoi:toimikunta:'nimi'}}</a>
     </div>
   </fieldset>
+
+  <fieldset>
+    <label>{{i18n.tutkinnot.tutkinnon_perusteet}}</label>
+    <p><a ng-href="{{i18n.tutkinnot.eperusteet_linkki}}/esitys/{{tutkinto.eperustetunnus}}/naytto/tiedot">{{i18n.tutkinnot.eperusteet}}</a></p>
+  </fieldset>
+
+  <fieldset>
+    <label>{{i18n.tutkinnot.osaamisen_tunnistaminen}}</label>
+    <p><a ng-href="{{i18n.tutkinnot.osaan_linkki}}/linkki/osien-valinta?tutkinto={{tutkinto.tutkintotunnus}}&diaarinumero={{tutkinto.peruste}}&tyyppi=naytto">{{i18n.tutkinnot.osaan_fi}}</a></p>
+  </fieldset>
 </section>
 
 <h2>{{i18n.tutkinnot.tutkinnon_jarjestajat}}</h2>
