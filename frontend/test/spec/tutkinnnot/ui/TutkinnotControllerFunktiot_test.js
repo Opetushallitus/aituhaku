@@ -27,21 +27,23 @@ describe('tutkinnot.ui.TutkinnotControllerFunktiot', function(){
     $provide.value('Tutkinto', Tutkinto);
   }));
 
-  beforeEach(inject(function(TutkinnotControllerFunktiot, _$timeout_) {
+  beforeEach(inject(function(TutkinnotControllerFunktiot, _$timeout_, _$httpBackend_) {
     f = TutkinnotControllerFunktiot;
     $timeout = _$timeout_;
+
+    _$httpBackend_.whenGET('api/kieli').respond(['fi', 'sv', 'se', '2k', 'en']);
   }));
 
   describe('hakuehdot', function(){
     it('ei opintoalaa', function(){
       var hakuModel = {tutkinnonNimi: 'Auto'};
-      expect(f.hakuehdot(hakuModel)).toEqual({nimi: 'Auto', opintoala: null});
+      expect(f.hakuehdot(hakuModel)).toEqual({nimi: 'Auto', opintoala: null, kieli: null});
     });
 
     it('Opintoala', function(){
       var hakuModel = {tutkinnonNimi: 'Auto',
                        opintoala: '123'};
-      expect(f.hakuehdot(hakuModel)).toEqual({nimi: 'Auto', opintoala: '123'});
+      expect(f.hakuehdot(hakuModel)).toEqual({nimi: 'Auto', opintoala: '123', kieli: null});
     });
   });
 

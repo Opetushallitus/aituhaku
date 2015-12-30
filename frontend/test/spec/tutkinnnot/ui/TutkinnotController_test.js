@@ -31,6 +31,8 @@ describe('tutkinnot.ui.TutkinnotController', function(){
     $scope = $rootScope.$new();
     $browser = _$browser_;
 
+    _$httpBackend_.whenGET('api/kieli').respond(['fi', 'sv', 'se', '2k', 'en']);
+
     alustaController();
   }));
 
