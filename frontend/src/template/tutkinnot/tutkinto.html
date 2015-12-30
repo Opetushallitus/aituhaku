@@ -41,12 +41,22 @@
 
   <fieldset>
     <label>{{i18n.tutkinnot.tutkinnon_perusteet}}</label>
-    <p><a ng-href="{{i18n.tutkinnot.eperusteet_linkki}}/esitys/{{tutkinto.eperustetunnus}}/naytto/tiedot">{{i18n.tutkinnot.eperusteet}}</a></p>
+    <p>
+      <a ng-href="{{i18n.tutkinnot.eperusteet_linkki}}/esitys/{{tutkinto.eperustetunnus}}/naytto/tiedot">
+        <img class="bitmap" src="../img/ikoni_eperuste_22.png">
+        {{i18n.tutkinnot.eperusteet}}
+      </a>
+    </p>
   </fieldset>
 
   <fieldset>
     <label>{{i18n.tutkinnot.osaamisen_tunnistaminen}}</label>
-    <p><a ng-href="{{i18n.tutkinnot.osaan_linkki}}/linkki/osien-valinta?tutkinto={{tutkinto.tutkintotunnus}}&diaarinumero={{tutkinto.peruste}}&tyyppi=naytto">{{i18n.tutkinnot.osaan_fi}}</a></p>
+    <p>
+      <a ng-href="{{i18n.tutkinnot.osaan_linkki}}/linkki/osien-valinta?tutkinto={{tutkinto.tutkintotunnus}}&diaarinumero={{tutkinto.peruste}}&tyyppi=naytto">
+        <img class="bitmap" src="../img/osaan.png">
+        {{i18n.tutkinnot.osaan_fi}}
+      </a>
+    </p>
   </fieldset>
 </section>
 
