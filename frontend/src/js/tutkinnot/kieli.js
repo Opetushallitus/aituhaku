@@ -20,6 +20,7 @@ angular.module('tutkinnot.kielet', ['ngResource'])
       haku: {
         method: 'GET',
         isArray: true,
+        cache: true,
         url: 'api/kieli/'
       }
     });
