@@ -63,6 +63,8 @@
 
 (def TutkintoTiedot (merge Tutkinto
                            {:jarjestajat [Jarjestaja]
+                            :peruste (s/maybe s/Str)
+                            :eperustetunnus (s/maybe s/Int)
                             :toimikunnat [ToimikuntaNimi]
                             :voimassaolo (s/enum :ei-voimassa
                                                  :voimassa
