@@ -128,7 +128,7 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
 
     var haunLaukaisevatKentat = ['tutkinnonNimi', 'opintoala', 'kieli'];
 
-    _(haunLaukaisevatKentat).each(function(k){
+    _.each(haunLaukaisevatKentat, function(k){
       $scope.$watch('hakuModel.'+k, function(n, o){
         // Jätetään Angularin alustuksen aiheuttama kutsu huomiotta, ks.
         // http://stackoverflow.com/a/18915585
