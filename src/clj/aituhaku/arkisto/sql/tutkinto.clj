@@ -64,10 +64,10 @@
                                  (nil? opintoala)
                                  {:opintoala_tkkoodi opintoala}))
                     (sql/where (or
-                                 (nil? kieli) 
-                                 (sql/sqlfn exists (sql/subselect tutkinnon_jarjestajat_view
-                                                    (sql/where {:tutkintotunnus :tutkinnot_view.tutkintotunnus
-                                                                :kieli kieli}))))))
+                                 (nil? kieli)
+                                 (exists (sql/subselect tutkinnon_jarjestajat_view
+                                           (sql/where {:tutkintotunnus :tutkinnot_view.tutkintotunnus
+                                                       :kieli kieli}))))))
         nimikkeet (group-by :tutkintotunnus (sql/select tutkintonimike_view))]
     (for [tutkinto tutkinnot
           :let [nimikkeet (map #(dissoc % :tutkintotunnus) (get nimikkeet (:tutkintotunnus tutkinto)))]]
