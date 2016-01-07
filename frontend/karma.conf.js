@@ -31,7 +31,7 @@ module.exports = function(config) {
       'src/bower_components/angular-cookies/angular-cookies.js',
       'src/bower_components/angular-route/angular-route.js',
       'src/bower_components/angular-resource/angular-resource.js',
-      'src/bower_components/lodash/dist/lodash.js',
+      'src/bower_components/lodash/lodash.min.js',
       'src/bower_components/angular-mocks/angular-mocks.js',
       'src/bower_components/sprintf/dist/sprintf.min.js',
       'src/bower_components/stacktrace/stacktrace.js',
