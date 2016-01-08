@@ -16,7 +16,6 @@
   (:require [clojure.set :refer [subset?]]
             [clojure.test :refer [deftest is are testing]]
             [clj-webdriver.taxi :as w]
-            [clj-time.core :as time]
             [aitu-e2e.util :refer :all]
             [aitu-e2e.data-util :refer [with-data]]
             [aituhaku-e2e.util :refer :all]))
