@@ -9,7 +9,7 @@
     tuloksia-sivulla="10"
     otsikot="[i18n.tutkinnot.tutkinnon_nimi, i18n.tutkinnot.tutkintonimikkeet]"
     hakutulokset="jarjestaja.tutkinnot">
-    <div class="table-cell"><a ng-href="#/tutkinto/{{hakutulos.tutkintotunnus}}">{{hakutulos.nimi | lokalisoi:hakutulos:'nimi'}}</a></div>
+    <div class="table-cell"><a class="e2e-hakutulos-nimi" ng-href="#/tutkinto/{{hakutulos.tutkintotunnus}}">{{hakutulos.nimi | lokalisoi:hakutulos:'nimi'}}</a></div>
     <div class="table-cell"><span ng-repeat="nimike in hakutulos.tutkintonimikkeet">{{nimike.nimi | lokalisoi:nimike:'nimi'}}<br/></span></div>
   </hakutulokset>
 </div>

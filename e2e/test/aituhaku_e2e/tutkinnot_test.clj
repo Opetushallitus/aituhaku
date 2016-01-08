@@ -52,7 +52,7 @@
   (w/text "h2"))
 
 (defn testaa-hakutuloslistan-sivua [tutkinnot-osajoukko]
-  (is (= (nakyvien-tutkintojen-tiedot "hakutulos.nimi")
+  (is (= (map w/text (w/find-elements {:css ".e2e-hakutulos-nimi"}))
          (map :nimi_fi tutkinnot-osajoukko)))
   (is (= (nakyvien-tutkintojen-tiedot "hakutulos.tutkintotunnus")
          (map :tutkintotunnus tutkinnot-osajoukko)))

@@ -38,6 +38,7 @@
         (avaa (toimikuntasivu "ILMA"))
         ;;Niin
         (are [elementti teksti] (= (elementin-teksti elementti) teksti)
-             "toimikunta.nimi" "ILMASTOINTIALAN TUTKINTOTOIMIKUNTA"
-             "i18n.kielisyys[toimikunta.kielisyys]" "suomi"
-             "toimikunta.toimikausi_alku" "01.08.2013 – 31.07.2016")))))
+             "i18n.kielisyys[toimikunta.kielisyys]" "suomi")
+        (are [css teksti] (= (w/text (w/find-element {:css css})) teksti)
+                          ".e2e-toimikunta-nimi" "ILMASTOINTIALAN TUTKINTOTOIMIKUNTA"
+                          ".e2e-toimikausi" "01.08.2013 – 31.07.2016")))))

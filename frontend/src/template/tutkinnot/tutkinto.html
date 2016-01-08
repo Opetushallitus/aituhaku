@@ -24,18 +24,18 @@
   </fieldset>
   <fieldset>
     <label>{{i18n.tutkinnot.koulutusala}}</label>
-    <p>{{tutkinto.koulutusala_nimi | lokalisoi:tutkinto:'koulutusala_nimi'}}</p>
+    <p class="e2e-tutkinto-koulutusala-nimi">{{tutkinto.koulutusala_nimi | lokalisoi:tutkinto:'koulutusala_nimi'}}</p>
   </fieldset>
   <fieldset>
     <label>{{i18n.tutkinnot.opintoala}}</label>
-    <p>{{tutkinto.opintoala_nimi | lokalisoi:tutkinto:'opintoala_nimi'}}</p>
+    <p class="e2e-tutkinto-opintoala-nimi">{{tutkinto.opintoala_nimi | lokalisoi:tutkinto:'opintoala_nimi'}}</p>
   </fieldset>
 
   <br>
   <fieldset class="toimikunta-lista">
     <label>{{i18n.tutkinnot.toimikunta}}</label>
     <div ng-repeat="toimikunta in tutkinto.toimikunnat">
-      <a ng-href="#/toimikunta/{{toimikunta.tkunta}}?tutkinto={{tutkinto.tutkintotunnus}}">{{toimikunta.nimi | lokalisoi:toimikunta:'nimi'}}</a>
+      <a class="e2e-toimikunta-nimi" ng-href="#/toimikunta/{{toimikunta.tkunta}}?tutkinto={{tutkinto.tutkintotunnus}}">{{toimikunta.nimi | lokalisoi:toimikunta:'nimi'}}</a>
     </div>
   </fieldset>
 

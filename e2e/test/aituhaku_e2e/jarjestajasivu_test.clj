@@ -24,9 +24,7 @@
   (str "/fi/#/jarjestaja/" oppilaitoskoodi))
 
 (defn nakyvien-tutkintojen-nimet []
-  (set (map w/text (w/find-elements (-> *ng*
-                                       (.repeater "hakutulos in hakutulokset")
-                                       (.column "hakutulos.nimi"))))))
+  (set (map w/text (w/find-elements {:css ".e2e-hakutulos-nimi"}))))
 
 (deftest jarjestajasivu-test
   (let [testidata (tutkinnot-oletus-testidata)

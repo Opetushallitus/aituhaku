@@ -29,13 +29,6 @@
       w/find-element
       w/text))
 
-(defn toimikunta-kentan-arvo []
-  (-> *ng*
-      (.repeater "toimikunta in tutkinto.toimikunnat")
-      (.column "toimikunta.nimi")
-      w/find-element
-      w/text))
-
 (defn tutkinnon-jarjestajien-nimet []
   (map w/text (-> *ng*
                   (.repeater "jarjestaja in tutkinto.jarjestajat")
@@ -61,15 +54,14 @@
             (is (= (tutkinnon-tietokentan-arvo "tutkinto.tutkintotunnus") (:tutkintotunnus tutkinto))))
           (testing
             "koulutusalan nimi"
-            (is (= (tutkinnon-tietokentan-arvo "tutkinto.koulutusala_nimi")
+            (is (= (w/text (w/find-element {:css ".e2e-tutkinto-koulutusala-nimi"}))
                    (get-in testidata [:koulutusalat 0 :selite_fi]))))
           (testing
             "opintoalan nimi"
-            (is (= (tutkinnon-tietokentan-arvo "tutkinto.opintoala_nimi")
+            (is (= (w/text (w/find-element {:css ".e2e-tutkinto-opintoala-nimi"}))
                    (get-in testidata [:opintoalat 0 :selite_fi]))))
           (testing
-            "toimikunta"
-            (is (= (toimikunta-kentan-arvo) (get-in testidata [:toimikunnat 0 :nimi_fi]))))
+            (is (= (w/text (w/find-element {:css ".e2e-toimikunta-nimi"})) (get-in testidata [:toimikunnat 0 :nimi_fi]))))
           (testing
             "tutkinnon järjestäjät"
             (is (= (set (tutkinnon-jarjestajien-nimet)) (set (map :nimi (:oppilaitokset testidata)))))))))))

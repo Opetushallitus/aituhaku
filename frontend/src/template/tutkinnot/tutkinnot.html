@@ -34,7 +34,7 @@
     otsikot="[i18n.tutkinnot.tutkintotunnus, i18n.tutkinnot.tutkinnon_nimi, i18n.tutkinnot.tutkintonimikkeet, i18n.tutkinnot.opintoala]"
     hakutulokset="hakuModel.tutkinnot">
     <div class="table-cell">{{hakutulos.tutkintotunnus}}</div>
-    <div class="table-cell"><a ng-href="#/tutkinto/{{hakutulos.tutkintotunnus}}">{{hakutulos.nimi | lokalisoi:hakutulos:'nimi'}}</a></div>
+    <div class="table-cell"><a class="e2e-hakutulos-nimi" ng-href="#/tutkinto/{{hakutulos.tutkintotunnus}}">{{hakutulos.nimi | lokalisoi:hakutulos:'nimi'}}</a></div>
     <div class="table-cell"><span ng-repeat="nimike in hakutulos.tutkintonimikkeet">{{nimike | lokalisoiKentta:'nimi'}}<br/></span></div>
     <div class="table-cell">{{hakutulos.opintoala_nimi | lokalisoi:hakutulos:'opintoala_nimi'}}</div>
   </hakutulokset>

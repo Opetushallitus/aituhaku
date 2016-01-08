@@ -1,6 +1,6 @@
 <palaa-hakuun></palaa-hakuun>
 
-<h2>{{toimikunta.nimi | lokalisoi:toimikunta:'nimi'}}</h2>
+<h2 class="e2e-toimikunta-nimi">{{toimikunta.nimi | lokalisoi:toimikunta:'nimi'}}</h2>
 
 <section class="info-section">
   <fieldset>
@@ -13,7 +13,7 @@
   </fieldset>
   <fieldset>
     <label>{{i18n.toimikunta.toimikausi}}</label>
-    <p>{{toimikunta.toimikausi_alku | date:'dd.MM.yyyy'}} &ndash; {{toimikunta.toimikausi_loppu | date:'dd.MM.yyyy'}}</p>
+    <p class="e2e-toimikausi">{{toimikunta.toimikausi_alku | date:'dd.MM.yyyy'}} &ndash; {{toimikunta.toimikausi_loppu | date:'dd.MM.yyyy'}}</p>
   </fieldset>
   <fieldset>
     <label>{{i18n.toimikunta.jasenet}}</label>
