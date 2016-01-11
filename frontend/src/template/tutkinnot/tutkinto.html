@@ -42,8 +42,8 @@
   <fieldset></fieldset>
 
   <fieldset>
-    <label>{{i18n.tutkinnot.tutkinnon_perusteet}}</label>
-    <p>
+    <label ng-show="{{tutkinto.eperustetunnus}}">{{i18n.tutkinnot.tutkinnon_perusteet}}</label>
+    <p ng-show="{{tutkinto.eperustetunnus}}">
       <a ng-href="{{i18n.tutkinnot.eperusteet_linkki}}/esitys/{{tutkinto.eperustetunnus}}/naytto/tiedot" title="{{i18n.tutkinnot.eperusteet_ohje}}">
         <img class="bitmap" src="../img/ikoni_eperuste_22.png">
         {{i18n.tutkinnot.eperusteet}}
@@ -52,8 +52,8 @@
   </fieldset>
 
   <fieldset>
-    <label>{{i18n.tutkinnot.osaamisen_tunnistaminen}}</label>
-    <p>
+    <label ng-show="{{tutkinto.peruste}}">{{i18n.tutkinnot.osaamisen_tunnistaminen}}</label>
+    <p ng-show="{{tutkinto.peruste}}">
       <a ng-href="{{i18n.tutkinnot.osaan_linkki}}/linkki/osien-valinta?tutkinto={{tutkinto.tutkintotunnus}}&diaarinumero={{tutkinto.peruste}}&tyyppi=naytto" title="{{i18n.tutkinnot.osaan_ohje}}">
         <img class="bitmap" src="../img/osaan.png">
         {{i18n.tutkinnot.osaan_fi}}
