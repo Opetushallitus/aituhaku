@@ -8,7 +8,7 @@
     <div class="print">{{hakuModel.tutkinnonNimi}}</div>
   </fieldset>
   <fieldset class="select2-fieldset">
-    <label>{{i18n.tutkinnot.opintoala}}</label>
+    <label>{{i18n.tutkinnot.ala}}</label>
     <select class="no-print" ng-model="hakuModel.opintoala">
       <option value=""></option>
       <optgroup ng-repeat="koulutusala in koulutusalat" label="{{koulutusala.koulutusala_tkkoodi}}. {{koulutusala | lokalisoiKentta:'koulutusala_nimi'}}">
@@ -31,7 +31,7 @@
   <hakutulokset
     nykyinen-sivu="hakuModel.nykyinenSivu"
     tuloksia-sivulla="10"
-    otsikot="[i18n.tutkinnot.tutkintotunnus, i18n.tutkinnot.tutkinnon_nimi, i18n.tutkinnot.tutkintonimikkeet, i18n.tutkinnot.opintoala]"
+    otsikot="[i18n.tutkinnot.tutkintotunnus, i18n.tutkinnot.tutkinnon_nimi, i18n.tutkinnot.tutkintonimikkeet, i18n.tutkinnot.ala]"
     hakutulokset="hakuModel.tutkinnot">
     <div class="table-cell">{{hakutulos.tutkintotunnus}}</div>
     <div class="table-cell"><a class="e2e-hakutulos-nimi" ng-href="#/tutkinto/{{hakutulos.tutkintotunnus}}">{{hakutulos.nimi | lokalisoi:hakutulos:'nimi'}}</a></div>
