@@ -13,33 +13,10 @@
 ;; European Union Public Licence for more details.
 
 (ns aituhaku.rest-api.js-log
-  (:require [compojure.core :as c]
-            [clojure.string :as str]
-            [clojure.tools.logging :as log]))
+  (:require [compojure.core :refer [defroutes POST]]
+            [oph.rest_api.js-log :refer [logita]]))
 
-;   "max length of message strings from the client side"
-(def
-  maxlength 1000)
+(defroutes reitit
+  (POST "/virhe" [virheenUrl userAgent virheviesti stackTrace cause]
+    (logita virheenUrl userAgent virheviesti stackTrace cause)))
 
-(defn sanitize
-  "replaces linefeeds with blanks and limits the length"
-  [s]
-  {:pre [clojure.core/string?]}
-  (let [ln (min (.length s) maxlength)]
-    (-> s
-      (str/replace "\n" "!")
-      (str/replace "\r" "!")
-      (.substring 0 ln))))
-
-(c/defroutes reitit
-  (c/POST "/virhe" [virheenUrl userAgent virheviesti stackTrace cause]
-    (let [rivinvaihto "\n"]
-      (log/info (str rivinvaihto
-                     "--- Javascript virhe ---" rivinvaihto
-                     "Virheen url: " (sanitize virheenUrl) rivinvaihto
-                     "User agent string: " (sanitize userAgent) rivinvaihto
-                     "Virheviesti: " (sanitize virheviesti) rivinvaihto
-                     "Stacktrace: " (sanitize stackTrace) rivinvaihto
-                     "Aiheuttaja: " (sanitize cause) rivinvaihto
-                     "------------------------")))
-    {:status 200}))
