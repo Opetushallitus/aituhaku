@@ -4,7 +4,6 @@
     [schema.core :as s]
     [aituhaku.asetukset :refer [asetukset]]))
 
-
 (defn json-response
   ([data]
    (if (nil? data)

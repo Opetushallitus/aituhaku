@@ -1,12 +1,10 @@
 (ns aituhaku.rest.performance-test
-   (:require 
-    [aituhaku.asetukset :as haku-asetukset]
-    [aituhaku.palvelin :as palvelin]
-    [clojure.test :refer :all]
-    [peridot.core :as peridot]
-    [clojure.tools.logging :as log]
-    [aituhaku.arkisto.sql.jarjestaja :as jarjestaja-arkisto]
-    ))
+   (:require [aituhaku.asetukset :as haku-asetukset]
+             [aituhaku.palvelin :as palvelin]
+             [clojure.test :refer :all]
+             [peridot.core :as peridot]
+             [clojure.tools.logging :as log]
+             [aituhaku.arkisto.sql.jarjestaja :as jarjestaja-arkisto]))
 
 (defn alusta-korma!
   ([asetukset]
@@ -45,7 +43,7 @@
         start (java.lang.System/currentTimeMillis)
         req-count (* thread-count urls-per-thread)
         urls-for-threads (for [_ (range thread-count)]
-                           (repeatedly urls-per-thread #(rand-nth url-seq))) 
+                           (repeatedly urls-per-thread #(rand-nth url-seq)))
         req-durations (doall ; pakotetaan evaluointi kutsumalla deref kaikille säikeille
                         (map deref
                           ; luodaan joukko säikeitä. Kaikki säikeet on luotu ennen kuin deref kutsutaan
@@ -62,7 +60,7 @@
                                         (is (= (:status (:response response)) 200))
                                         elapsed)
                                       (catch Exception e
-                                        ; timeout exception. TODO: täytyy miettiä miten tämä halutaan oikeasti käsitellä 
+                                        ; timeout exception. TODO: täytyy miettiä miten tämä halutaan oikeasti käsitellä
                                         ; pidennetään timeouttia? halutaanko raportoida timeoutin ylittäneet requestit jotenkin?
                                         (.printStackTrace e))))))))))
         end (java.lang.System/currentTimeMillis)
@@ -75,7 +73,7 @@
     (log/info "average request time " avg " ms")
     (log/info "requests per second, avg " throughput)))
 
-(defn oppilaitos->jarjestaja-url 
+(defn oppilaitos->jarjestaja-url
   [oppilaitos]
   (str "/api/jarjestaja/" (:oppilaitoskoodi oppilaitos)))
 
@@ -85,7 +83,7 @@
     #(let [urlit (map oppilaitos->jarjestaja-url (take 100 (jarjestaja-arkisto/hae-oppilaitoskoodit)))]
       (time-with-peridot-multi urlit 1 100))))
 
-(deftest ^:performance jarjestaja-tiedot-useita-saikeita []  
+(deftest ^:performance jarjestaja-tiedot-useita-saikeita []
   (log/info "järjestäjätiedot, useita säikeitä")
   (with-korma
     #(let [urlit (map oppilaitos->jarjestaja-url (take 500 (jarjestaja-arkisto/hae-oppilaitoskoodit)))]
@@ -103,7 +101,7 @@
   (log/info "tutkintohaku, useita säikeitä")
   ; sisältää myös termejä, joilla ei löydy tuloksia
   ; hakutermin oltava vähintään kolme merkkiä, jotta rajapinta palauttaa tuloksia
-  (let [hakutermit (list "ase" "aut" "ope" "rav" "kul" "hev" "Ravinto" "Pinta" "opa" "xxx" "   " "yxzdfgasdlasqwrojaskn")]    
+  (let [hakutermit (list "ase" "aut" "ope" "rav" "kul" "hev" "Ravinto" "Pinta" "opa" "xxx" "   " "yxzdfgasdlasqwrojaskn")]
     (with-korma
       #(let [urlit (map termi->tutkintohaku-url hakutermit)]
         (time-with-peridot-multi urlit 15 100)))))

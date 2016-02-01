@@ -45,7 +45,7 @@
   :java-source-paths ["clojure-utils/src/java"]
   :test-paths ["test/clj"]
   :test-selectors {:kaikki (constantly true)
-                   :default  (complement (some-fn :integraatio :performance)) 
+                   :default  (complement (some-fn :integraatio :performance))
                    :performance :performance
                    :integraatio :integraatio}
   :main aituhaku.palvelin

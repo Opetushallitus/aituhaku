@@ -19,14 +19,14 @@
 (defn hae-oppilaitoskoodit []
   (sql/select tutkinnon_jarjestajat_view
     (sql/fields :oppilaitoskoodi)))
-  
+
 (defn hae
   [oppilaitoskoodi]
   (let [jarjestaja (first (sql/select tutkinnon_jarjestajat_view
                             (sql/fields :oppilaitoskoodi :nimi :www_osoite :ktnimi_fi :ktnimi_sv :kieli)
                             (sql/where {:oppilaitoskoodi oppilaitoskoodi})))
-        tutkinnot (sql/select tutkinnot_view 
-                    (sql/join :inner tutkinnon_jarjestajat_view 
+        tutkinnot (sql/select tutkinnot_view
+                    (sql/join :inner tutkinnon_jarjestajat_view
                               (= :jarjestajat.tutkintotunnus :tutkinnot_view.tutkintotunnus))
                     (sql/with tutkintonimike_view
                       (sql/fields :nimi_fi :nimi_sv))
