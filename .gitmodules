@@ -1,0 +1,3 @@
+[submodule "clojure-utils"]
+	path = clojure-utils
+	url = https://github.com/opetushallitus/clojure-utils
