@@ -41,8 +41,8 @@
                                   [org.clojure/test.check "0.5.8"]]}
              :uberjar {:main aituhaku.palvelin
                        :aot :all}}
-  :source-paths ["src/clj" "../clojure-utils/src/clj"]
-  :java-source-paths ["../clojure-utils/src/java"]
+  :source-paths ["src/clj" "clojure-utils/src/clj"]
+  :java-source-paths ["clojure-utils/src/java"]
   :test-paths ["test/clj"]
   :test-selectors {:kaikki (constantly true)
                    :default  (complement (some-fn :integraatio :performance)) 
