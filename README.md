@@ -19,6 +19,7 @@ aituhaku on työnimi järjestelmälle.
 * Eclipse: Luo projekti puhtaana projektina, ei Clojure-projektina. Valitse sen jälkeen Convert to Leiningen project.
    (Counterclockwise luo muuten turhia default-tiedostoja, jotka joutuu käsin poistamaan.)
 
-Toteutuskoodilla on riippuvuus yleiskäyttöisiä kirjastofunktioita sisältävään [clojure-utils](https://github.com/Opetushallitus/clojure-utils) repositoryyn siten että molemmat täytyy paikallisesti kloonata rinnakkaisiin hakemistoihin.
+Toteutuskoodilla on riippuvuus yleiskäyttöisiä kirjastofunktioita sisältävään [clojure-utils](https://github.com/Opetushallitus/clojure-utils) repositoryyn. Tämä on järjestetty git submodulena.
+
 
 
