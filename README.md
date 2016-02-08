@@ -21,5 +21,9 @@ aituhaku on työnimi järjestelmälle.
 
 Toteutuskoodilla on riippuvuus yleiskäyttöisiä kirjastofunktioita sisältävään [clojure-utils](https://github.com/Opetushallitus/clojure-utils) repositoryyn. Tämä on järjestetty git submodulena.
 
+# Testien ajaminen
+
+Näyttötutkintohaku käyttää Aitun tietokantaa, joten myös testit edellyttävät tätä. Lisäksi end-to-end selaintestit hakemistossa *e2e* luovat testidataa Aitun rajapintojen avulla, joten näiden testien ajaminen edellyttää sitä että Aitu-sovellus on käynnistetty paikallisesti.
+
 
 
