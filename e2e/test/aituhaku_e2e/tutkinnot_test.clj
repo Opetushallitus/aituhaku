@@ -120,17 +120,17 @@
             (testing
               "ensimmäinen sivu:"
               (testaa-hakutuloslistan-sivua (take 10 (:tutkinnot testidata)))
-              (is (= (hakutuloslaskurin-teksti) "hakutulokset 1 - 10 / yhteensä 25 hakutulosta")))
+              (is (= (hakutuloslaskurin-teksti) "hakutulokset 1 - 10 / yhteensä 25 hakutulosta, joihin löytyy tutkinnosta vastaava järjestäjä")))
             (seuraava-sivu)
             (testing
               "toinen sivu:"
               (testaa-hakutuloslistan-sivua (take 10 (drop 10 (:tutkinnot testidata))))
-              (is (= (hakutuloslaskurin-teksti) "hakutulokset 11 - 20 / yhteensä 25 hakutulosta")))
+              (is (= (hakutuloslaskurin-teksti) "hakutulokset 11 - 20 / yhteensä 25 hakutulosta, joihin löytyy tutkinnosta vastaava järjestäjä")))
             (seuraava-sivu)
             (testing
               "kolmas sivu:"
               (testaa-hakutuloslistan-sivua (take 5 (drop 20 (:tutkinnot testidata))))
-              (is (= (hakutuloslaskurin-teksti) "hakutulokset 21 - 25 / yhteensä 25 hakutulosta")))
+              (is (= (hakutuloslaskurin-teksti) "hakutulokset 21 - 25 / yhteensä 25 hakutulosta, joihin löytyy tutkinnosta vastaava järjestäjä")))
           (testing
             "tutkinnon sivulle siirtyminen:"
             (testing "hakunäkymästä voi siirtyä tutkinnon sivulle"
