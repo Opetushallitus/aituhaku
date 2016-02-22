@@ -39,7 +39,7 @@
   (w/text "h2"))
 
 (deftest tutkintosivu-test
-  (let [testidata (tutkinnot-oletus-testidata)
+  (let [testidata (luo-sopimukset-tutkinnoille (tutkinnot-oletus-testidata))
         tutkinto (-> testidata :tutkinnot first)]
     (with-webdriver
       (with-data testidata
@@ -67,17 +67,21 @@
             (is (= (set (tutkinnon-jarjestajien-nimet)) (set (map :nimi (:oppilaitokset testidata)))))))))))
 
 (defn tutkinto [tutkintotunnus siirtymaajan-loppupvm voimassa-loppupvm]
-  {:koulutusalat [{:koodi "KA"
-                   :selite_fi "Koulutusala"}]
-   :opintoalat [{:koodi "OA"
-                 :selite_fi "Opintoala"
-                 :koulutusala "KA"}]
-   :tutkinnot [{:tutkintotunnus tutkintotunnus
-                :opintoala "OA"
-                :nimi_fi "Tutkinto"
-                :voimassa_alkupvm "1899-01-01"
-                :siirtymaajan_loppupvm siirtymaajan-loppupvm
-                :voimassa_loppupvm voimassa-loppupvm}]})
+  (luo-sopimukset-tutkinnoille {:koulutusalat [{:koodi "KA"
+                                                :selite_fi "Koulutusala"}]
+                                :opintoalat [{:koodi "OA"
+                                              :selite_fi "Opintoala"
+                                              :koulutusala "KA"}]
+                                :toimikunnat [{:tkunta "TK"}]
+                                :koulutustoimijat [{:ytunnus "1234567-8"}]
+                                :oppilaitokset [{:oppilaitoskoodi "12345"
+                                                 :koulutustoimija "1234567-8"}]
+                                :tutkinnot [{:tutkintotunnus tutkintotunnus
+                                             :opintoala "OA"
+                                             :nimi_fi "Tutkinto"
+                                             :voimassa_alkupvm "1899-01-01"
+                                             :siirtymaajan_loppupvm siirtymaajan-loppupvm
+                                             :voimassa_loppupvm voimassa-loppupvm}]}))
 
 (defn voimassaoleva-tutkinto [tutkintotunnus]
   (tutkinto tutkintotunnus "2199-01-01" "2100-01-01"))
@@ -120,11 +124,3 @@
         (is (ilmoitus-siirtymaajasta-nakyvissa?))
         (is (= (nakyva-siirtymaajan-paattymispvm) "1.1.2100"))
         (is (not (ilmoitus-vanhentumisesta-nakyvissa?)))))))
-
-(deftest vanhentunut-ilmoitus-test
-  (with-webdriver
-    (testing "Vanhentuneelle tutkinnolle näytetään ilmoitus vanhentumisesta"
-      (with-data (vanhentunut-tutkinto "789")
-        (avaa (tutkintosivu "789"))
-        (is (not (ilmoitus-siirtymaajasta-nakyvissa?)))
-        (is (ilmoitus-vanhentumisesta-nakyvissa?))))))

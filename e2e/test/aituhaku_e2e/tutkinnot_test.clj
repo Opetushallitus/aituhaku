@@ -69,7 +69,9 @@
 
 (deftest ^:no-ie tutkinnot-haku-test
   (let [toisen-opintoalan-tutkinnot (drop 25 (luo-tutkintoja-opintoalaan 26 "OA2"))
-        testidata (update-in (tutkinnot-oletus-testidata) [:tutkinnot] concat toisen-opintoalan-tutkinnot)
+        testidata (-> (tutkinnot-oletus-testidata)
+                    (update-in [:tutkinnot] concat toisen-opintoalan-tutkinnot)
+                    luo-sopimukset-tutkinnoille)
         vaara-hakuehto "väärä hakuehto"
         tutkinnon-nimi-ehto (-> (:tutkinnot testidata) first :nimi_fi)
         opintoalan-nimi-ehto (-> (:opintoalat testidata) second :selite_fi)]
@@ -110,7 +112,7 @@
               (is (= (hakutuloslaskurin-teksti) "1 hakutulos")))))))))
 
 (deftest tutkinnot-sivutus-test
-  (let [testidata (tutkinnot-oletus-testidata)]
+  (let [testidata (luo-sopimukset-tutkinnoille (tutkinnot-oletus-testidata))]
     (with-data testidata
       (with-webdriver
         (avaa tutkinnot)
@@ -140,7 +142,7 @@
                 (is (= (tutkinto-sivun-otsikko) "HAETTAVA TUTKINTO A1"))))))))))
 
 (deftest ^:no-ie tutkinnot-paluu-hakuun-test
-  (let [testidata (tutkinnot-oletus-testidata)]
+  (let [testidata (luo-sopimukset-tutkinnoille (tutkinnot-oletus-testidata))]
     (with-data testidata
       (with-webdriver
         (avaa tutkinnot)
