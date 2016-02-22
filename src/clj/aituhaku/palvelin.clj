@@ -17,7 +17,8 @@
   (:require [clojure.java.io :as io]
             [clojure.tools.logging :as log]
             [clojure.pprint :refer [pprint]]
-            [compojure.core :as c]
+            [compojure.api.exception :as ex]
+            [compojure.api.sweet :refer [api context swagger-routes GET]]
             [compojure.route :as r]
             [org.httpkit.server :as hs]
             [ring.middleware.json :refer [wrap-json-params]]
@@ -30,7 +31,7 @@
             [cheshire.generate :as json-gen]
             schema.core
             [oph.common.infra.print-wrapper :refer [log-request-wrapper]]
-            [aituhaku.asetukset :refer [asetukset lue-asetukset oletusasetukset konfiguroi-lokitus]]
+            [aituhaku.asetukset :refer [asetukset lue-asetukset oletusasetukset konfiguroi-lokitus service-path]]
             [aituhaku.infra.i18n :refer [wrap-locale]]
             [aituhaku.infra.status :refer [status piilota-salasanat build-id]]
             [stencil.core :as s]
@@ -57,22 +58,29 @@
                                             :keywords (get-in tekstit [:meta :keywords])})))
 
 (defn ^:private reitit [asetukset]
-  (c/routes
-    (c/context "/api/tutkinto" [] aituhaku.rest-api.tutkinto/reitit)
-    (c/context "/api/toimikunta" [] aituhaku.rest-api.toimikunta/reitit)
-    (c/context "/api/i18n" [] aituhaku.rest-api.i18n/reitit)
-    (c/context "/api/opintoala" [] aituhaku.rest-api.opintoala/reitit)
-    (c/context "/api/jarjestaja" [] aituhaku.rest-api.jarjestaja/reitit)
-    (c/context "/api/jslog" []  aituhaku.rest-api.js-log/reitit )
-    (c/context "/api/kieli" [] aituhaku.rest-api.kieli/reitit)
+  (api
+    {:exceptions {:handlers {:schema.core/error ex/schema-error-handler}}}
+    (swagger-routes
+        {:ui "/api-docs"
+         :spec "/swagger.json"
+         :data {:info {:title "Näyttötutkintohaku API"
+                       :description "Näyttötutkintohaun rajapinnat."}
+                :basePath (str (service-path (get-in asetukset [:server :base-url])))}})
+    (context "/api/tutkinto" [] aituhaku.rest-api.tutkinto/reitit)
+    (context "/api/toimikunta" [] aituhaku.rest-api.toimikunta/reitit)
+    (context "/api/i18n" [] aituhaku.rest-api.i18n/reitit)
+    (context "/api/opintoala" [] aituhaku.rest-api.opintoala/reitit)
+    (context "/api/jarjestaja" [] aituhaku.rest-api.jarjestaja/reitit)
+    (context "/api/jslog" []  aituhaku.rest-api.js-log/reitit )
+    (context "/api/kieli" [] aituhaku.rest-api.kieli/reitit)
     (if (:development-mode asetukset)
-      (c/GET "/status" [] (s/render-file "status" (assoc (status)
-                                                         :asetukset (with-out-str
-                                                                      (-> asetukset
-                                                                        piilota-salasanat
-                                                                        pprint)))))
-     (c/GET "/status" [] (s/render-string "OK" {})))
-    (c/GET "/" request (render-index asetukset request))
+      (GET "/status" [] (s/render-file "status" (assoc (status)
+                                                       :asetukset (with-out-str
+                                                                    (-> asetukset
+                                                                      piilota-salasanat
+                                                                      pprint)))))
+      (GET "/status" [] (s/render-string "OK" {})))
+    (GET "/" request (render-index asetukset request))
     (r/not-found "Not found")))
 
 (defn sammuta [palvelin]
@@ -90,13 +98,10 @@
       (.writeString json-generator (.toString c "yyyy-MM-dd"))))
   (->
     (reitit asetukset)
-    wrap-keyword-params
-    wrap-json-params
     (wrap-resource "public/app")
     (wrap-locale
       :ei-redirectia #"/api/.*"
       :base-url (get-in asetukset [:server :base-url]))
-    wrap-params
     wrap-content-type
     wrap-not-modified
     wrap-expires

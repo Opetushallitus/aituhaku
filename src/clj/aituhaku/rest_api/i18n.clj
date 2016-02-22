@@ -15,13 +15,10 @@
 (ns aituhaku.rest-api.i18n
   (:import (java.util Locale
                       ResourceBundle))
-  (:require [compojure.core :as c]
-            [schema.core :as schema]
-            [aituhaku.rest-api.http-util :refer [json-response-nocache]]
+  (:require [compojure.api.core :refer [defroutes GET]]
+            [aituhaku.rest-api.http-util :refer [response-nocache]]
+            [aituhaku.toimiala.skeema :refer [KayttoliittymaKieli]]
             [oph.common.util.util :refer [pisteavaimet->puu]]))
-
-(defn validoi-kieli []
-  (schema/pred (fn[k] (or (= k "fi")(= k "sv")))))
 
 (defn hae-tekstit [kieli]
   (ResourceBundle/clearCache)
@@ -31,7 +28,7 @@
          (into {})
          pisteavaimet->puu)))
 
-(c/defroutes reitit
-  (c/GET "/:kieli" [kieli :as req]
-    (schema/validate (validoi-kieli) kieli)
-    (json-response-nocache (hae-tekstit kieli))))
+(defroutes reitit
+  (GET "/:kieli" []
+    :path-params [kieli :- KayttoliittymaKieli]
+    (response-nocache (hae-tekstit kieli))))

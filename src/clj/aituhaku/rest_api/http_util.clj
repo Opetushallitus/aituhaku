@@ -2,7 +2,8 @@
   (:require
     [cheshire.core :as cheshire]
     [schema.core :as s]
-    [aituhaku.asetukset :refer [asetukset]]))
+    [aituhaku.asetukset :refer [asetukset]]
+    [oph.common.util.http-util :refer [response-or-404]]))
 
 (defn json-response
   ([data]
@@ -18,3 +19,7 @@
 (defn json-response-nocache
   [data]
   (assoc-in (json-response data) [:headers "Cache-control"] "max-age=0"))
+
+(defn response-nocache
+  [data]
+  (assoc-in (response-or-404 data) [:headers "Cache-control"] "max-age=0"))

@@ -1,12 +1,10 @@
 (ns aituhaku.rest-api.opintoala
-  (:require [compojure.core :as c]
-            [schema.core :as schema]
-            [aituhaku.rest-api.http-util :refer [json-response]]
+  (:require [compojure.api.core :refer [defroutes GET]]
+            [aituhaku.arkisto.opintoala :as arkisto]
             [aituhaku.toimiala.skeema :refer [Koulutusala]]
-            [aituhaku.arkisto.opintoala :as arkisto]))
+            [oph.common.util.http-util :refer [response-or-404]]))
 
-(c/defroutes reitit
-  (c/GET "/haku" []
-    (json-response
-      (arkisto/hae)
-      [Koulutusala])))
+(defroutes reitit
+  (GET "/haku" []
+    :return [Koulutusala]
+    (response-or-404 (arkisto/hae))))

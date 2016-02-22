@@ -15,6 +15,8 @@
 (ns aituhaku.toimiala.skeema
   (:require [schema.core :as s]))
 
+(def KayttoliittymaKieli (s/enum "fi" "sv"))
+
 (def Kieli (s/enum "fi" "sv" "se" "en" "2k"))
 
 (def Tutkintonimike {:nimi_fi s/Str

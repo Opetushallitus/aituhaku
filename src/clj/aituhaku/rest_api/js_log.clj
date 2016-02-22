@@ -13,10 +13,9 @@
 ;; European Union Public Licence for more details.
 
 (ns aituhaku.rest-api.js-log
-  (:require [compojure.core :refer [defroutes POST]]
+  (:require [compojure.api.core :refer [defroutes POST]]
             [oph.rest_api.js-log :refer [logita]]))
 
 (defroutes reitit
   (POST "/virhe" [virheenUrl userAgent virheviesti stackTrace cause]
     (logita virheenUrl userAgent virheviesti stackTrace cause)))
-

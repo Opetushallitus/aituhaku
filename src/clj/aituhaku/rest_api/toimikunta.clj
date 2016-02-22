@@ -13,11 +13,14 @@
 ;; European Union Public Licence for more details.
 
 (ns aituhaku.rest-api.toimikunta
-  (:require [compojure.core :as c]
-            [aituhaku.rest-api.http-util :refer [json-response]]
+  (:require [compojure.api.core :refer [defroutes GET]]
+            [schema.core :as s]
+            [aituhaku.arkisto.sql.toimikunta :as arkisto]
             [aituhaku.toimiala.skeema :refer [Toimikunta]]
-            [aituhaku.arkisto.sql.toimikunta :as arkisto]))
+            [oph.common.util.http-util :refer [response-or-404]]))
 
-(c/defroutes reitit
-  (c/GET "/:tkunta" [tkunta :as req]
-    (json-response (arkisto/hae tkunta) Toimikunta)))
+(defroutes reitit
+  (GET "/:tkunta" []
+    :path-params [tkunta :- s/Str]
+    :return Toimikunta
+    (response-or-404 (arkisto/hae tkunta))))

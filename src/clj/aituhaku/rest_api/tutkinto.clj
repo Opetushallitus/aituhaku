@@ -13,23 +13,21 @@
 ;; European Union Public Licence for more details.
 
 (ns aituhaku.rest-api.tutkinto
-  (:require [compojure.core :as c]
-            [schema.core :as schema]
-            [aituhaku.rest-api.http-util :refer [json-response]]
+  (:require [compojure.api.core :refer [defroutes GET]]
+            [schema.core :as s]
+            [aituhaku.arkisto.tutkinto :as arkisto]
             [aituhaku.toimiala.skeema :refer [Tutkinto TutkintoTiedot Kieli]]
-            [aituhaku.arkisto.tutkinto :as arkisto]))
+            [oph.common.util.http-util :refer [response-or-404]]))
 
-(c/defroutes reitit
-  (c/GET "/haku" [nimi opintoala kieli]
-    (schema/validate (schema/maybe schema/Str) nimi)
-    (schema/validate (schema/maybe schema/Str) opintoala)
-    (schema/validate (schema/maybe Kieli) kieli)
-    (json-response
-      (arkisto/hae-ehdoilla nimi opintoala kieli)
-      [Tutkinto]))
+(defroutes reitit
+  (GET "/haku" []
+    :query-params [{nimi :- s/Str nil}
+                   {opintoala :- s/Str nil}
+                   {kieli :- Kieli nil}]
+    :return [Tutkinto]
+    (response-or-404 (arkisto/hae-ehdoilla nimi opintoala kieli)))
 
-  (c/GET "/:tutkintotunnus" [tutkintotunnus :as req]
-    (schema/validate schema/Str tutkintotunnus)
-    (json-response
-      (arkisto/hae tutkintotunnus)
-      TutkintoTiedot)))
+  (GET "/:tutkintotunnus" []
+    :path-params [tutkintotunnus :- s/Str]
+    :return TutkintoTiedot
+    (response-or-404 (arkisto/hae tutkintotunnus))))

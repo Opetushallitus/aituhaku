@@ -13,14 +13,12 @@
 ;; European Union Public Licence for more details.
 
 (ns aituhaku.rest-api.kieli
-  (:require [compojure.core :as c]
-            [schema.core :as schema]
-            [aituhaku.rest-api.http-util :refer [json-response]]
+  (:require [compojure.api.core :refer [defroutes GET]]
+            [aituhaku.arkisto.sql.kieli :as arkisto]
             [aituhaku.toimiala.skeema :refer [Kieli]]
-            [aituhaku.arkisto.sql.kieli :as arkisto]))
+            [oph.common.util.http-util :refer [response-or-404]]))
 
-(c/defroutes reitit
-  (c/GET "/" []
-    (json-response
-      (arkisto/hae-kaikki)
-      [{:kieli Kieli}])))
+(defroutes reitit
+  (GET "/" []
+    :return [{:kieli Kieli}]
+    (response-or-404 (arkisto/hae-kaikki))))

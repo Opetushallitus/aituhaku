@@ -13,11 +13,14 @@
 ;; European Union Public Licence for more details.
 
 (ns aituhaku.rest-api.jarjestaja
-  (:require [compojure.core :as c]
-            [aituhaku.rest-api.http-util :refer [json-response]]
+  (:require [compojure.api.core :refer [defroutes GET]]
+            [schema.core :as s]
             [aituhaku.toimiala.skeema :refer [JarjestajanTutkinnot]]
-            [aituhaku.arkisto.sql.jarjestaja :as arkisto]))
+            [aituhaku.arkisto.sql.jarjestaja :as arkisto]
+            [oph.common.util.http-util :refer [response-or-404]]))
 
-(c/defroutes reitit
-  (c/GET "/:oppilaitoskoodi" [oppilaitoskoodi :as req]
-    (json-response (arkisto/hae oppilaitoskoodi) JarjestajanTutkinnot)))
+(defroutes reitit
+  (GET "/:oppilaitoskoodi" []
+    :path-params [oppilaitoskoodi :- s/Str]
+    :return JarjestajanTutkinnot
+    (response-or-404 (arkisto/hae oppilaitoskoodi))))
