@@ -17,6 +17,7 @@
     </select>
     <div class="print">{{hakuModel.opintoalanNimi | lokalisoiKentta:'opintoala_nimi'}}</div>
   </fieldset>
+  <input type="hidden" ng-model="hakuModel.nimikieli"> 
   <fieldset class="select2-fieldset">
     <label>{{i18n.tutkinnot.suorituskieli}}</label>
     <select class="no-print" ng-model="hakuModel.kieli">

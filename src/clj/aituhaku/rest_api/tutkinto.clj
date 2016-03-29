@@ -23,9 +23,10 @@
   (GET "/haku" []
     :query-params [{nimi :- s/Str nil}
                    {opintoala :- s/Str nil}
+                   {nimikieli :- Kieli nil}
                    {kieli :- Kieli nil}]
     :return [Tutkinto]
-    (response-or-404 (arkisto/hae-ehdoilla nimi opintoala kieli)))
+    (response-or-404 (arkisto/hae-ehdoilla nimi nimikieli opintoala kieli)))
 
   (GET "/:tutkintotunnus" []
     :path-params [tutkintotunnus :- s/Str]

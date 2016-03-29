@@ -42,24 +42,29 @@
           :siirtymaajalla
           :voimassa)
         :ei-voimassa))))
-(t/ann sisaltaako-nimi? [String Nimetty -> Boolean])
+
+(t/ann sisaltaako-nimi? [String String Nimetty -> Boolean])
 (defn sisaltaako-nimi?
-  [nimi entity]
-  (sisaltaako-kentat? entity [:nimi_fi :nimi_sv] nimi))
+  [nimi kieli entity]
+  (let [nimikentta (case kieli
+                     "fi" :nimi_fi
+                     "sv" :nimi_sv)]
+    (sisaltaako-kentat? entity [nimikentta] nimi)))
 
-(t/ann sisaltaako-nimi-tai-nimike? [String TutkinnonPerustiedot -> Boolean])
+(t/ann sisaltaako-nimi-tai-nimike? [String String TutkinnonPerustiedot -> Boolean])
 (defn sisaltaako-nimi-tai-nimike?
-  [nimi tutkinto]
-  (boolean (or (sisaltaako-nimi? nimi tutkinto)
-               (some (partial sisaltaako-nimi? nimi) (:tutkintonimikkeet tutkinto)))))
+  [nimi kieli tutkinto]
+  (boolean (or (sisaltaako-nimi? nimi kieli tutkinto)
+               (some (partial sisaltaako-nimi? nimi kieli) (:tutkintonimikkeet tutkinto)))))
 
-(t/ann hae-ehdoilla [String String String -> (t/Seq TutkinnonPerustiedot)])
+(t/ann hae-ehdoilla [String String String String -> (t/Seq TutkinnonPerustiedot)])
 (defn hae-ehdoilla
   "Hakee kentistä ehdoilla."
-  [nimi opintoala kieli]
-  (->> (tutkinto-sql/hae-tutkintojen-tiedot opintoala kieli)
-    (filter tutkinto-voimassa?)
-    (filter (partial sisaltaako-nimi-tai-nimike? nimi))))
+  [nimi kieli opintoala suorituskieli]
+  (let [kieli-rajaus (or suorituskieli kieli)] ; kieli-rajaus on suorituskieli, jos se on annettu. Muussa tapauksessa käyttökieli.
+    (->> (tutkinto-sql/hae-tutkintojen-tiedot opintoala suorituskieli)
+      (filter tutkinto-voimassa?)
+      (filter (partial sisaltaako-nimi-tai-nimike? nimi kieli-rajaus)))))
 
 (t/defalias TutkintoJaVoimassaolo
   (t/I Tutkinto

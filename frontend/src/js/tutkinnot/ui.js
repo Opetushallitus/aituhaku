@@ -21,6 +21,7 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
                                 'yhteiset.suodattimet.jarjestaLokalisoidullaNimella',
                                 'yhteiset.palvelut.debounce',
                                 'yhteiset.direktiivit.palaaHakuun',
+                                'yhteiset.palvelut.i18n',
                                 'ngRoute'])
 
   .config(['$routeProvider', function($routeProvider) {
@@ -46,15 +47,16 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
   // Modelia ei voida alustaa TutkinnotControllerissa, koska silloin hakuehdot
   // tyhjenisivät aina kun hakusivulle navigoidaan (hakuehtojen halutaan
   // säilyvän esim. kun hakusivulle palataan selaimen Takaisin-napilla).
-  .factory('TutkintoHakuModel', function() {
+  .factory('TutkintoHakuModel', ['kieli',  function(kieli) {
     return {
       tutkinnonNimi : '',
+      nimikieli: kieli, // i18n.kieli, // i18n.kieli 
       opintoala : '',
       opintoalanNimi : {},
       tutkinnot : null,
       nykyinenSivu : 1
     };
-  })
+  }])
 
   .factory('TutkinnotControllerFunktiot', ['hakuAsetukset',
                                            '$filter',
@@ -63,6 +65,7 @@ angular.module('tutkinnot.ui', ['tutkinnot.tutkinto',
                                            function(asetukset, $filter, Tutkinto, debounce){
     function hakuehdot(hakuModel) {
       return {nimi: hakuModel.tutkinnonNimi,
+    	      nimikieli: hakuModel.nimikieli, 
               opintoala: _.isEmpty(hakuModel.opintoala) ? null : hakuModel.opintoala,
               kieli: _.isEmpty(hakuModel.kieli) ? null : hakuModel.kieli};
     }
