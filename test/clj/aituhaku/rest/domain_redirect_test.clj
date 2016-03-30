@@ -1,19 +1,10 @@
 (ns aituhaku.rest.domain-redirect-test
    (:require
-    [aituhaku.asetukset :as haku-asetukset]
-    [aituhaku.palvelin :as palvelin]
-    [clojure.test :refer :all]
-    [peridot.core :as peridot]))
+     [aituhaku.test-util :refer [peridot-session!]]
+     [clojure.test :refer :all]    
+     [peridot.core :as peridot]))
 
-(defn peridot-session! []
-  (let [asetukset
-        (-> haku-asetukset/oletusasetukset
-          (assoc :development-mode true))
-        crout (palvelin/app asetukset)
-        _ (deliver haku-asetukset/asetukset asetukset)]
-    (peridot/session crout)))
-
-(deftest domain-redirect-test
+(deftest ^:integraatio domain-redirect-test
   (let [peridot-session (peridot-session!)]
     (testing "Aituhaun kieli riippuu käytetystä domainista"
       (are [domain kieli] (let [url (str "http://" domain)
