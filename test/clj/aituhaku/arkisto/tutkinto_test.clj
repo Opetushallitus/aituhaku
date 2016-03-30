@@ -6,7 +6,14 @@
             [clojure.test.check.clojure-test :refer [defspec]]
             [clj-time.core :as time]
             clj-time.coerce
-            [aituhaku.arkisto.tutkinto :refer :all]))
+            [aituhaku.arkisto.tutkinto :refer :all]
+            [aituhaku.test-util :refer [peridot-session! with-korma]]))
+
+(deftest ^:integraatio hakuehdot
+  (with-korma
+    #(let [fo (hae-ehdoilla "Vatulointi-jota-ei-ole-olemassa" "fi" nil "fi")]
+       (is (empty? fo)))))
+
 
 (defn pvm-gen [min-pvm max-pvm]
   (let [paivia-valissa (time/in-days (time/interval
