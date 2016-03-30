@@ -37,13 +37,13 @@ describe('tutkinnot.ui.TutkinnotControllerFunktiot', function(){
   describe('hakuehdot', function(){
     it('ei opintoalaa', function(){
       var hakuModel = {tutkinnonNimi: 'Auto'};
-      expect(f.hakuehdot(hakuModel)).toEqual({nimi: 'Auto', opintoala: null, kieli: null});
+      expect(f.hakuehdot(hakuModel)).toEqual({nimi: 'Auto',nimikieli: undefined, opintoala: null, kieli: null});
     });
 
     it('Opintoala', function(){
       var hakuModel = {tutkinnonNimi: 'Auto',
                        opintoala: '123'};
-      expect(f.hakuehdot(hakuModel)).toEqual({nimi: 'Auto', opintoala: '123', kieli: null});
+      expect(f.hakuehdot(hakuModel)).toEqual({nimi: 'Auto', nimikieli: undefined, opintoala: '123', kieli: null});
     });
   });
 
