@@ -14,6 +14,10 @@
     #(let [fo (hae-ehdoilla "Vatulointi-jota-ei-ole-olemassa" "fi" nil "fi")]
        (is (empty? fo)))))
 
+(deftest ^:integraatio hakuehdot-on
+  (with-korma
+    #(let [tutkinto-ei-suorituskielirajausta (hae-ehdoilla "Audio" "fi" nil nil)]
+       (is (= 1 (count tutkinto-ei-suorituskielirajausta))))))
 
 (defn pvm-gen [min-pvm max-pvm]
   (let [paivia-valissa (time/in-days (time/interval
