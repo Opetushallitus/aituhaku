@@ -60,7 +60,7 @@
 
 (defn termi->tutkintohaku-url
   [termi]
-   (str "/api/tutkinto/haku?nimi=" (java.net.URLEncoder/encode termi "UTF-8")))
+   (str "/api/tutkinto/haku?nimi=" (java.net.URLEncoder/encode termi "UTF-8") "&kieli=fi"))
 
 (defn termi->opintoalahaku-url
   [termi]
