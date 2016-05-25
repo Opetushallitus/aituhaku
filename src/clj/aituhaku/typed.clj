@@ -15,3 +15,4 @@
 (t/ann oph.common.util.util/pvm-tuleva-tai-tanaan? [LocalDate -> Boolean])
 (t/ann ^:no-check clojure.string/lower-case [String -> String])
 (t/ann oph.common.util.util/sisaltaako-kentat? (t/All [k] [(t/Map k t/Any) (t/Coll k) String -> Boolean]))
+(t/ann oph.common.util.util/some-value-with (t/All [s t] [(t/IFn [s -> t]) t (t/Coll s) -> s]))

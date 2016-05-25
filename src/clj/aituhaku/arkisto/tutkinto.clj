@@ -16,7 +16,7 @@
   (:require [clojure.core.typed :as t]
             [clj-time.core :as time]
             [aituhaku.arkisto.sql.tutkinto :as tutkinto-sql
-             :refer [TutkinnonPerustiedot Tutkinto Nimetty]]
+             :refer [TutkinnonSuppeatTiedot TutkinnonPerustiedot Tutkinto Nimetty]]
             [oph.common.util.util :refer [sisaltaako-kentat? pvm-mennyt-tai-tanaan? pvm-tuleva-tai-tanaan? time-forever]]
             aituhaku.typed
             [aituhaku.toimiala.skeema :as skeema]
@@ -62,7 +62,12 @@
   (boolean (or (sisaltaako-nimi? nimi kieli tutkinto)
                (some (partial sisaltaako-nimi? nimi kieli) (:tutkintonimikkeet tutkinto)))))
 
-(t/ann hae-ehdoilla [String String String String -> (t/Seq TutkinnonPerustiedot)])
+(t/ann ^:no-check rajaa-tutkinnon-kentat [TutkinnonPerustiedot -> TutkinnonSuppeatTiedot])
+(defn rajaa-tutkinnon-kentat [tutkinto]
+  (select-keys tutkinto [:tutkintotunnus :nimi_fi :nimi_sv :tutkintonimikkeet :opintoala_nimi_fi :opintoala_nimi_fi
+                         :opintoala_tkkoodi :koulutusala_nimi_fi :koulutusala_nimi_sv :tutkintotaso]))
+
+(t/ann hae-ehdoilla [String String String String -> (t/Seq TutkinnonSuppeatTiedot)])
 (defn hae-ehdoilla
   "Hakee kentistä ehdoilla."
   [nimi kieli opintoala suorituskieli]
@@ -70,7 +75,7 @@
     (->> (tutkinto-sql/hae-tutkintojen-tiedot opintoala suorituskieli)
       (filter tutkinto-voimassa?)
       (filter (partial sisaltaako-nimi-tai-nimike? nimi kieli-rajaus))
-      (map #(select-keys % (keys skeema/Tutkinto)))
+      (map rajaa-tutkinnon-kentat)
       distinct)))
 
 (t/defalias TutkintoJaVoimassaolo
@@ -79,7 +84,8 @@
 
 (t/ann hae [String -> (t/Option TutkintoJaVoimassaolo)])
 (defn hae [tutkintotunnus]
-  (let [tutkinnot (for [tutkinto (tutkinto-sql/hae tutkintotunnus)]
+  (let [tutkinnot (t/for [tutkinto :- Tutkinto (tutkinto-sql/hae tutkintotunnus)]
+                    :- TutkintoJaVoimassaolo
                     (assoc tutkinto :voimassaolo (voimassaolo (time/today) tutkinto)))]
     (or (some-value-with :voimassaolo :voimassa tutkinnot)
         (first tutkinnot))))

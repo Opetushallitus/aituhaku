@@ -36,17 +36,19 @@
 
 (t/defalias Tutkintonimike Nimetty)
 
+(t/defalias TutkinnonSuppeatTiedot (t/I Nimetty
+                                        (t/HMap :mandatory {:tutkintotunnus String
+                                                            :tutkintotaso String
+                                                            :opintoala_nimi_fi String
+                                                            :opintoala_nimi_sv (t/Option String)
+                                                            :opintoala_tkkoodi String
+                                                            :tutkintonimikkeet (t/Seq Tutkintonimike)})))
+
 (t/defalias TutkinnonPerustiedot (t/I TutkinnonVoimassaoloPvm
-                                      Nimetty
-                                      (t/HMap :mandatory {:tutkintotunnus String
-                                                          :tutkintotaso String
-                                                          :opintoala_nimi_fi String
-                                                          :opintoala_nimi_sv (t/Option String)
-                                                          :opintoala_tkkoodi String
-                                                          :voimassa_alkupvm LocalDate
+                                      TutkinnonSuppeatTiedot
+                                      (t/HMap :mandatory {:voimassa_alkupvm LocalDate
                                                           :voimassa_loppupvm LocalDate
-                                                          :siirtymaajan_loppupvm LocalDate
-                                                          :tutkintonimikkeet (t/Seq Tutkintonimike)})))
+                                                          :siirtymaajan_loppupvm LocalDate})))
 
 (t/defalias Tutkinto (t/I TutkinnonPerustiedot
                           (t/HMap :mandatory {:koulutusala_nimi_fi String
