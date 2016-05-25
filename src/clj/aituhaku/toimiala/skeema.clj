@@ -29,7 +29,7 @@
 
 (def Tutkinto (merge TutkintoPerustiedot
                      {:opintoala_nimi_fi s/Str
-                      :opintoala_nimi_sv s/Str
+                      (s/optional-key :opintoala_nimi_sv) s/Str
                       :opintoala_tkkoodi s/Str
                       (s/optional-key :koulutusala_nimi_fi) s/Str
                       (s/optional-key :koulutusala_nimi_sv) s/Str
