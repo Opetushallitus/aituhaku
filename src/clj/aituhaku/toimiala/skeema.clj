@@ -33,10 +33,7 @@
                       :opintoala_tkkoodi s/Str
                       (s/optional-key :koulutusala_nimi_fi) s/Str
                       (s/optional-key :koulutusala_nimi_sv) s/Str
-                      :tutkintotaso s/Str
-                      :voimassa_alkupvm org.joda.time.LocalDate
-                      :voimassa_loppupvm org.joda.time.LocalDate
-                      :siirtymaajan_loppupvm org.joda.time.LocalDate}))
+                      :tutkintotaso s/Str}))
 
 (def ToimikuntaNimi {:nimi_fi s/Str
                      :nimi_sv s/Str
@@ -64,7 +61,10 @@
                                  {:tutkinnot [TutkintoPerustiedot]}))
 
 (def TutkintoTiedot (merge Tutkinto
-                           {:jarjestajat [Jarjestaja]
+                           {:voimassa_alkupvm org.joda.time.LocalDate
+                            :voimassa_loppupvm org.joda.time.LocalDate
+                            :siirtymaajan_loppupvm org.joda.time.LocalDate
+                            :jarjestajat [Jarjestaja]
                             :peruste (s/maybe s/Str)
                             :eperustetunnus (s/maybe s/Int)
                             :toimikunnat [ToimikuntaNimi]

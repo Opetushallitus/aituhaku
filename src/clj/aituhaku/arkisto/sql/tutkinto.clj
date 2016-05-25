@@ -77,10 +77,15 @@
 (defn hae [tutkintotunnus]
   {:post [((t/pred (t/Seq Tutkinto)) %)]}
   (sql/select tutkinnot_view
+    (sql/fields :tutkintotunnus :nimi_fi :nimi_sv :tutkintotaso
+                :opintoala_nimi_fi :opintoala_nimi_sv :koulutusala_nimi_fi :koulutusala_nimi_sv
+                :voimassa_alkupvm :voimassa_loppupvm :siirtymaajan_loppupvm
+                :opintoala_tkkoodi :peruste :eperustetunnus)
     (sql/with tutkinnon_jarjestajat_view
       (sql/fields :oppilaitoskoodi :nimi :www_osoite :ktnimi_fi :ktnimi_sv :kieli))
     (sql/with tutkinnon_toimikunnat_view
       (sql/fields :nimi_fi :nimi_sv :tkunta))
     (sql/with tutkintonimike_view
       (sql/fields :nimi_fi :nimi_sv))
-    (sql/where {:tutkintotunnus tutkintotunnus})))
+    (sql/where {:tutkintotunnus tutkintotunnus})
+    (sql/order :voimassa_alkupvm :desc)))

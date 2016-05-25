@@ -18,7 +18,9 @@
             [aituhaku.arkisto.sql.tutkinto :as tutkinto-sql
              :refer [TutkinnonPerustiedot Tutkinto Nimetty]]
             [oph.common.util.util :refer [sisaltaako-kentat? pvm-mennyt-tai-tanaan? pvm-tuleva-tai-tanaan? time-forever]]
-            aituhaku.typed)
+            aituhaku.typed
+            [aituhaku.toimiala.skeema :as skeema]
+            [oph.common.util.util :refer [some-value-with]])
   (:import org.joda.time.LocalDate))
 
 (t/ann tutkinto-voimassa? [TutkinnonPerustiedot -> Boolean])
@@ -27,7 +29,7 @@
   (and (pvm-mennyt-tai-tanaan? (:voimassa_alkupvm tutkinto))
        (pvm-tuleva-tai-tanaan? (:voimassa_loppupvm tutkinto))))
 
-(t/defalias TutkinnonVoimassaolo (t/U ':voimassa ':ei-voimassa ':siirtymaajalla))
+(t/defalias TutkinnonVoimassaolo (t/U ':voimassa ':ei-voimassa ':siirtymaajalla ':tulossa-voimaan))
 
 (t/ann voimassaolo [LocalDate tutkinto-sql/TutkinnonVoimassaoloPvm -> TutkinnonVoimassaolo])
 (defn voimassaolo [ajankohta voimassaolo-pvm]
@@ -41,7 +43,10 @@
                  (time/after? siirtymaajan_loppupvm ajankohta))
           :siirtymaajalla
           :voimassa)
-        :ei-voimassa))))
+        (if (and (time/after? voimassa_alkupvm ajankohta)
+                 (time/after? voimassa_loppupvm ajankohta))
+          :tulossa-voimaan
+          :ei-voimassa)))))
 
 (t/ann sisaltaako-nimi? [String String Nimetty -> Boolean])
 (defn sisaltaako-nimi?
@@ -64,7 +69,9 @@
   (let [kieli-rajaus (or suorituskieli kieli)] ; kieli-rajaus on suorituskieli, jos se on annettu. Muussa tapauksessa käyttökieli.
     (->> (tutkinto-sql/hae-tutkintojen-tiedot opintoala suorituskieli)
       (filter tutkinto-voimassa?)
-      (filter (partial sisaltaako-nimi-tai-nimike? nimi kieli-rajaus)))))
+      (filter (partial sisaltaako-nimi-tai-nimike? nimi kieli-rajaus))
+      (map #(select-keys % (keys skeema/Tutkinto)))
+      distinct)))
 
 (t/defalias TutkintoJaVoimassaolo
   (t/I Tutkinto
@@ -72,5 +79,7 @@
 
 (t/ann hae [String -> (t/Option TutkintoJaVoimassaolo)])
 (defn hae [tutkintotunnus]
-  (when-let [tutkinto (first (tutkinto-sql/hae tutkintotunnus))]
-    (assoc tutkinto :voimassaolo (voimassaolo (time/today) tutkinto))))
+  (let [tutkinnot (for [tutkinto (tutkinto-sql/hae tutkintotunnus)]
+                    (assoc tutkinto :voimassaolo (voimassaolo (time/today) tutkinto)))]
+    (or (some-value-with :voimassaolo :voimassa tutkinnot)
+        (first tutkinnot))))
