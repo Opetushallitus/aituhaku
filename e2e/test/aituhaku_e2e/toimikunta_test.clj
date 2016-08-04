@@ -30,8 +30,8 @@
       (with-data {:toimikunnat [{:nimi_fi "Ilmastointialan tutkintotoimikunta"
                                  :kielisyys "fi"
                                  :sahkoposti "toimikunta@mail.fi"
-                                 :toimikausi_alku "2013-08-01"
-                                 :toimikausi_loppu "2016-07-31"
+                                 :toimikausi_alku "2016-08-01"
+                                 :toimikausi_loppu "2018-07-31"
                                  :tkunta "ILMA"}]
                   :henkilot [{:henkiloid -1
                               :puhelin "0401234567"
@@ -48,6 +48,6 @@
              "i18n.kielisyys[toimikunta.kielisyys]" "suomi")
         (are [css teksti] (= (w/text (w/find-element {:css css})) teksti)
                           ".e2e-toimikunta-nimi" "ILMASTOINTIALAN TUTKINTOTOIMIKUNTA"
-                          ".e2e-toimikausi" "01.08.2013 – 31.07.2016"
+                          ".e2e-toimikausi" "01.08.2016 – 31.07.2018"
                           ".e2e-puhelin" "0401234567"
                           ".e2e-osoite" "Testikatu 1\n12345 Testilä")))))
