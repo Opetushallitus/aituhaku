@@ -32,6 +32,7 @@
                                  :sahkoposti "toimikunta@mail.fi"
                                  :toimikausi_alku "2016-08-01"
                                  :toimikausi_loppu "2018-07-31"
+                                 :toimikausi 3
                                  :tkunta "ILMA"}]
                   :henkilot [{:henkiloid -1
                               :puhelin "0401234567"
