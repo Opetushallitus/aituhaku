@@ -35,4 +35,4 @@ angular.module('toimikunnat.ui', ['toimikunnat.toimikunta',
   }])
   .controller('ToimikuntalistaController', ['Toimikunta', '$routeParams', '$scope', function(Toimikunta, $routeParams, $scope) {
 	  $scope.toimikunnat = Toimikunta.haeKaikki();
-  }])
+  }]);
