@@ -23,9 +23,16 @@ angular.module('toimikunnat.ui', ['toimikunnat.toimikunta',
       .when('/toimikunta/:tkunta', {
         controller: 'ToimikuntaController',
         templateUrl: 'template/toimikunnat/toimikunta.html'
+      })
+      .when('/toimikuntalista', {
+          controller: 'ToimikuntalistaController',
+          templateUrl: 'template/toimikunnat/toimikuntalista.html'    	  
       });
   }])
 
   .controller('ToimikuntaController', ['Toimikunta', '$routeParams', '$scope', function(Toimikunta, $routeParams, $scope) {
     $scope.toimikunta = Toimikunta.get({tkunta: $routeParams.tkunta});
-  }]);
+  }])
+  .controller('ToimikuntalistaController', ['Toimikunta', '$routeParams', '$scope', function(Toimikunta, $routeParams, $scope) {
+	  $scope.toimikunnat = Toimikunta.haeKaikki();
+  }])

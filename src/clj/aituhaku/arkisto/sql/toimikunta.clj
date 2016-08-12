@@ -18,6 +18,7 @@
 
 (defn hae
   [tkunta]
+  ; TODO: select-unique
   (let [toimikunta (first (sql/select toimikunta_view
                             (sql/where {:tkunta tkunta})))
         jasenet (sql/select toimikuntien_jasenet_view
@@ -25,3 +26,9 @@
                   (sql/where {:toimikunta tkunta})
                   (sql/order (sql/raw "case rooli when 'puheenjohtaja' then 1 when 'varapuheenjohtaja' then 2 when 'sihteeri' then 3 when 'jasen' then 4 else 5 end, sukunimi, etunimi")))]
     (assoc toimikunta :jasenet jasenet)))
+
+(defn hae-kaikki []
+  (sql/select toimikunta_view
+;    (sql/with toimikuntien_jasenet_view
+;      (sql/fields :etunimi :sukunimi :rooli))
+    (sql/order :nimi_fi)))

@@ -76,12 +76,14 @@
      ~@body))
 
 (declare tutkinnot_view)
+(declare toimikuntien_jasenet_view)
 
 (defentity kieli_view
   (sql/table :aituhaku.kieli_view))
 
 (defentity toimikunta_view
-  (sql/table :aituhaku.toimikuntaview))
+  (sql/table :aituhaku.toimikuntaview)
+  (sql/has-many toimikuntien_jasenet_view {:fk :toimikunta}))
 
 (defentity tutkinnon_jarjestajat_view
   (sql/table :aituhaku.tutkinnon_jarjestajat_view :jarjestajat))
@@ -108,4 +110,5 @@
   (sql/table :aituhaku.opintoala_view))
 
 (defentity toimikuntien_jasenet_view
-  (sql/table :aituhaku.toimikuntien_jasenet_view))
+  (sql/table :aituhaku.toimikuntien_jasenet_view)
+    (sql/belongs-to toimikunta_view {:fk :tkunta}))

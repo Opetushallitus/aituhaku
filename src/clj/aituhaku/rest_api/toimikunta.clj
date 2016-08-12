@@ -16,11 +16,15 @@
   (:require [compojure.api.core :refer [defroutes GET]]
             [schema.core :as s]
             [aituhaku.arkisto.sql.toimikunta :as arkisto]
-            [aituhaku.toimiala.skeema :refer [Toimikunta]]
+            [aituhaku.toimiala.skeema :refer [Toimikunta Toimikunta-plain]]
             [oph.common.util.http-util :refer [response-or-404]]))
 
 (defroutes reitit
   (GET "/:tkunta" []
     :path-params [tkunta :- s/Str]
     :return Toimikunta
-    (response-or-404 (arkisto/hae tkunta))))
+    (response-or-404 (arkisto/hae tkunta)))
+  
+  (GET "/" []
+     :return [Toimikunta-plain] ; TODO: jäsenet on tässä tapauksessa nullia.. kök
+     (response-or-404 (arkisto/hae-kaikki))))

@@ -16,11 +16,15 @@
 
 angular.module('toimikunnat.toimikunta', ['ngResource'])
   .factory('Toimikunta', ['$resource', function($resource) {
-    return $resource('api/toimikunta/:tkunta', {tkunta: '@tkunta'}, {
-      get: {
-        method: 'GET',
-        id: 'toimikunta'
-      }
-    });
+	  return $resource(null, null, {
+	      haeKaikki: {
+	        method: 'GET',
+	        isArray: true,
+	        url: 'api/toimikunta'
+	      },
+	      get: {
+	        method: 'GET',
+	        url: 'api/toimikunta/:tkunta'
+	      }
+	  });	  
   }]);
-

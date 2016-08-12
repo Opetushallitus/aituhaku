@@ -43,16 +43,18 @@
             :sukunimi s/Str
             :rooli s/Str})
 
-(def Toimikunta (merge ToimikuntaNimi
-                       {:sahkoposti (s/maybe s/Str)
-                        :puhelin (s/maybe s/Str)
-                        :osoite (s/maybe s/Str)
-                        :postinumero (s/maybe s/Str)
-                        :postitoimipaikka (s/maybe s/Str)
-                        :toimikausi_alku org.joda.time.LocalDate
-                        :toimikausi_loppu org.joda.time.LocalDate
-                        :kielisyys s/Str
-                        :jasenet [Jasen]}))
+(def Toimikunta-plain (merge ToimikuntaNimi
+                             {:sahkoposti (s/maybe s/Str)
+                              :puhelin (s/maybe s/Str)
+                              :osoite (s/maybe s/Str)
+                              :postinumero (s/maybe s/Str)
+                              :postitoimipaikka (s/maybe s/Str)
+                              :toimikausi_alku org.joda.time.LocalDate
+                              :toimikausi_loppu org.joda.time.LocalDate
+                              :kielisyys s/Str}))
+
+(def Toimikunta (merge Toimikunta-plain
+                       {:jasenet [Jasen]}))
 
 (def Jarjestaja {:oppilaitoskoodi s/Str
                  :nimi s/Str

@@ -1,0 +1,7 @@
+<palaa-hakuun></palaa-hakuun>
+
+<p>{{i18n.toimikuntalista.otsikko}}</p>
+
+<div ng-repeat="toimikunta in toimikunnat">
+  <a class="e2e-toimikunta-nimi" ng-href="#/toimikunta/{{toimikunta.tkunta}}">{{toimikunta.nimi | lokalisoi:toimikunta:'nimi'}}</a>
+</div>
