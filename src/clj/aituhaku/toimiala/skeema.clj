@@ -52,14 +52,11 @@
                               :postitoimipaikka (s/maybe s/Str)
                               :toimikausi_alku org.joda.time.LocalDate
                               :toimikausi_loppu org.joda.time.LocalDate
-                              :kielisyys s/Str}))
-                          
-(def Toimikunta-toimiala (merge Toimikunta-plain
-                                {:tutkinnot [TutkintoPerustiedot-plain]}))
-  
+                              :kielisyys s/Str
+                              :tutkinnot [TutkintoPerustiedot-plain]}))
+                           
 (def Toimikunta (merge Toimikunta-plain
                        {:jasenet [Jasen]}))
-
 
 (def Jarjestaja {:oppilaitoskoodi s/Str
                  :nimi s/Str

@@ -16,7 +16,7 @@
   (:require [compojure.api.core :refer [defroutes GET]]
             [schema.core :as s]
             [aituhaku.arkisto.sql.toimikunta :as arkisto]
-            [aituhaku.toimiala.skeema :refer [Toimikunta Toimikunta-toimiala]]
+            [aituhaku.toimiala.skeema :refer [Toimikunta Toimikunta-plain]]
             [oph.common.util.http-util :refer [response-or-404]]))
 
 (defroutes reitit
@@ -26,5 +26,5 @@
     (response-or-404 (arkisto/hae tkunta)))
   
   (GET "/" []
-     :return [Toimikunta-toimiala] 
+     :return [Toimikunta-plain] 
      (response-or-404 (arkisto/hae-kaikki))))
