@@ -2,6 +2,16 @@
 
 <p>{{i18n.toimikuntalista.otsikko}}</p>
 
-<div ng-repeat="toimikunta in toimikunnat">
-  <a class="e2e-toimikunta-nimi" ng-href="#/toimikunta/{{toimikunta.tkunta}}">{{toimikunta.nimi | lokalisoi:toimikunta:'nimi'}}</a>
+<div class="table">
+  <div class="table-row" ng-repeat="toimikunta in toimikunnat">
+    <div class="table-cell">
+      <a class="e2e-toimikunta-nimi" ng-href="#/toimikunta/{{toimikunta.tkunta}}">{{toimikunta.nimi | lokalisoi:toimikunta:'nimi'}}</a>
+    </div>
+    <div class="table-cell">
+        <span ng-repeat="tutkinto in toimikunta.tutkinnot">
+            <a class="e2e-toimikunta-nimi" ng-href="#/tutkinto/{{tutkinto.tutkintotunnus}}">{{tutkinto.nimi | lokalisoi:tutkinto:'nimi'}}</a>
+            <br>
+        </span>
+    </div>
+  </div>
 </div>

@@ -22,10 +22,11 @@
 (def Tutkintonimike {:nimi_fi s/Str
                      :nimi_sv (s/maybe s/Str)})
 
-(def TutkintoPerustiedot {:tutkintotunnus s/Str
-                          :nimi_fi s/Str
-                          :nimi_sv (s/maybe s/Str)
-                          :tutkintonimikkeet [Tutkintonimike]})
+(def TutkintoPerustiedot-plain {:tutkintotunnus s/Str
+                               :nimi_fi s/Str
+                               :nimi_sv (s/maybe s/Str)})
+
+(def TutkintoPerustiedot (merge TutkintoPerustiedot-plain {:tutkintonimikkeet [Tutkintonimike]}))
 
 (def Tutkinto (merge TutkintoPerustiedot
                      {:opintoala_nimi_fi s/Str
@@ -52,9 +53,13 @@
                               :toimikausi_alku org.joda.time.LocalDate
                               :toimikausi_loppu org.joda.time.LocalDate
                               :kielisyys s/Str}))
-
+                          
+(def Toimikunta-toimiala (merge Toimikunta-plain
+                                {:tutkinnot [TutkintoPerustiedot-plain]}))
+  
 (def Toimikunta (merge Toimikunta-plain
                        {:jasenet [Jasen]}))
+
 
 (def Jarjestaja {:oppilaitoskoodi s/Str
                  :nimi s/Str

@@ -28,7 +28,10 @@
     (assoc toimikunta :jasenet jasenet)))
 
 (defn hae-kaikki []
-  (sql/select toimikunta_view
-;    (sql/with toimikuntien_jasenet_view
-;      (sql/fields :etunimi :sukunimi :rooli))
-    (sql/order :nimi_fi)))
+  (map #(clojure.set/rename-keys % {:toimikunnat :tutkinnot})
+       (sql/select toimikunta_view
+         (sql/with tutkinnon_toimikunnat_view
+           (sql/fields :tutkintotunnus 
+                       [:tutkinto_nimi_fi :nimi_fi]
+                       [:tutkinto_nimi_sv :nimi_sv]))
+         (sql/order :nimi_fi))))
