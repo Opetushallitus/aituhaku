@@ -24,7 +24,8 @@
         jasenet (sql/select toimikuntien_jasenet_view
                   (sql/fields :etunimi :sukunimi :rooli)
                   (sql/where {:toimikunta tkunta})
-                  (sql/order (sql/raw "case rooli when 'puheenjohtaja' then 1 when 'varapuheenjohtaja' then 2 when 'sihteeri' then 3 when 'jasen' then 4 else 5 end, sukunimi, etunimi")))
+                  ; OPH-1835: puheenjohtaja, varapuheenjohtaja, jäsenet, pysyvät asiantuntijat, tutkintotoimikunnan sihteeri
+                  (sql/order (sql/raw "case rooli when 'puheenjohtaja' then 1 when 'varapuheenjohtaja' then 2 when 'jasen' then 3 when 'asiantuntija' then 4 else 5 end, sukunimi, etunimi")))
         tutkinnot (sql/select tutkinnon_toimikunnat_view
                     (sql/fields :tutkintotunnus 
                                 [:tutkinto_nimi_fi :nimi_fi]

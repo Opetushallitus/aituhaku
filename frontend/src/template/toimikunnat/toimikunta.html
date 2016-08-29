@@ -1,4 +1,10 @@
 <palaa-hakuun></palaa-hakuun>
+<p>
+  {{i18n.toimikunta.selite1}}
+</p>
+<p>
+  {{i18n.toimikunta.selite2}}
+</p>
 
 <h2 class="e2e-toimikunta-nimi">{{toimikunta.nimi | lokalisoi:toimikunta:'nimi'}}</h2>
 
@@ -9,7 +15,7 @@
     <label>{{i18n.toimikunta.puhelin}}</label>
     <p class="e2e-puhelin">{{toimikunta.puhelin}}</p>
     <label>{{i18n.toimikunta.postiosoite}}</label>
-    <p class="e2e-osoite">{{toimikunta.osoite}}<br/>{{toimikunta.postinumero}} {{toimikunta.postitoimipaikka}}</p>
+    <p class="e2e-osoite">{{toimikunta.nimi | lokalisoi:toimikunta:'nimi'}}<br/>{{toimikunta.osoite}}<br/>{{toimikunta.postinumero}} {{toimikunta.postitoimipaikka}}</p>
     
     <label>{{i18n.toimikunta.toimiala}}</label>
      <ul>
