@@ -51,4 +51,4 @@
                           ".e2e-toimikunta-nimi" "ILMASTOINTIALAN TUTKINTOTOIMIKUNTA"
                           ".e2e-toimikausi" "01.08.2016 – 31.07.2018"
                           ".e2e-puhelin" "0401234567"
-                          ".e2e-osoite" "Testikatu 1\n12345 Testilä")))))
+                          ".e2e-osoite" "Ilmastointialan tutkintotoimikunta\nTestikatu 1\n12345 Testilä")))))
