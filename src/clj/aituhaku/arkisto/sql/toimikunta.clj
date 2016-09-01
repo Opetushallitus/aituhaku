@@ -26,20 +26,26 @@
                   (sql/where {:toimikunta tkunta})
                   ; OPH-1835: puheenjohtaja, varapuheenjohtaja, jäsenet, pysyvät asiantuntijat, tutkintotoimikunnan sihteeri
                   (sql/order (sql/raw "case rooli when 'puheenjohtaja' then 1 when 'varapuheenjohtaja' then 2 when 'jasen' then 3 when 'asiantuntija' then 4 else 5 end, sukunimi, etunimi")))
-        tutkinnot (sql/select tutkinnon_toimikunnat_view
+        tutkinnot (sql/select :aituhaku.tutkinnon_toimikunnat_view
                     (sql/fields :tutkintotunnus 
                                 [:tutkinto_nimi_fi :nimi_fi]
-                                [:tutkinto_nimi_sv :nimi_sv])
+                                [:tutkinto_nimi_sv :nimi_sv]
+                                [(sql/sqlfn exists (sql/subselect :aituhaku.tutkinnon_jarjestajat_view (sql/where (= :aituhaku.tutkinnon_toimikunnat_view.tutkintotunnus :aituhaku.tutkinnon_jarjestajat_view.tutkintotunnus)))) :sopimuksia ])
                     (sql/where {:tkunta tkunta}))]
     (-> toimikunta
-      (assoc :tutkinnot tutkinnot)
+      (assoc :tutkinnot tutkinnot) 
       (assoc :jasenet jasenet))))
 
 (defn hae-kaikki []
-  (map #(clojure.set/rename-keys % {:toimikunnat :tutkinnot})
-       (sql/select toimikunta_view
-         (sql/with tutkinnon_toimikunnat_view
-           (sql/fields :tutkintotunnus 
-                       [:tutkinto_nimi_fi :nimi_fi]
-                       [:tutkinto_nimi_sv :nimi_sv]))
-         (sql/order :nimi_fi))))
+(let [sopimuksia (fn [x] (map #(assoc % :sopimuksia true) x))
+      lista (map #(clojure.set/rename-keys % {:toimikunnat :tutkinnot})
+                 (sql/select toimikunta_view
+                             (sql/with tutkinnon_toimikunnat_view
+                               (sql/fields :tutkintotunnus 
+                                           [:tutkinto_nimi_fi :nimi_fi]
+                                           [:tutkinto_nimi_sv :nimi_sv]))
+                                        ;   [(sql/sqlfn exists (sql/subselect :aituhaku.tutkinnon_jarjestajat_view (sql/where (= :aituhaku.tutkinnon_toimikunnat_view.tutkintotunnus :aituhaku.tutkinnon_jarjestajat_view.tutkintotunnus)))) :sopimuksia ]))
+                             (sql/order :nimi_fi)))
+    lista2 (map #(assoc % :tutkinnot (sopimuksia (:tutkinnot %))) lista)]
+    lista2))
+
