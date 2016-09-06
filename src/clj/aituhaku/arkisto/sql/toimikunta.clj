@@ -37,15 +37,18 @@
       (assoc :jasenet jasenet))))
 
 (defn hae-kaikki []
-(let [sopimuksia (fn [x] (map #(assoc % :sopimuksia true) x))
-      lista (map #(clojure.set/rename-keys % {:toimikunnat :tutkinnot})
-                 (sql/select toimikunta_view
-                             (sql/with tutkinnon_toimikunnat_view
-                               (sql/fields :tutkintotunnus 
-                                           [:tutkinto_nimi_fi :nimi_fi]
-                                           [:tutkinto_nimi_sv :nimi_sv]))
-                                        ;   [(sql/sqlfn exists (sql/subselect :aituhaku.tutkinnon_jarjestajat_view (sql/where (= :aituhaku.tutkinnon_toimikunnat_view.tutkintotunnus :aituhaku.tutkinnon_jarjestajat_view.tutkintotunnus)))) :sopimuksia ]))
-                             (sql/order :nimi_fi)))
-    lista2 (map #(assoc % :tutkinnot (sopimuksia (:tutkinnot %))) lista)]
-    lista2))
+  (let [soppareita (set (sql/select :aituhaku.tutkinnon_jarjestajat_view
+                           (sql/fields :tutkintotunnus)
+                           (sql/modifier "DISTINCT")))]
+
+    (let [sopimuksia (fn [x] (map #(assoc % :sopimuksia (contains? soppareita {:tutkintotunnus (:tutkintotunnus %)})) x))
+          lista (map #(clojure.set/rename-keys % {:toimikunnat :tutkinnot})
+                     (sql/select toimikunta_view
+                                 (sql/with tutkinnon_toimikunnat_view
+                                   (sql/fields :tutkintotunnus 
+                                               [:tutkinto_nimi_fi :nimi_fi]
+                                               [:tutkinto_nimi_sv :nimi_sv]))
+                                 (sql/order :nimi_fi)))
+        lista2 (map #(assoc % :tutkinnot (sopimuksia (:tutkinnot %))) lista)]
+        lista2)))
 

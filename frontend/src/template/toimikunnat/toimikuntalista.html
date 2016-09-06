@@ -9,8 +9,9 @@
     </div>
     <div class="table-cell">
         <span ng-repeat="tutkinto in toimikunta.tutkinnot">
-            <a class="e2e-toimikunta-nimi" ng-href="#/tutkinto/{{tutkinto.tutkintotunnus}}">{{tutkinto.nimi | lokalisoi:tutkinto:'nimi'}}</a>
-            <br>
+          <a ng-if='tutkinto.sopimuksia' class="e2e-toimikunta-nimi" ng-href="#/tutkinto/{{tutkinto.tutkintotunnus}}">{{tutkinto.nimi | lokalisoi:tutkinto:'nimi'}}</a>
+          <span ng-if='!tutkinto.sopimuksia'>{{tutkinto.nimi | lokalisoi:tutkinto:'nimi'}}</span>
+          <br>
         </span>
     </div>
   </div>
