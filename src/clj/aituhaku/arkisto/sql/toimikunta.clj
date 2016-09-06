@@ -49,6 +49,6 @@
                                                [:tutkinto_nimi_fi :nimi_fi]
                                                [:tutkinto_nimi_sv :nimi_sv]))
                                  (sql/order :nimi_fi)))
-        lista2 (map #(assoc % :tutkinnot (sopimuksia (:tutkinnot %))) lista)]
+        lista2 (map #(update % :tutkinnot sopimuksia) lista)]
         lista2)))
 
