@@ -79,7 +79,8 @@
                             :toimikunnat [ToimikuntaNimi]
                             :voimassaolo (s/enum :ei-voimassa
                                                  :voimassa
-                                                 :siirtymaajalla)}))
+                                                 :siirtymaajalla
+                                                 :tulossa-voimaan)}))
 
 (def Opintoala {:opintoala_nimi_fi s/Str
                 :opintoala_nimi_sv s/Str
