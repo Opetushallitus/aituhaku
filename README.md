@@ -8,13 +8,15 @@ aituhaku on työnimi järjestelmälle.
 # Lähdekoodin kuvaus
 
 * Aituhaku käyttää Aitu-sovelluksen tietokantaa oman skeemansa näkymien kautta. Tietokannan alustusskriptit löytyvät [Aitun lähdekoodin](https://github.com/Opetushallitus/aitu) kautta.
-* Aitun lähdekoodin mukana on myös virtuaalikoneet ja automatisoidut asennusskriptit, joilla tietokannan saa alustettua. 
+* Aitun lähdekoodin mukana on myös virtuaalikoneet ja automatisoidut asennusskriptit, joilla tietokannan saa alustettua.
 * Aituhaun paikallista käyttöä ja kehitystä varten, katso frontend hakemistossa oleva readme ja noudata sen ohjeita.
 
 # Kehitystyö
 
-* Aituhaun kehitystyö: Katso dev/user.clj. Sen avulla voi REPL:ssä helposti hallita palvelimen käynnistelyä. 
+* Aituhaun kehitystyö: Katso dev/user.clj. Sen avulla voi REPL:ssä helposti hallita palvelimen käynnistelyä.
  Ideana on ns. [Stuart Sierra workflow](http://thinkrelevance.com/blog/2013/06/04/clojure-workflow-reloaded)
+
+* Jos kehität Windows-koneella, aja ennen ensimmäistä serverin käynnistystä (user\uudelleenkaynnista!) komento "npm install --global windows-build-tools". Lisätietoa https://www.npmjs.com/package/windows-build-tools ja https://github.com/nodejs/node-gyp.
 
 * Eclipse: Luo projekti puhtaana projektina, ei Clojure-projektina. Valitse sen jälkeen Convert to Leiningen project.
    (Counterclockwise luo muuten turhia default-tiedostoja, jotka joutuu käsin poistamaan.)
