@@ -22,3 +22,4 @@ resources/public/app/
 ansible/aituhaku_vagrant/salasanat/
 *.iml
 aituhaku.properties
+/frontend/build/config.gypi
