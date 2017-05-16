@@ -31,5 +31,6 @@
                     (sql/with tutkintonimike_view
                       (sql/fields :nimi_fi :nimi_sv))
                     (sql/fields :tutkinnot_view.tutkintotunnus :tutkinnot_view.nimi_fi :tutkinnot_view.nimi_sv)
-                    (sql/where {:jarjestajat.oppilaitoskoodi oppilaitoskoodi}))]
-    (assoc jarjestaja :tutkinnot tutkinnot)))
+                    (sql/where {:jarjestajat.oppilaitoskoodi oppilaitoskoodi})
+                    )]
+    (assoc jarjestaja :tutkinnot (distinct tutkinnot))))
