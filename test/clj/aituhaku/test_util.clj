@@ -1,12 +1,12 @@
 (ns aituhaku.test-util
-  (:require 
+  (:require
     [aituhaku.asetukset :as haku-asetukset]
     [aituhaku.palvelin :as palvelin]
     [cheshire.core :as cheshire]
     [peridot.core :as peridot]))
 
 (defn body-json [response]
- (cheshire/parse-string (slurp (:body response)) true))
+ (cheshire/parse-string (slurp (:body response) :encoding "UTF-8") true))
 
 (defn peridot-session! []
   (let [asetukset

@@ -24,12 +24,12 @@
                          status))
 
 (def build-id (delay (if-let [resource (io/resource "build-id.txt")]
-                       (.trim (slurp resource))
+                       (.trim (slurp resource :encoding "UTF-8"))
                        "dev")))
 
 (defn status []
   {:build-id @build-id
    :asennukset (try
-                 (slurp "asennukset.txt")
+                 (slurp "asennukset.txt" :encoding "UTF-8")
                  (catch java.io.FileNotFoundException _
                    nil))})
