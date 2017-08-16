@@ -28,6 +28,7 @@
                  [org.clojure/core.typed "0.3.22"]
                  [org.clojure/tools.logging "0.3.1"]
                  [org.slf4j/slf4j-api "1.7.16"]
+                 [org.flatland/useful "0.11.5"]
                  [peridot "0.4.3"]
                  [org.postgresql/postgresql "9.4-1201-jdbc41"]
                  [prismatic/schema "1.0.5"]
